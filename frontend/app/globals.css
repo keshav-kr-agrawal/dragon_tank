@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Minimalist Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+}
+
+/* ---------------------------------------------------------------------------
+   Ultra-Modern Pure Transparent Glassmorphism (VisionOS / Apple Aesthetic)
+--------------------------------------------------------------------------- */
+
+/* Primary Transparent Frosted Glass Card */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: 0 10px 35px -5px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+}
+
+/* Highly Transparent Glass Sub-panel */
+.glass-panel-subtle {
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.02);
+}
+
+/* High-Elevation Floating Glass Dock / Navbar */
+.glass-dock {
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(36px) saturate(190%);
+  -webkit-backdrop-filter: blur(36px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 45px -8px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+}
+
+/* Transparent Glass Badges & Pills */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+/* Transparent Glass Interactive Buttons */
+.glass-btn {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* Dragon Voice Speaking Glass Glow */
+@keyframes dragonSpeakingPulse {
+  0%, 100% {
+    box-shadow: 0 16px 36px -8px rgba(217, 119, 6, 0.18), 0 2px 10px rgba(217, 119, 6, 0.08);
+    border-color: rgba(217, 119, 6, 0.5);
+  }
+  50% {
+    box-shadow: 0 22px 48px -6px rgba(217, 119, 6, 0.28), 0 4px 16px rgba(217, 119, 6, 0.14);
+    border-color: rgba(217, 119, 6, 0.75);
+  }
+}
+
+.dragon-speaking-glass {
+  background: rgba(255, 255, 255, 0.85) !important;
+  animation: dragonSpeakingPulse 2.4s ease-in-out infinite;
+}
+
+/* Equalizer Waveform Bars */
+@keyframes eqBarPulse {
+  0%, 100% {
+    height: 25%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+
+.eq-bar-1 { animation: eqBarPulse 0.75s ease-in-out infinite; }
+.eq-bar-2 { animation: eqBarPulse 0.55s ease-in-out infinite 0.12s; }
+.eq-bar-3 { animation: eqBarPulse 0.9s ease-in-out infinite 0.25s; }
+.eq-bar-4 { animation: eqBarPulse 0.65s ease-in-out infinite 0.08s; }
+.eq-bar-5 { animation: eqBarPulse 0.8s ease-in-out infinite 0.18s; }

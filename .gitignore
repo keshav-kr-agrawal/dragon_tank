@@ -1,0 +1,49 @@
+# Environment variables & secrets (DO NOT COMMIT SENSITIVE KEYS)
+.env
+.env.local
+.env.*.local
+*.env
+backend/.env
+frontend/.env.local
+frontend/.env*.local
+
+# Allow example templates
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+
+# Node dependencies & builds
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+frontend/out/
+build/
+dist/
+*.tsbuildinfo
+frontend/tsconfig.tsbuildinfo
+
+# Python caches & virtual environments
+__pycache__/
+backend/__pycache__/
+*.py[cod]
+*$py.class
+*.log
+venv/
+.venv/
+env/
+backend/venv/
+backend/.venv/
+
+# Operating System & IDE files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
