@@ -261,37 +261,55 @@ Each mentor focuses on specific real-world dimensions:
 
 ## 9. Frontend Architecture & Visual Experience
 
-### 9.1 Apple VisionOS Pure Glassmorphism Design System
-- **Glass Dock**: `backdrop-filter: blur(36px) saturate(190%)` floating command navigation.
-- **Glass Panels**: Clean, translucent containers with subtle borders and shadows.
-- **Single Speaker Aura**: When a Shark speaks, only their avatar tile glows with an active amber pulse, while listening Sharks remain gently frosted.
+### 9.1 The Ishaan-UI Design System & Anti-Slop Discipline
+The frontend adopts the art-directed **Ishaan-UI design philosophy**, eliminating generic template aesthetics in favor of a cohesive, authored visual world:
+- **The Sovereign Chamber Metaphor**: Warm ivory parchment canvas (`#FAF8F5`), deep obsidian stone ink (`#1C1917`), warm amber lacquer accent (`#B45309`), and subtle paper grain overlay (`.grain`).
+- **Editorial Display Typography with Italic Turns**: Built with Google Font **Newsreader** paired with **Plus Jakarta Sans** and **JetBrains Mono**. Big display headings feature an expressive italic second line rather than generic bold sans-serif text.
+- **Anti-Slop Implementation**:
+  - Zero kicker/eyebrow tags above headings (no "FEATURES" or "STUDIO PROCESS"). Headings carry their full meaning autonomously.
+  - Zero emoji bullets or badges in data structures.
+  - Zero purple-blue gradient clichés or floating orbs without environment.
+- **Ishaan-UI Surface Tokens**:
+  - `.glass`: Warm-white frosted gradient with 1px highlight and soft ambient shadow.
+  - `.glass-strong`: Denser frosted pane for active elements and focus chambers.
+  - `.glass-inset`: Tactile recessed wells for sliders, chips, and input bars.
 
-### 9.2 Split-Pane Stage: Boardroom Floor vs. Viability & Impact Radar
+### 9.2 Custom Hand-Drawn SVG Icon Set (`IshaanIcons.tsx`)
+Rather than relying on stock icon libraries, all core symbols are drawn by hand in one consistent voice on a 24×24 grid with 1.4px stroke, round caps/joins, and intentional open gaps:
+- `IconFlame`: The boardroom ember.
+- `IconCompass`: Societal Need & Purpose.
+- `IconGear`: Technical & Operational Feasibility.
+- `IconCoins`: Unit Economics & Money Making.
+- `IconAscend`: Scalability & Growth.
+- `IconSeal`: Formal Verdicts & Chamber Rulings.
+- `IconArrow`: Curved-shaft forward gesture.
+- `IconCheckCircle`: Open-gap verified status indicator.
+
+### 9.3 Bespoke Data Visuals: The Bezel Dial (`BezelDial.tsx`)
+In accordance with Ishaan-UI principles (*data visuals should be custom, never default chart skins*), the application implements a dedicated SVG Bezel Dial:
+- 60 hairline tick marks around a ring.
+- Sweeping status arc with spring transitions.
+- Large Newsreader display numerals displaying unit contribution and gross margin.
+
+### 9.4 Split-Pane Stage: Boardroom Floor vs. Viability & Impact Radar
 Located in [`frontend/components/PitchBoardroom.tsx`](file:///Users/keshav/shark%20tank/frontend/components/PitchBoardroom.tsx):
 - **Left Stage (60% Desktop Width)**:
   - Scrollable transcript displaying student statements and the single speaking Shark's guidance.
-  - Shark tone badge and action chips.
-  - Individual **"Reply to Mentor"** button on each message bubble.
+  - Typographical status seals instead of emoji tags.
+  - Bespoke action chips: `Societal Need`, `Money Making & Costs`, `Technical Feasibility`, `Scalability Plan`, `Request Formal Critique`.
 - **Right Stage (40% Desktop Width) — Student Venture Viability & Impact Radar**:
-  - **Shark Formal Guidance & Verdict Card**: Live strategic summary and constructive feedback.
-  - **The 4 Real-World Pillars Grid**: Real-time evaluation of Societal Need, Feasibility, Commercial Viability, and Scalability.
-  - **Measurable Societal & Human Impact Card**: Dedicated tracking of community benefits and social value.
-  - **Formal Viability Ruling Button**: Triggers the panel's comprehensive final evaluation.
+  - **Bezel Dial**: Real-time margin and viability gauge.
+  - **Mentor Formal Guidance Card**: Large display quotation in Newsreader italic serif.
+  - **The 4 Real-World Pillars Grid**: Societal Need, Feasibility, Money Making, and Scalability with custom hand-drawn glyphs.
+  - **Measurable Societal & Human Impact Card**: Community and human value tracking.
+  - **Formal Viability Ruling Action**: Triggers the panel's comprehensive final evaluation with an authentic seal.
 
-### 9.3 Student Venture Economics & Viability Lab
+### 9.5 Student Venture Economics & Viability Lab
 Located on [`frontend/components/HomePage.tsx`](file:///Users/keshav/shark%20tank/frontend/components/HomePage.tsx):
-- Interactive sliders for **Direct Unit Cost (₹)**, **Customer Pricing (₹)**, and **Target Community Reach (Users)**.
+- Embedded **Bezel Dial** displaying live Gross Margin %.
+- Interactive tactile sliders for **Direct Unit Cost (₹)**, **Customer Pricing (₹)**, and **Target Community Reach (Users)**.
 - Computes live: Gross Margin %, Break-even Volume, and Net Monthly Run-Rate.
 - Live dynamic Shark feedback preview with formal guidance, suggestions, or scolding based on real math.
-
-### 9.4 Targeted Shark Mentorship & Student Action Chips
-Student founders can click quick chips tailored to realistic venture stages:
-1. `🌍 Societal Need`: *"Here is the acute societal problem and who directly benefits from our solution."*
-2. `💰 Money Making & Costs`: *"Here are our exact unit costs, customer pricing, and how this venture becomes profitable."*
-3. `⚙️ Technical Feasibility`: *"Our core prototype architecture was developed and tested in our university laboratory."*
-4. `📈 Scalability Plan`: *"Here is our roadmap to expand from our 500-student campus pilot to regional scale."*
-5. `🌱 Measurable Impact`: *"Here is the tangible, measurable human benefit our venture creates for society."*
-6. `📋 Request Honest Scolding`: *"Sharks, give me your most direct, formal critique. What are the fatal flaws in my current model?"*
 
 ### 9.5 Red Carpet Cinematic Entrance
 Implemented in [`frontend/components/RedCarpetTransition.tsx`](file:///Users/keshav/shark%20tank/frontend/components/RedCarpetTransition.tsx):

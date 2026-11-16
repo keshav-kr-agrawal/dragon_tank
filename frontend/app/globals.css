@@ -1,24 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #F8FAFC;
-  --foreground: #0F172A;
+  --canvas: #FAF8F5;
+  --surface: #FFFFFF;
+  --ink: #1C1917;
+  --ink-2: #57534E;
+  --ink-3: #8C827A;
+  --accent: #B45309;
+  --accent-soft: rgba(180, 83, 9, 0.12);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--canvas);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--ink);
+  background-color: var(--canvas);
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Typography Utility Classes */
+.font-display {
+  font-family: 'Newsreader', Georgia, serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+.font-sans-ui {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+}
+
+.font-mono-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-feature-settings: 'tnum';
 }
 
 /* Custom Minimalist Scrollbars */
@@ -32,88 +56,134 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
+  background: rgba(120, 113, 108, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.5);
+  background: rgba(120, 113, 108, 0.45);
 }
 
 /* ---------------------------------------------------------------------------
-   Ultra-Modern Pure Transparent Glassmorphism (VisionOS / Apple Aesthetic)
+   Ishaan UI Surface Architecture: Warm Frosted Glass & Tactical Insets
 --------------------------------------------------------------------------- */
 
-/* Primary Transparent Frosted Glass Card */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.52);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.82);
-  box-shadow: 0 10px 35px -5px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
-}
-
-/* Highly Transparent Glass Sub-panel */
-.glass-panel-subtle {
-  background: rgba(255, 255, 255, 0.32);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.02);
-}
-
-/* High-Elevation Floating Glass Dock / Navbar */
-.glass-dock {
-  background: rgba(255, 255, 255, 0.68);
-  backdrop-filter: blur(36px) saturate(190%);
-  -webkit-backdrop-filter: blur(36px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 16px 45px -8px rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
-}
-
-/* Transparent Glass Badges & Pills */
-.glass-pill {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+/* Primary Frosted Glass Pane */
+.glass {
+  background: linear-gradient(160deg, rgba(255, 253, 248, 0.8), rgba(255, 253, 248, 0.55));
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
   border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(28, 25, 23, 0.03),
+    0 24px 60px -36px rgba(28, 25, 23, 0.12);
 }
 
-/* Transparent Glass Interactive Buttons */
-.glass-btn {
-  background: rgba(255, 255, 255, 0.6);
+/* Denser Frosted Pane for Active Focus / Modals / Key Controls */
+.glass-strong {
+  background: linear-gradient(160deg, rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.8));
+  backdrop-filter: blur(32px) saturate(1.4);
+  -webkit-backdrop-filter: blur(32px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    0 30px 70px -40px rgba(28, 25, 23, 0.18);
+}
+
+/* Inset Wells, Slider Tracks & Form Inputs */
+.glass-inset {
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: inset 0 1px 2px rgba(28, 25, 23, 0.04);
+}
+
+/* High-Elevation Floating Command Dock */
+.glass-dock {
+  background: rgba(255, 253, 248, 0.78);
+  backdrop-filter: blur(36px) saturate(1.6);
+  -webkit-backdrop-filter: blur(36px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 45px -8px rgba(28, 25, 23, 0.06), 0 4px 12px -2px rgba(28, 25, 23, 0.02);
+}
+
+/* Legacy Alias for backward compatibility */
+.glass-panel {
+  background: linear-gradient(160deg, rgba(255, 253, 248, 0.8), rgba(255, 253, 248, 0.55));
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 24px 60px -36px rgba(28, 25, 23, 0.12);
+}
+
+.glass-panel-subtle {
+  background: rgba(255, 255, 255, 0.42);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.03);
+}
+
+.glass-pill {
+  background: rgba(255, 253, 248, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(28, 25, 23, 0.03);
+}
+
+.glass-btn {
+  background: rgba(255, 253, 248, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 3px 12px rgba(28, 25, 23, 0.03);
+  transition: all 0.25s var(--ease);
 }
 
 .glass-btn:hover {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 6px 20px rgba(28, 25, 23, 0.06);
 }
 
-/* Dragon Voice Speaking Glass Glow */
-@keyframes dragonSpeakingPulse {
+/* Subtle Paper Grain Overlay (From Ishaan-UI) */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Single Speaker Active Chamber Aura */
+@keyframes singleSpeakerPulse {
   0%, 100% {
-    box-shadow: 0 16px 36px -8px rgba(217, 119, 6, 0.18), 0 2px 10px rgba(217, 119, 6, 0.08);
-    border-color: rgba(217, 119, 6, 0.5);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 16px 36px -8px rgba(180, 83, 9, 0.2),
+      0 2px 10px rgba(180, 83, 9, 0.08);
+    border-color: rgba(180, 83, 9, 0.55);
   }
   50% {
-    box-shadow: 0 22px 48px -6px rgba(217, 119, 6, 0.28), 0 4px 16px rgba(217, 119, 6, 0.14);
-    border-color: rgba(217, 119, 6, 0.75);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 24px 50px -6px rgba(180, 83, 9, 0.3),
+      0 4px 18px rgba(180, 83, 9, 0.16);
+    border-color: rgba(180, 83, 9, 0.85);
   }
 }
 
 .dragon-speaking-glass {
-  background: rgba(255, 255, 255, 0.85) !important;
-  animation: dragonSpeakingPulse 2.4s ease-in-out infinite;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 251, 245, 0.9)) !important;
+  animation: singleSpeakerPulse 2.6s var(--ease) infinite;
 }
 
-/* Equalizer Waveform Bars */
+/* Equalizer Waveform Bars with Soft Caps */
 @keyframes eqBarPulse {
   0%, 100% {
     height: 25%;
@@ -128,3 +198,16 @@ body {
 .eq-bar-3 { animation: eqBarPulse 0.9s ease-in-out infinite 0.25s; }
 .eq-bar-4 { animation: eqBarPulse 0.65s ease-in-out infinite 0.08s; }
 .eq-bar-5 { animation: eqBarPulse 0.8s ease-in-out infinite 0.18s; }
+
+/* Hairline Tick Gauge */
+.bezel-ring {
+  stroke-dasharray: 2 4;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

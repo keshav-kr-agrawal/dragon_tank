@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Dragon Tank India: Live AI Voice Investment Simulator',
+  title: 'Dragon Tank India — Student Venture Mentorship & Viability Simulator',
   description:
-    'Pitch your business to 6 autonomous AI Dragons in real-time. Powered by Google Gemini, LangGraph orchestration, and ElevenLabs voice streaming.',
+    'A real-world AI boardroom for college innovators. Pitch to 6 iconic mentors for deep one-at-a-time examination, constructive formal guidance, and viability analysis.',
 }
 
 export const viewport: Viewport = {
@@ -24,11 +24,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased selection:bg-amber-100 selection:text-amber-900">
+      <body className="min-h-screen bg-[#FAF8F5] text-[#1C1917] antialiased selection:bg-amber-100 selection:text-amber-900">
         {children}
       </body>
     </html>

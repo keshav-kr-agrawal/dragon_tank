@@ -3,31 +3,28 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Flame,
-  Mic,
-  MicOff,
-  Send,
-  RotateCcw,
-  Sparkles,
-  TrendingUp,
-  Cpu,
-  ShieldAlert,
-  Gavel,
+  IconFlame,
+  IconCompass,
+  IconGear,
+  IconCoins,
+  IconAscend,
+  IconSeal,
+  IconArrow,
+  IconCheckCircle,
+  IconMic,
+  IconSliders,
+  IconChevronRight,
+  IconRotate,
+  IconSend
+} from './IshaanIcons'
+import BezelDial from './BezelDial'
+import {
   Check,
   Copy,
-  Layers,
   X,
-  Zap,
-  DollarSign,
-  ArrowLeft,
-  AlertTriangle,
-  Target,
-  Briefcase,
-  Award,
-  ChevronRight,
-  TrendingDown,
   MessageCircle,
-  GraduationCap,
+  AlertTriangle,
+  ArrowLeft,
   Play
 } from 'lucide-react'
 import { ALL_DRAGON_PROFILES, DragonProfile, DragonDialogue } from './dragonDialogues'
@@ -562,19 +559,19 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
   const getDragonSymbol = (id: string) => {
     switch (id) {
       case 'roaster':
-        return <TrendingUp className="w-4 h-4 text-amber-700" />
+        return <IconCoins size={15} className="text-amber-800" />
       case 'operator':
-        return <ShieldAlert className="w-4 h-4 text-purple-700" />
+        return <IconCompass size={15} className="text-purple-800" />
       case 'marketing':
-        return <Flame className="w-4 h-4 text-sky-700" />
+        return <IconFlame size={15} className="text-sky-800" />
       case 'tech':
-        return <Cpu className="w-4 h-4 text-emerald-700" />
+        return <IconGear size={15} className="text-emerald-800" />
       case 'strategist':
-        return <Layers className="w-4 h-4 text-indigo-700" />
+        return <IconAscend size={15} className="text-indigo-800" />
       case 'd2c':
-        return <DollarSign className="w-4 h-4 text-rose-700" />
+        return <IconSeal size={15} className="text-rose-800" />
       default:
-        return <Flame className="w-4 h-4 text-slate-700" />
+        return <IconFlame size={15} className="text-stone-700" />
     }
   }
 
@@ -584,44 +581,42 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
   }
 
   return (
-    <div className="relative min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans overflow-x-hidden selection:bg-amber-100 selection:text-amber-900">
+    <div className="relative min-h-screen bg-[#FAF8F5] text-[#1C1917] flex flex-col font-sans-ui overflow-x-hidden selection:bg-amber-100 selection:text-amber-950 grain">
       {/* -----------------------------------------------------------------------
-          Ambient Luxury Gradient Orbs (Creates Glassmorphism Depth)
+          Ambient Luxury Warm Atmosphere (Ishaan-UI Palette)
       ------------------------------------------------------------------------ */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-amber-200/35 rounded-full blur-[130px]" />
-        <div className="absolute top-1/4 right-0 w-[420px] h-[420px] bg-purple-100/35 rounded-full blur-[140px]" />
-        <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-emerald-100/30 rounded-full blur-[140px]" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-amber-100/40 rounded-full blur-[140px]" />
+        <div className="absolute top-1/4 right-0 w-[420px] h-[420px] bg-stone-200/40 rounded-full blur-[150px]" />
+        <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-orange-50/40 rounded-full blur-[150px]" />
       </div>
 
       {/* -----------------------------------------------------------------------
-          Glassmorphic Header with Home Navigation
+          Glassmorphic Header with Minimal Dock
       ------------------------------------------------------------------------ */}
-      <header className="sticky top-0 z-30 glass-dock border-b border-white/60 px-4 md:px-8 py-3 flex items-center justify-between">
+      <header className="sticky top-0 z-30 glass-dock border-b border-stone-200/60 px-4 md:px-8 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           {/* Back to Home Button */}
           <button
             onClick={onBackToHome}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-panel text-xs font-semibold text-slate-700 hover:text-slate-950 hover:scale-105 transition-all shadow-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-btn text-xs font-semibold text-stone-700 hover:text-stone-950 transition-all shadow-xs"
             title="Return to Home Page"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Home Lobby</span>
+            <span className="hidden sm:inline">Home</span>
           </button>
 
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 p-0.5 shadow-sm">
-            <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
-              <Flame className="w-4 h-4 text-amber-600" />
-            </div>
+          <div className="w-8 h-8 rounded-xl bg-[#1C1917] text-amber-400 flex items-center justify-center shadow-xs">
+            <IconFlame size={17} />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="font-extrabold text-base md:text-lg tracking-tight text-slate-900">
-                Dragon Tank India
+            <div className="flex items-baseline gap-2">
+              <h1 className="font-extrabold text-base md:text-lg tracking-tight text-[#1C1917]">
+                Dragon Tank <span className="font-display italic font-normal text-amber-800">India</span>
               </h1>
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-700 border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Live 6-Dragon Boardroom
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-800 border border-emerald-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                Strictly 1 Speaker
               </span>
             </div>
           </div>
@@ -629,37 +624,31 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
 
         {/* Action Controls */}
         <div className="flex items-center gap-2">
-          {/* Student Mode Badge */}
-          <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-panel text-xs font-semibold text-slate-700 border border-slate-200/80 shadow-2xs">
-            <GraduationCap className="w-3.5 h-3.5 text-indigo-600" />
-            <span>Student & Early-Stage Lab</span>
-          </span>
-
           {/* Sample Pitches */}
           <button
             onClick={() => setShowPitchPresets(true)}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-panel text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all hover:scale-105"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-btn text-xs font-semibold text-stone-700 hover:text-stone-900 transition-all"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            Presets
+            <IconSliders size={13} className="text-amber-800" />
+            <span>Presets</span>
           </button>
 
           {/* Final Verdict */}
           <button
             onClick={handleVerdict}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition-all hover:scale-105"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#1C1917] hover:bg-stone-800 text-stone-50 text-xs font-semibold shadow-xs transition-all hover:scale-[1.02]"
           >
-            <Gavel className="w-3.5 h-3.5 text-amber-400" />
-            Final Verdict
+            <IconSeal size={13} className="text-amber-400" />
+            <span>Final Ruling</span>
           </button>
 
           {/* Reset */}
           <button
             onClick={handleReset}
-            className="p-2 rounded-xl glass-panel text-slate-500 hover:text-slate-900 transition-all hover:scale-105"
+            className="p-2 rounded-xl glass-btn text-stone-600 hover:text-stone-900 transition-all"
             title="Reset Floor"
           >
-            <RotateCcw className="w-4 h-4" />
+            <IconRotate size={15} />
           </button>
         </div>
       </header>
@@ -675,10 +664,10 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
             exit={{ y: -20, opacity: 0 }}
             className="sticky top-14 z-20 mx-auto max-w-xl px-4 py-1.5"
           >
-            <div className="flex items-center justify-center gap-2 px-4 py-2 rounded-2xl glass-dock bg-amber-500/90 text-slate-950 font-black text-xs shadow-lg border border-amber-300 tracking-wide">
-              <Zap className="w-4 h-4 fill-slate-950 animate-bounce" />
+            <div className="flex items-center justify-center gap-2 px-4 py-2 rounded-2xl glass-dock bg-amber-500/90 text-slate-950 font-bold text-xs shadow-lg border border-amber-300 tracking-wide">
+              <IconFlame size={15} className="text-stone-950" />
               <span>
-                ROOM INTERRUPTION: <span className="underline">{interruptionBanner.interrupter}</span> cuts off {interruptionBanner.interrupted}!
+                Intervention: <span className="underline">{interruptionBanner.interrupter}</span> speaks to {interruptionBanner.interrupted}
               </span>
             </div>
           </motion.div>
@@ -848,26 +837,26 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
 
                         {/* Tone & Drama Badges */}
                         {msg.tone_badge && (
-                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-                            {msg.tone_badge}
+                          <span className="text-[10px] font-mono-num font-semibold px-2 py-0.5 rounded-md glass-inset text-amber-900 border border-amber-800/20">
+                            {msg.tone_badge.replace(/[🔥💡⚠️⚙️💰🌍📈🌱📋🏛️⚡]/g, '').trim()}
                           </span>
                         )}
 
                         {isInterruption && msg.interrupted_speaker && (
-                          <span className="text-[10px] font-black text-amber-900 bg-amber-100 px-1.5 py-0.5 rounded border border-amber-300">
-                            ⚡ Cuts off {msg.interrupted_speaker}
+                          <span className="text-[10px] font-mono-num font-semibold text-amber-950 bg-amber-100/80 px-2 py-0.5 rounded border border-amber-300">
+                            Intervenes · {msg.interrupted_speaker}
                           </span>
                         )}
 
                         {isOut && (
-                          <span className="text-[10px] font-black text-rose-700 bg-rose-100 px-1.5 py-0.5 rounded">
-                            I AM OUT
+                          <span className="text-[10px] font-mono-num font-bold text-rose-800 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                            Out
                           </span>
                         )}
 
                         {isOffer && (
-                          <span className="text-[10px] font-black text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300">
-                            DEAL OFFER
+                          <span className="text-[10px] font-mono-num font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-300">
+                            Endorsement
                           </span>
                         )}
                       </div>
@@ -915,52 +904,57 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
           </div>
 
           {/* Quick Interactive Student Founder Action Chips */}
-          <div className="px-3.5 py-2 border-t border-white/60 bg-white/30 flex items-center gap-1.5 overflow-x-auto text-xs scrollbar-none">
-            <span className="text-[10px] font-bold text-slate-400 uppercase shrink-0">Quick Reply:</span>
+          <div className="px-4 py-2.5 border-t border-stone-200/60 bg-stone-50/50 flex items-center gap-2 overflow-x-auto text-xs scrollbar-none">
+            <span className="text-[10px] font-mono-num font-bold text-stone-400 uppercase tracking-wider shrink-0">
+              Guidance:
+            </span>
             {[
-              { label: '🌍 Societal Need', text: 'Here is the genuine societal problem we are solving and the exact user pain point.' },
-              { label: '💰 Money Making & Costs', text: 'Here is how our venture generates real revenue, our unit costs, pricing, and how we achieve profitability.' },
-              { label: '⚙️ Technical Feasibility', text: 'Here is our technical prototype architecture and how our student team builds and maintains it.' },
-              { label: '📈 Scalability Plan', text: 'Here is how we scale from our campus pilot to 15 universities and regional markets.' },
-              { label: '🌱 Measurable Impact', text: 'Here is the tangible benefit and measurable human or business impact our solution delivers.' },
-              { label: '📋 Request Honest Scolding', text: 'Sharks, please give us a direct, formal reality check on our biggest feasibility blindspot.' }
+              { label: 'Societal Need', icon: IconCompass, text: 'Here is the genuine societal problem we are solving and the exact user pain point.' },
+              { label: 'Money Making & Costs', icon: IconCoins, text: 'Here is how our venture generates real revenue, our unit costs, pricing, and how we achieve profitability.' },
+              { label: 'Technical Feasibility', icon: IconGear, text: 'Here is our technical prototype architecture and how our student team builds and maintains it.' },
+              { label: 'Scalability Plan', icon: IconAscend, text: 'Here is how we scale from our campus pilot to 15 universities and regional markets.' },
+              { label: 'Measurable Impact', icon: IconFlame, text: 'Here is the tangible benefit and measurable human or business impact our solution delivers.' },
+              { label: 'Request Formal Critique', icon: IconSeal, text: 'Sharks, please give us a direct, formal reality check on our biggest feasibility blindspot.' }
             ].map((chip, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(chip.text)}
-                className="shrink-0 px-2.5 py-1 rounded-xl glass-panel text-[11px] font-semibold text-slate-700 hover:text-slate-950 hover:border-amber-400 transition-all cursor-pointer"
+                className="shrink-0 px-3 py-1.5 rounded-xl glass-btn text-[11px] font-semibold text-stone-700 hover:text-stone-950 flex items-center gap-1.5 transition-all cursor-pointer"
               >
-                {chip.label}
+                <chip.icon size={12} className="text-amber-800" />
+                <span>{chip.label}</span>
               </button>
             ))}
           </div>
 
           {/* Target Dragon Selector for Replying */}
-          <div className="px-3.5 pt-2 pb-1.5 bg-white/40 border-t border-white/60 flex items-center justify-between text-xs">
+          <div className="px-4 pt-2.5 pb-2 bg-stone-50/70 border-t border-stone-200/60 flex items-center justify-between text-xs">
             <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5 max-w-full">
-              <span className="text-[10px] font-bold text-slate-500 uppercase shrink-0">Direct to Shark:</span>
+              <span className="text-[10px] font-mono-num font-bold text-stone-400 uppercase tracking-wider shrink-0">
+                Direct To:
+              </span>
               <button
                 onClick={() => setReplyTargetDragon(null)}
-                className={`px-2 py-0.5 rounded-lg text-[11px] font-bold transition-all shrink-0 cursor-pointer ${
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all shrink-0 cursor-pointer ${
                   replyTargetDragon === null
-                    ? 'bg-slate-900 text-white shadow-xs'
-                    : 'glass-panel text-slate-600 hover:text-slate-900'
+                    ? 'bg-[#1C1917] text-stone-50 shadow-xs'
+                    : 'glass-btn text-stone-600 hover:text-stone-900'
                 }`}
               >
-                🌐 Auto-Select Domain Shark
+                Auto-Select Domain Mentor
               </button>
               {ALL_DRAGON_PROFILES.map((dp) => (
                 <button
                   key={dp.id}
                   onClick={() => setReplyTargetDragon(dp.name)}
-                  className={`px-2 py-0.5 rounded-lg text-[11px] font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
                     replyTargetDragon === dp.name
-                      ? 'bg-slate-900 text-white shadow-xs ring-1 ring-amber-400'
-                      : 'glass-panel text-slate-700 hover:text-slate-950'
+                      ? 'bg-[#1C1917] text-stone-50 shadow-xs ring-1 ring-amber-400'
+                      : 'glass-btn text-stone-700 hover:text-stone-950'
                   }`}
                 >
                   <span
-                    className="w-2 h-2 rounded-full inline-block"
+                    className="w-1.5 h-1.5 rounded-full inline-block"
                     style={{ backgroundColor: dp.accentColor }}
                   />
                   <span>{dp.name.split(' ')[0]}</span>
@@ -970,7 +964,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
             {replyTargetDragon && (
               <button
                 onClick={() => setReplyTargetDragon(null)}
-                className="text-[10px] text-slate-400 hover:text-slate-700 ml-2 shrink-0 underline cursor-pointer"
+                className="text-[10px] text-stone-400 hover:text-stone-700 ml-2 shrink-0 underline cursor-pointer"
               >
                 Reset
               </button>
@@ -978,18 +972,18 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
           </div>
 
           {/* Desktop Pitch Dock */}
-          <div className="p-3.5 border-t border-white/60 bg-white/50 backdrop-blur-md">
+          <div className="p-3.5 border-t border-stone-200/60 bg-white/70 backdrop-blur-md">
             <div className="flex items-center gap-2">
               <button
                 onClick={handleToggleMic}
                 className={`p-2.5 rounded-xl transition-all ${
                   isRecording
-                    ? 'bg-rose-500 text-white shadow-md animate-pulse ring-4 ring-rose-200'
-                    : 'glass-panel text-slate-700 hover:text-slate-900 hover:scale-105'
+                    ? 'bg-rose-600 text-white shadow-md animate-pulse ring-4 ring-rose-200'
+                    : 'glass-btn text-stone-700 hover:text-stone-900 hover:scale-105'
                 }`}
                 title={isRecording ? 'Stop Recording' : 'Voice Input'}
               >
-                {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                <IconMic size={16} />
               </button>
 
               <input
@@ -1007,16 +1001,16 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
                     ? `Replying directly to ${replyTargetDragon} (e.g. explain feasibility, societal need, or costs)...`
                     : 'Present your project (e.g. societal need, technical feasibility, money-making model, or ask for guidance)...'
                 }
-                className="flex-1 glass-panel rounded-xl px-4 py-2.5 text-xs md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 transition-all"
+                className="flex-1 glass-inset rounded-xl px-4 py-2.5 text-xs md:text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all"
               />
 
               <button
                 onClick={() => handleSend()}
                 disabled={!inputText.trim()}
-                className="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 text-white transition-all hover:scale-105 shadow-xs"
+                className="p-2.5 rounded-xl bg-[#1C1917] hover:bg-stone-800 disabled:opacity-30 text-stone-50 transition-all hover:scale-105 shadow-xs"
                 title="Send Pitch"
               >
-                <Send className="w-4 h-4" />
+                <IconSend size={15} />
               </button>
             </div>
           </div>
@@ -1024,33 +1018,33 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
 
         {/* Right (40%): Live Student Venture Viability & Impact Radar */}
         <section className="lg:col-span-5 flex flex-col gap-4">
-          <div className="glass-panel rounded-3xl p-5 md:p-6 flex flex-col gap-4 shadow-sm">
+          <div className="glass-strong rounded-3xl p-5 md:p-6 flex flex-col gap-4 shadow-sm">
             
             {/* Header: Viability Radar */}
-            <div className="flex items-center justify-between pb-1 border-b border-white/60">
+            <div className="flex items-center justify-between pb-2 border-b border-stone-200/60">
               <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-indigo-700" />
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                <IconCompass size={16} className="text-amber-800" />
+                <span className="text-xs font-bold uppercase tracking-wider text-stone-800 font-mono-num">
                   Venture Viability Radar
                 </span>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
-                {businessMetrics.verdict_badge || 'Live Analysis'}
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                {businessMetrics.verdict_badge || 'Live Assessment'}
               </span>
             </div>
 
             {/* Shark's Formal Actionable Guidance & Reality Check Card */}
-            <div className="glass-panel bg-amber-50/70 border-amber-300/80 rounded-2xl p-4 flex flex-col gap-2 shadow-xs">
+            <div className="p-4 rounded-2xl glass-inset border border-stone-200/80 flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-                  <Zap className="w-4 h-4 text-amber-700" />
-                  Shark Formal Guidance & Verdict
+                <span className="text-[10px] font-mono-num font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                  <IconSeal size={13} className="text-amber-800" />
+                  Mentor Formal Guidance
                 </span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                <span className="px-2 py-0.5 rounded-md text-[9px] font-bold bg-stone-100 text-stone-700 border border-stone-200">
                   {businessMetrics.tone_category || 'Formal Mentorship'}
                 </span>
               </div>
-              <p className="text-xs text-slate-800 leading-relaxed font-medium italic">
+              <p className="font-display italic text-sm text-stone-900 leading-relaxed">
                 "{businessMetrics.key_actionable_guidance || 'Present your project to receive formal guidance, feasibility reality checks, or constructive scolding.'}"
               </p>
             </div>
@@ -1058,68 +1052,72 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
             {/* The 4 Real-World Pillars Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* 1. Societal Need */}
-              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between gap-1 mb-1">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      🌍 Societal Need
+                  <div className="flex items-center justify-between gap-1 mb-1.5">
+                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
+                      <IconCompass size={12} className="text-amber-800" />
+                      Societal Need
                     </span>
-                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-200">
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200">
                       {businessMetrics.societal_need || 'Evaluating'}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
                     {businessMetrics.need_summary || 'Does society or any real demographic genuinely need this solution?'}
                   </p>
                 </div>
               </div>
 
               {/* 2. Technical Feasibility */}
-              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between gap-1 mb-1">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      ⚙️ Feasibility
+                  <div className="flex items-center justify-between gap-1 mb-1.5">
+                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
+                      <IconGear size={12} className="text-emerald-800" />
+                      Feasibility
                     </span>
-                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
                       {businessMetrics.feasibility || 'Evaluating'}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
                     {businessMetrics.feasibility_summary || 'Can a student team engineer, deploy, and maintain this reliably?'}
                   </p>
                 </div>
               </div>
 
               {/* 3. Commercial Viability & Money Making */}
-              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between gap-1 mb-1">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      💰 Money Making
+                  <div className="flex items-center justify-between gap-1 mb-1.5">
+                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
+                      <IconCoins size={12} className="text-amber-800" />
+                      Money Making
                     </span>
-                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-200">
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200">
                       {businessMetrics.commercial_viability || 'Evaluating'}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
                     {businessMetrics.money_making_summary || 'Are unit costs lower than price? How will this venture make profit?'}
                   </p>
                 </div>
               </div>
 
               {/* 4. Scalability */}
-              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between gap-1 mb-1">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      📈 Scalability
+                  <div className="flex items-center justify-between gap-1 mb-1.5">
+                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
+                      <IconAscend size={12} className="text-purple-800" />
+                      Scalability
                     </span>
-                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-200">
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">
                       {businessMetrics.scalability || 'Evaluating'}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
                     {businessMetrics.scalability_summary || 'How does this grow beyond your campus into wider regional markets?'}
                   </p>
                 </div>
@@ -1127,12 +1125,12 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
             </div>
 
             {/* Measurable Societal Impact & Benefits */}
-            <div className="glass-panel rounded-2xl p-4 bg-emerald-50/50 border-emerald-200/80">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900 mb-1">
-                <Award className="w-3.5 h-3.5 text-emerald-700" />
+            <div className="glass rounded-2xl p-4 bg-emerald-50/50 border border-emerald-200/80">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-950 mb-1">
+                <IconSeal size={14} className="text-emerald-800" />
                 <span>Measurable Societal & Human Impact</span>
               </div>
-              <p className="text-xs text-emerald-950/90 leading-relaxed font-medium">
+              <p className="text-xs text-stone-700 leading-relaxed font-normal">
                 {businessMetrics.societal_impact || 'Evaluating positive change, productivity enhancement, and human benefits...'}
               </p>
             </div>
@@ -1141,17 +1139,17 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
             <div className="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
               <button
                 onClick={handleVerdict}
-                className="w-full flex-1 py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full flex-1 py-3 px-4 rounded-xl bg-[#1C1917] hover:bg-stone-800 text-stone-50 font-semibold text-xs tracking-wide shadow-xs transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
               >
-                <Gavel className="w-3.5 h-3.5 text-amber-300" />
+                <IconSeal size={14} className="text-amber-400" />
                 <span>Request Final Formal Viability Ruling</span>
               </button>
               <button
                 onClick={handleReset}
-                className="py-2.5 px-3.5 rounded-xl glass-btn text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 cursor-pointer"
+                className="py-3 px-3.5 rounded-xl glass-btn text-xs font-semibold text-stone-600 hover:text-stone-900 flex items-center justify-center gap-1.5 cursor-pointer"
                 title="Reset Floor for Fresh Pitch"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
+                <IconRotate size={14} />
                 <span>Reset</span>
               </button>
             </div>
