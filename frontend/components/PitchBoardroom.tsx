@@ -47,14 +47,28 @@ export interface Dragon {
 }
 
 export interface BusinessMetrics {
-  ask: string
-  equity: string
-  valuation: string
-  revenue: string
-  gross_margin: string
-  arr: string
-  cac: string
-  repeat_rate: string
+  // Real-world venture viability dimensions
+  societal_need?: string
+  need_summary?: string
+  feasibility?: string
+  feasibility_summary?: string
+  commercial_viability?: string
+  money_making_summary?: string
+  scalability?: string
+  scalability_summary?: string
+  societal_impact?: string
+  key_actionable_guidance?: string
+  verdict_badge?: string
+  tone_category?: string
+  // Legacy / optional numbers
+  ask?: string
+  equity?: string
+  valuation?: string
+  revenue?: string
+  gross_margin?: string
+  arr?: string
+  cac?: string
+  repeat_rate?: string
   implied_multiple?: string
   multiple_verdict?: string
   future_valuation_advice?: string
@@ -67,7 +81,7 @@ export interface ChatMessage {
   dragonId?: string
   content: string
   timestamp: string
-  action?: 'speech' | 'out' | 'offer' | 'crosstalk' | 'roast' | 'scold' | 'praise' | 'motivate' | 'suggestion' | 'valuation_guidance' | 'interruption'
+  action?: 'speech' | 'out' | 'offer' | 'crosstalk' | 'roast' | 'scold' | 'praise' | 'motivate' | 'suggestion' | 'valuation_guidance' | 'interruption' | 'guidance'
   tone_badge?: string
   is_interruption?: boolean
   interrupted_speaker?: string
@@ -108,29 +122,35 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
       role: 'moderator',
       speaker: 'Studio Floor',
       content:
-        'Step onto the floor, Student Founder. The 6 Dragons are seated. Present your venture and state your funding ask, or the Dragons will ask for them directly.',
+        'Step onto the floor, Student Founder. The Sharks are seated. Present your project or venture idea. Exactly one Shark will evaluate your pitch live, focusing on Societal Need, Real Benefits, Technical Feasibility, Commercial Viability, Money-Making Model, and Scalability.',
       timestamp: 'Just now'
     }
   ])
 
-  // Business Metrics State (Zero pre-written numbers - comes from pitch or dragons ask)
+  // Business Metrics State (Real-world venture viability & student guidance)
   const [businessMetrics, setBusinessMetrics] = useState<BusinessMetrics>({
+    societal_need: 'Awaiting Student Pitch',
+    need_summary: 'State the real problem in society and who suffers without your solution.',
+    feasibility: 'Awaiting Student Pitch',
+    feasibility_summary: 'Explain your technical architecture and student execution feasibility.',
+    commercial_viability: 'Awaiting Student Pitch',
+    money_making_summary: 'Explain your unit economics, pricing model, and how you achieve profit.',
+    scalability: 'Awaiting Student Pitch',
+    scalability_summary: 'Explain how this venture expands beyond your campus or hackathon demo.',
+    societal_impact: 'Measurable benefit and positive change created for people or industry.',
+    key_actionable_guidance: 'Present your venture. Exactly one Shark will evaluate your pitch live with formal guidance or scolding.',
+    verdict_badge: 'Awaiting Pitch',
     ask: initialMetrics?.ask || 'Not stated yet',
     equity: initialMetrics?.equity || 'Not stated yet',
-    valuation: initialMetrics?.valuation || 'Awaiting founder pitch',
+    valuation: initialMetrics?.valuation || 'Student Project Stage',
     revenue: 'Not stated yet',
     arr: 'Not stated yet',
-    gross_margin: 'Not stated yet',
-    cac: 'Not stated yet',
-    repeat_rate: 'Not stated yet',
-    implied_multiple: 'Awaiting ask & numbers',
-    multiple_verdict: 'Awaiting pitch details',
-    future_valuation_advice: 'State your funding ask, equity, and sales in your pitch or Dragons will ask you directly.'
+    gross_margin: 'Not stated yet'
   })
 
   // Market Benchmark
   const [marketBenchmark, setMarketBenchmark] = useState<string>(
-    'Early-stage student ventures need customer validation and evidence of traction before setting a valuation.'
+    'Early-stage student ventures must prove societal need, customer willingness to pay, and operational feasibility.'
   )
 
   const [offers, setOffers] = useState<DealOffer[]>([])
@@ -507,7 +527,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
       wsRef.current.send(
         JSON.stringify({
           type: 'call_for_decisions',
-          text: 'Dragons, give me your final decision. Are you in or are you out?',
+          text: 'Sharks, please deliver your final formal ruling on our venture viability, feasibility, and next steps.',
           metrics: businessMetrics
         })
       )
@@ -523,7 +543,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
         id: 'reset',
         role: 'moderator',
         speaker: 'Studio Floor',
-        content: 'The floor has been reset. State your business, revenue, and your ask.',
+        content: 'The floor has been reset. A fresh student founder steps into the den. Present your project or venture idea.',
         timestamp: 'Just now'
       }
     ])
@@ -898,12 +918,12 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
           <div className="px-3.5 py-2 border-t border-white/60 bg-white/30 flex items-center gap-1.5 overflow-x-auto text-xs scrollbar-none">
             <span className="text-[10px] font-bold text-slate-400 uppercase shrink-0">Quick Reply:</span>
             {[
-              { label: '🎓 Student Pilot', text: 'We tested this with 120 college students on our campus and 40% use it daily.' },
-              { label: '🔍 Customer Validation', text: 'We conducted 35 customer interviews. 18 students paid ₹199 each via UPI for our beta.' },
-              { label: '💡 Project to Startup', text: 'How do you recommend we transition this from a college capstone project into a real commercial venture?' },
-              { label: '📊 Honest Valuation', text: 'Dragons, help me understand what an honest pre-seed valuation is for our current stage.' },
-              { label: '🛡️ Tech Architecture', text: 'The core algorithms and hardware prototype were built entirely by our student team in the campus lab.' },
-              { label: '💰 Campus Seed Ask', text: 'We are asking for ₹15 Lakhs for 7% equity to fund server costs and our 3-campus pilot.' }
+              { label: '🌍 Societal Need', text: 'Here is the genuine societal problem we are solving and the exact user pain point.' },
+              { label: '💰 Money Making & Costs', text: 'Here is how our venture generates real revenue, our unit costs, pricing, and how we achieve profitability.' },
+              { label: '⚙️ Technical Feasibility', text: 'Here is our technical prototype architecture and how our student team builds and maintains it.' },
+              { label: '📈 Scalability Plan', text: 'Here is how we scale from our campus pilot to 15 universities and regional markets.' },
+              { label: '🌱 Measurable Impact', text: 'Here is the tangible benefit and measurable human or business impact our solution delivers.' },
+              { label: '📋 Request Honest Scolding', text: 'Sharks, please give us a direct, formal reality check on our biggest feasibility blindspot.' }
             ].map((chip, idx) => (
               <button
                 key={idx}
@@ -918,7 +938,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
           {/* Target Dragon Selector for Replying */}
           <div className="px-3.5 pt-2 pb-1.5 bg-white/40 border-t border-white/60 flex items-center justify-between text-xs">
             <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5 max-w-full">
-              <span className="text-[10px] font-bold text-slate-500 uppercase shrink-0">Replying to:</span>
+              <span className="text-[10px] font-bold text-slate-500 uppercase shrink-0">Direct to Shark:</span>
               <button
                 onClick={() => setReplyTargetDragon(null)}
                 className={`px-2 py-0.5 rounded-lg text-[11px] font-bold transition-all shrink-0 cursor-pointer ${
@@ -927,7 +947,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
                     : 'glass-panel text-slate-600 hover:text-slate-900'
                 }`}
               >
-                🌐 All Dragons (Panel)
+                🌐 Auto-Select Domain Shark
               </button>
               {ALL_DRAGON_PROFILES.map((dp) => (
                 <button
@@ -984,8 +1004,8 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
                   isRecording
                     ? `Recording voice (${recordingSeconds}s)... Speak clearly.`
                     : replyTargetDragon
-                    ? `Replying directly to ${replyTargetDragon} (e.g. explain customer validation or pricing)...`
-                    : 'Pitch your venture (e.g. campus pilot, ₹20L ask for 5% equity, or pitch your idea and Dragons will ask)...'
+                    ? `Replying directly to ${replyTargetDragon} (e.g. explain feasibility, societal need, or costs)...`
+                    : 'Present your project (e.g. societal need, technical feasibility, money-making model, or ask for guidance)...'
                 }
                 className="flex-1 glass-panel rounded-xl px-4 py-2.5 text-xs md:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400/80 transition-all"
               />
@@ -1002,158 +1022,139 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
           </div>
         </section>
 
-        {/* Right (40%): Live Business Metrics & Valuation Math */}
+        {/* Right (40%): Live Student Venture Viability & Impact Radar */}
         <section className="lg:col-span-5 flex flex-col gap-4">
           <div className="glass-panel rounded-3xl p-5 md:p-6 flex flex-col gap-4 shadow-sm">
-            {/* Valuation & ARR Multiple Card */}
-            {businessMetrics.valuation &&
-            !businessMetrics.valuation.toLowerCase().includes('awaiting') &&
-            !businessMetrics.valuation.toLowerCase().includes('not stated') ? (
-              <div className="glass-panel bg-emerald-50/70 border-emerald-200/80 rounded-2xl p-4 flex flex-col gap-2 shadow-xs">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
-                    Pre-Money Valuation
-                  </span>
-                  <span className="text-xs font-medium text-emerald-700">
-                    Ask: {businessMetrics.ask}
-                  </span>
-                </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-extrabold text-emerald-900 tracking-tight font-mono">
-                    {businessMetrics.valuation}
-                  </span>
-                  <span className="text-xs text-emerald-700">
-                    ({businessMetrics.equity} Equity Dilution)
-                  </span>
-                </div>
-
-                {/* Dynamic Multiple & Market Verdict */}
-                {businessMetrics.implied_multiple && (
-                  <div className="flex items-center justify-between pt-2 border-t border-emerald-200/60 text-xs">
-                    <div className="flex items-center gap-1.5 text-emerald-900">
-                      <TrendingUp className="w-3.5 h-3.5 text-emerald-700" />
-                      <span>Multiple: <strong>{businessMetrics.implied_multiple}</strong></span>
-                    </div>
-                    {businessMetrics.multiple_verdict && (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                        {businessMetrics.multiple_verdict}
-                      </span>
-                    )}
-                  </div>
-                )}
+            
+            {/* Header: Viability Radar */}
+            <div className="flex items-center justify-between pb-1 border-b border-white/60">
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-indigo-700" />
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                  Venture Viability Radar
+                </span>
               </div>
-            ) : (
-              <div className="glass-panel bg-amber-50/50 border-amber-200/70 rounded-2xl p-4 flex flex-col gap-2.5 shadow-xs">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-amber-900">
-                      Financial Valuation
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200">
+                {businessMetrics.verdict_badge || 'Live Analysis'}
+              </span>
+            </div>
+
+            {/* Shark's Formal Actionable Guidance & Reality Check Card */}
+            <div className="glass-panel bg-amber-50/70 border-amber-300/80 rounded-2xl p-4 flex flex-col gap-2 shadow-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                  <Zap className="w-4 h-4 text-amber-700" />
+                  Shark Formal Guidance & Verdict
+                </span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                  {businessMetrics.tone_category || 'Formal Mentorship'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-800 leading-relaxed font-medium italic">
+                "{businessMetrics.key_actionable_guidance || 'Present your project to receive formal guidance, feasibility reality checks, or constructive scolding.'}"
+              </p>
+            </div>
+
+            {/* The 4 Real-World Pillars Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* 1. Societal Need */}
+              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                      🌍 Societal Need
+                    </span>
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-200">
+                      {businessMetrics.societal_need || 'Evaluating'}
                     </span>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
-                    Awaiting Pitch Numbers
-                  </span>
-                </div>
-                <p className="text-xs text-slate-700 leading-relaxed">
-                  No pre-written numbers or money are assumed. State your funding ask (e.g. ₹20L for 5%) and revenue in your pitch, or the Dragons will proactively ask you directly.
-                </p>
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-amber-200/60 text-xs">
-                  <div className="glass-panel rounded-xl p-2 bg-white/60">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Ask Amount</span>
-                    <span className="text-xs font-bold text-slate-800 block mt-0.5">{businessMetrics.ask}</span>
-                  </div>
-                  <div className="glass-panel rounded-xl p-2 bg-white/60">
-                    <span className="text-[10px] font-semibold text-slate-400 block uppercase">Valuation</span>
-                    <span className="text-xs font-bold text-slate-800 block mt-0.5">{businessMetrics.valuation}</span>
-                  </div>
+                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                    {businessMetrics.need_summary || 'Does society or any real demographic genuinely need this solution?'}
+                  </p>
                 </div>
               </div>
-            )}
 
-            {/* 4 Essential Numbers Grid */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="glass-panel rounded-2xl p-3.5">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
-                  Monthly Revenue
-                </span>
-                <span className="text-base font-bold text-slate-900 mt-1 block">
-                  {businessMetrics.revenue}
-                </span>
+              {/* 2. Technical Feasibility */}
+              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                      ⚙️ Feasibility
+                    </span>
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                      {businessMetrics.feasibility || 'Evaluating'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                    {businessMetrics.feasibility_summary || 'Can a student team engineer, deploy, and maintain this reliably?'}
+                  </p>
+                </div>
               </div>
 
-              <div className="glass-panel rounded-2xl p-3.5">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
-                  Annualized ARR
-                </span>
-                <span className="text-base font-bold text-emerald-800 mt-1 block">
-                  {businessMetrics.arr}
-                </span>
+              {/* 3. Commercial Viability & Money Making */}
+              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                      💰 Money Making
+                    </span>
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-200">
+                      {businessMetrics.commercial_viability || 'Evaluating'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                    {businessMetrics.money_making_summary || 'Are unit costs lower than price? How will this venture make profit?'}
+                  </p>
+                </div>
               </div>
 
-              <div className="glass-panel rounded-2xl p-3.5">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
-                  Gross Margin
-                </span>
-                <span className="text-base font-bold text-slate-900 mt-1 block">
-                  {businessMetrics.gross_margin}
-                </span>
-              </div>
-
-              <div className="glass-panel rounded-2xl p-3.5">
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
-                  CAC / Repeat Rate
-                </span>
-                <span className="text-base font-bold text-slate-900 mt-1 block">
-                  {businessMetrics.cac} · {businessMetrics.repeat_rate}
-                </span>
+              {/* 4. Scalability */}
+              <div className="glass-panel rounded-2xl p-3.5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                      📈 Scalability
+                    </span>
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-purple-100 text-purple-800 border border-purple-200">
+                      {businessMetrics.scalability || 'Evaluating'}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-700 leading-snug line-clamp-3">
+                    {businessMetrics.scalability_summary || 'How does this grow beyond your campus into wider regional markets?'}
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Strategic Future Valuation Advice */}
-            {businessMetrics.future_valuation_advice && (
-              <div className="glass-panel rounded-2xl p-4 bg-indigo-50/40 border-indigo-200/60">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-900 mb-1">
-                  <Award className="w-3.5 h-3.5 text-indigo-600" />
-                  <span>Strategic Valuation Roadmap</span>
-                </div>
-                <p className="text-xs text-indigo-950/80 leading-relaxed italic">
-                  "{businessMetrics.future_valuation_advice}"
-                </p>
+            {/* Measurable Societal Impact & Benefits */}
+            <div className="glass-panel rounded-2xl p-4 bg-emerald-50/50 border-emerald-200/80">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900 mb-1">
+                <Award className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Measurable Societal & Human Impact</span>
               </div>
-            )}
+              <p className="text-xs text-emerald-950/90 leading-relaxed font-medium">
+                {businessMetrics.societal_impact || 'Evaluating positive change, productivity enhancement, and human benefits...'}
+              </p>
+            </div>
 
-            {/* Structured Offers Area */}
-            {offers.length > 0 && (
-              <div className="pt-2 flex flex-col gap-2">
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Extended Offers ({offers.length})
-                </span>
-                <div className="space-y-2">
-                  {offers.map((off, i) => (
-                    <div
-                      key={i}
-                      className="glass-panel bg-emerald-50/80 border-emerald-300 rounded-2xl p-3.5 flex items-center justify-between"
-                    >
-                      <div>
-                        <span className="font-bold text-xs text-emerald-950 block">
-                          {off.dragon_name}
-                        </span>
-                        <span className="text-xs text-emerald-800 line-clamp-1">
-                          {off.terms}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => setDealClosed(off)}
-                        className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-xs transition-colors shrink-0"
-                      >
-                        Accept Deal
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Action Bar: Request Formal Viability Ruling & Reset */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
+              <button
+                onClick={handleVerdict}
+                className="w-full flex-1 py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-xs transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Gavel className="w-3.5 h-3.5 text-amber-300" />
+                <span>Request Final Formal Viability Ruling</span>
+              </button>
+              <button
+                onClick={handleReset}
+                className="py-2.5 px-3.5 rounded-xl glass-btn text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 cursor-pointer"
+                title="Reset Floor for Fresh Pitch"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset</span>
+              </button>
+            </div>
           </div>
         </section>
       </main>

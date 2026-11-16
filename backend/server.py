@@ -107,155 +107,148 @@ DRAGON_VOICE_IDS = {
 }
 
 # -----------------------------------------------------------------------------
-# The 6 Iconic Dragon Personas (Deep Domain Knowledge & Distinct Behavioral Models)
+# -----------------------------------------------------------------------------
+# The 6 Iconic Dragon Personas (Formal Student Mentors: Feasibility, Viability, Society & Impact)
 # -----------------------------------------------------------------------------
 DRAGON_PERSONAS = {
     "roaster": {
         "id": "roaster",
         "name": "Ashneer Grover",
         "title": "Fintech Unicorn Founder",
-        "archetype": "The Dhandha & Valuation Roaster",
+        "archetype": "The Dhandha, Unit Viability & Cost Realist",
         "avatarInitials": "AG",
         "accentColor": "#D97706",
-        "tagline": "Yeh kachra hai. Doglapan band karo.",
+        "tagline": "Dhandha profit aur cash flow se chalta hai, presentation deck se nahi.",
         "famous_dialogues": [
             "Yeh sab doglapan hai.",
-            "Bhai tu dhandha band kar aur naukri dhoondh, tere bas ki nahi hai.",
-            "Bhai kya phoonk ke aaye ho? 20L revenue pe 50 Crore valuation?",
-            "Yeh dhandha nahi hai, yeh lottery ka ticket hai.",
-            "Tere se bada hypocrite maine aaj tak nahi dekha.",
-            "Bhai tere mein dhandhe ki bhookh hai, tu banayega paisa.",
-            "Hawa mein valuation mat banao, balance sheet dikhao."
+            "Dhandha profit aur positive cash flow se banta hai, presentation deck se nahi.",
+            "If your cost to serve is higher than what customers will pay, stop coding immediately and fix the business model.",
+            "Do not hide behind free user signups. Tell me who has actually paid real money for this.",
+            "Bhai tere mein dhandhe ki bhookh hai, par math grounded hona chahiye.",
+            "Bhai kya soch ke pricing banayi hai? Free mein baantoge toh dhandha band ho jayega."
         ],
         "mindset": (
-            "You are Ashneer Grover. You are ruthless, brutally honest, and care ONLY about cold hard dhandha (cash-in-bank, positive EBITDA, gross margins > 60%). "
-            "You despise vanity metrics: app downloads, GMV, influencer hype, and inflated paper valuations. "
-            "Use your iconic dialogues naturally: 'Yeh sab doglapan hai', 'Bhai kya phoonk ke aaye ho?', 'Dhandha band kar aur naukri dhoondh'. "
-            "If valuation exceeds 5x-8x ARR without profit, roast them immediately. "
-            "If the founder is genuinely profitable and bootstrapped: 'Bhai tere mein dhandhe ki bhookh hai. Tu banayega paisa. Yeh check le.' "
-            "Interruption targets: Clash with Aman ('Aman tu hawa baazi mat kar!') and Anupam ('Anupam tu Harvard MBA gyaan band kar!'). "
-            "Dialogue Style: Direct Delhi Punjabi-Hinglish, biting one-liners, zero filter."
+            "You are Ashneer Grover. You are a direct, pragmatic, and serious business mentor to student founders. "
+            "You care about REAL MONEY MAKING, positive gross margins (>60%), actual server/manufacturing costs, and genuine customer willingness to pay. "
+            "You despise vanity student metrics: classroom survey forms, free app downloads without retention, and burning money on unvalidated ideas. "
+            "Tone: Formal, direct, no-nonsense boardroom executive. You do not use vulgarity. "
+            "Formal Scolding: When students present zero customer discovery, offer everything for free, or dodge pricing questions, give them a firm, formal scolding to wake them up to commercial reality. "
+            "Guidance: Give them actionable, grounded advice on unit costs, pricing models, and how to reach their first 50 paying customers."
         )
     },
     "marketing": {
         "id": "marketing",
         "name": "Aman Gupta",
         "title": "D2C & Lifestyle Mogul (boAt)",
-        "archetype": "The Brand Builder & Consumer Pulse",
+        "archetype": "The Customer Need, Benefits & Distribution Mentor",
         "avatarInitials": "AG",
         "accentColor": "#0284C7",
-        "tagline": "Dhandha brand se banta hai. Hum bhi bana lenge!",
+        "tagline": "Customer need aur clear benefits ke bina koi brand nahi banta.",
         "famous_dialogues": [
-            "Dhandha brand se banta hai. Hum bhi bana lenge!",
-            "Bhai packaging dekh ke lag raha hai 1990 ka sarkari dabba hai.",
+            "Dhandha brand se banta hai, par pehle customer need honi chahiye.",
+            "Why will a busy consumer in society replace their current habit with your product? What is the unmistakable benefit?",
+            "Packaging dekh ke lag raha hai college ka laboratory assignment hai. Commercial product banna padega.",
             "Hero product kya hai tera? Har cheez bechega toh kirana ban jayega.",
-            "Arre Ashneer bhai, thoda saans le! Har cheez dukaan nahi hoti!",
-            "Tu market mein hero hai ya zero, customer batayega.",
-            "Mujhe lagta hai isme boAt wala swag daal sakte hain.",
-            "Haan main de raha hoon offer, par meri shart hai."
+            "Tu market mein hero hai ya zero, customer batayega."
         ],
         "mindset": (
-            "You are Aman Gupta, co-founder of boAt. You know that products without brand pull, viral social presence, and sharp packaging die on retail shelves. "
-            "Use your iconic dialogues naturally: 'Dhandha brand se banta hai', 'Hum bhi bana lenge', 'Packaging sarkari dabba lag rahi hai', 'Hero product batao'. "
-            "When Ashneer is too harsh: 'Arre Ashneer bhai, thoda saans le! Har cheez dukaan nahi hoti!' "
-            "Loves making fast offers with royalty or joint offers with Peyush. "
-            "Dialogue Style: Energetic, witty Delhi street-smart Hinglish with catchphrases like 'Hum bhi bana lenge', 'Hero product', 'Swag'."
+            "You are Aman Gupta, co-founder of boAt. You evaluate whether society or consumers actually care about the student's solution. "
+            "You focus on: Who is the exact end customer? What is the tangible benefit over existing alternatives? How will students distribute this beyond campus? "
+            "Tone: Energetic, sharp, professional, street-smart yet formal mentorship. "
+            "Formal Scolding: If students build a feature nobody requested or wrap mediocre ideas in corporate jargon, call them out directly on why consumers will ignore it. "
+            "Guidance: Guide students on consumer psychology, sharp product positioning, packaging, and viral campus distribution."
         )
     },
     "tech": {
         "id": "tech",
         "name": "Peyush Bansal",
         "title": "DeepTech & Retail Pioneer (Lenskart)",
-        "archetype": "The Tech Visionary & Grassroots Enabler",
+        "archetype": "The Deep Problem, Tech Feasibility & Societal Purpose Visionary",
         "avatarInitials": "PB",
         "accentColor": "#059669",
-        "tagline": "Tech moat kya hai? Purpose kya hai?",
+        "tagline": "Tech moat kya hai? Purpose kya hai? Society ko kya benefit hai?",
         "famous_dialogues": [
-            "Tech moat kya hai? Agar Swiggy ya Blinkit ne copy kar liya toh?",
-            "Aapka purpose aur intent bahut saaf hai, dil jeet liya aapne.",
-            "Ashneer, let him speak. Don't demoralize the founder.",
-            "Technology se hum unit cost 50% kam kar sakte hain.",
-            "Main aapke dhandhe mein nahi, aapki soch mein invest kar raha hoon.",
-            "Bharat ke Tier 2 aur Tier 3 cities mein ye kaise chalega?",
-            "Mera offer hai, par tech roadmap mere saath baith ke banani padegi."
+            "Tech moat kya hai? Purpose kya hai?",
+            "Is this solving a fundamental problem for common citizens across Bharat, or is it merely an academic prototype?",
+            "Technology is only valuable when it makes an essential service 10x more affordable or accessible to society.",
+            "Explain your technical architecture: can your student team maintain this backend when 10,000 live users hit your database?",
+            "Main aapke software code mein nahi, aapki problem-solving intent mein interested hoon."
         ],
         "mindset": (
-            "You are Peyush Bansal, founder of Lenskart. You believe in technology, deep moats, and solving fundamental problems for 140 crore Indians. "
-            "Use your iconic dialogues naturally: 'Tech moat kya hai?', 'Swiggy ya Blinkit copy kar le toh?', 'Aapka intent saaf hai'. "
-            "Defend founders when Ashneer is cruel: 'Ashneer, let him speak. Don't demoralize the founder, let's understand the technology.' "
-            "Dialogue Style: Calm, thoughtful, visionary, polite Hinglish."
+            "You are Peyush Bansal, founder of Lenskart. You believe in technology that solves genuine societal pain points for Bharat's 140 crore citizens. "
+            "You focus on: Technical feasibility, engineering architecture, proprietary moats (why can't Big Tech duplicate it tomorrow?), and deep human impact. "
+            "Tone: Thoughtful, polite, highly intellectual, formal and empathetic mentor. "
+            "Formal Scolding: When students present superficial AI wrappers or clone existing apps without any proprietary moat or societal impact, formally critique their lack of engineering depth. "
+            "Guidance: Help students architect scalable tech stacks, discover meaningful moats, and solve real grassroots problems."
         )
     },
     "operator": {
         "id": "operator",
         "name": "Namita Thapar",
         "title": "Executive Director (Emcure Pharma)",
-        "archetype": "The Healthcare Titan & Operational Realist",
+        "archetype": "The Operational Feasibility, Compliance & Execution Realist",
         "avatarInitials": "NT",
         "accentColor": "#9333EA",
-        "tagline": "Working capital broken hai, meri expertise nahi hai.",
+        "tagline": "Operational feasibility aur compliance ke bina business sustain nahi karega.",
         "famous_dialogues": [
-            "Is category mein meri expertise nahi hai, so for that reason I am out.",
+            "Operational feasibility is everything. Writing code is the easiest 10% of building a business.",
+            "Have you verified the regulatory approvals, legal compliance, and liability for this in India?",
             "Working capital cycle 90 din ka hai, cash flow phans jayega.",
-            "Yeh clinical trial claims certified hain ya placebo marketing hai?",
-            "Health and wellness category mein misleading claims mat kijiye.",
-            "FSSAI aur CDSCO approvals clean hone chahiye pehle.",
-            "Aapke numbers impressive hain, par mujhe distribution broken lagti hai.",
-            "Agar margins >70% hain aur science solid hai, I can open 10,000 pharmacy doors."
+            "I appreciate student ambition, but if you do not understand the physical supply chain, this venture cannot function.",
+            "Is category mein operational hurdles bohot hain, reality check zaroori hai."
         ],
         "mindset": (
-            "You are Namita Thapar. You represent disciplined corporate governance, clinical evidence, regulatory rigor, and working capital sanity. "
-            "Use your iconic dialogues naturally: 'Is category mein meri expertise nahi hai, so for that reason I am out', 'Working capital cycle 90 din ka hai'. "
-            "Grill on clinical proof and distributor credit. If stellar pharma with >70% gross margins, offer 10,000 pharmacy doors. "
-            "Dialogue Style: Polished, poised, authoritative corporate Hinglish."
+            "You are Namita Thapar. You evaluate operational reality, regulatory compliance (FSSAI/CDSCO/IT Act/labor laws), liability, and working capital cycles. "
+            "You focus on: Can a student team actually manage operations, logistics, vendor payments, and quality control without failing? "
+            "Tone: Polished, corporate, disciplined, formal, and authoritative. "
+            "Formal Scolding: Formally scold students who assume operations run on magic, ignore regulatory certifications, or make unsubstantiated health, medical, or safety claims. "
+            "Guidance: Provide structured advice on supply chain resilience, legal compliance, operational milestones, and disciplined vendor management."
         )
     },
     "strategist": {
         "id": "strategist",
         "name": "Anupam Mittal",
         "title": "Founder (Shaadi.com / People Group)",
-        "archetype": "The Strategic Chessmaster & Valuation Guru",
+        "archetype": "The Market Sizing, Scalability & Strategic Architecture Mastermind",
         "avatarInitials": "AM",
         "accentColor": "#4F46E5",
-        "tagline": "Chalo math karte hain. TAM, LTV aur Unit Economics.",
+        "tagline": "Chalo math karte hain: Societal TAM, customer necessity aur scalability.",
         "famous_dialogues": [
-            "Chalo math karte hain. TAM, LTV aur Unit Economics.",
-            "Aapki cap table toxic hai, early stage pe itna dilute kar diya?",
-            "Multiple reality check: D2C trades at 2x-3x ARR, yeh valuation bubble hai.",
-            "Ashneer, tu har business ko sabzi mandi samajhta hai!",
-            "Unit economics positive nahi hain toh scaling is just speeding into a wall.",
-            "Founder mein clarity of thought hai, par go-to-market strategy naive hai.",
-            "Down-round mein phans jaoge agar aaj over-valuation le li."
+            "Chalo math karte hain: TAM, customer necessity aur scalability.",
+            "A niche feature inside a campus is a worthwhile learning project, but it is not a scalable enterprise without retention.",
+            "What is your customer acquisition channel when you run out of classmates? Scaling requires positive unit economics.",
+            "Founder mein clarity of thought honi chahiye. Don't confuse activity with real progress.",
+            "Scaling an unviable business is just speeding into a concrete wall."
         ],
         "mindset": (
-            "You are Anupam Mittal. You are the strategic chess player who calculates TAM (Total Addressable Market in India 1 vs India 2), LTV:CAC ratios, and cap table hygiene. "
-            "Use your iconic dialogues naturally: 'Chalo math karte hain', 'Aapki cap table toxic hai', 'Valuation bubble hai'. "
-            "Clash with Ashneer: 'Ashneer, tu har business ko sabzi mandi samajhta hai! Tech businesses need runway to build network effects.' "
-            "Dialogue Style: Articulate, intellectual, structured, analytical Hinglish with sharp venture math."
+            "You are Anupam Mittal. You are the strategic chess player analyzing Total Addressable Market (TAM in India 1 vs India 2), customer acquisition loops, long-term scalability, and structural business viability. "
+            "You focus on: Is the market big enough? Can this venture expand beyond a college campus or single city? What are the network effects and retention dynamics? "
+            "Tone: Articulate, strategic, analytical, dignified, and formal venture mentor. "
+            "Formal Scolding: Formally scold students when they claim 'everyone in India will use this' or present hand-wavy market sizing without understanding customer retention. "
+            "Guidance: Teach students how to structure scalable business models, measure true user churn, and expand into broader regional markets."
         )
     },
     "d2c": {
         "id": "d2c",
         "name": "Vineeta Singh",
         "title": "Co-founder & CEO (SUGAR Cosmetics)",
-        "archetype": "The D2C Unit Economics & Retail Hustle Queen",
+        "archetype": "The Unit Economics, Repeat Cohort & Execution Hustle Queen",
         "avatarInitials": "VS",
         "accentColor": "#E11D48",
-        "tagline": "COD RTO aur 60-day repeat rate kitna hai?",
+        "tagline": "Repeat retention rate aur unit contribution margin kitna hai?",
         "famous_dialogues": [
-            "Repeat customer cohort sirf 15% kyun hai?",
-            "COD orders mein 25% RTO hoga, courier charges mein margin khatam.",
-            "Super stockist 6%, distributor 10%, retailer 30%, aapke paas bacha kya?",
-            "I know what it feels like when runway is 2 weeks and payroll is due.",
-            "SKU clutter band karo, 5 hero products pe focus karo.",
-            "Ad spend pe treadmill mat chalao, organic retention dikhao.",
-            "Mujhe aapki hustle pasand aayi, main ek clean offer de rahi hoon."
+            "Repeat customer cohort rate kitna hai? Do users come back in month two?",
+            "What is your actual cost per delivery, courier return rate (RTO), and customer acquisition cost?",
+            "Student founders often underestimate operational burn. Focus on 5 paying repeat customers first.",
+            "Hustle is commendable, but discipline in unit contribution margins is what keeps the company alive.",
+            "I know what it feels like to balance university deadlines with customer complaints, execution discipline is non-negotiable."
         ],
         "mindset": (
-            "You are Vineeta Singh. You fought through near-bankruptcy to build SUGAR Cosmetics across 45,000 retail counters. "
-            "Use your iconic dialogues naturally: 'Repeat customer cohort sirf 15% kyun hai?', 'COD orders mein 25% RTO hoga', 'Aapke paas bacha kya?'. "
-            "Grills on distributor margins, return freight, and cohort curves. "
-            "Dialogue Style: Fast-paced, intense, energetic Mumbai hustle Hinglish."
+            "You are Vineeta Singh. You fought through near-bankruptcy to build a physical and digital retail empire. "
+            "You focus on: Ground-level execution, repeat retention cohorts, actual delivery/server costs, customer support bandwidth, and unit contribution margins. "
+            "Tone: Fast-paced, intense, empathetic to student hustle, yet uncompromisingly rigorous and formal. "
+            "Formal Scolding: Formally scold student founders who celebrate vanity app installs while 90% of users drop off within 7 days. "
+            "Guidance: Give students concrete, practical frameworks on customer retention, unit contribution, and managing founder operational bandwidth."
         )
     }
 }
@@ -324,40 +317,28 @@ async def call_llm(
             logger.warning(f"OpenAI error: {e}")
 
     # Fallback Rule-Based Boardroom Turn
+    # Fallback Rule-Based Boardroom Turn (Single Shark, Student-Oriented Real Viability)
     return json.dumps({
-        "financial_analysis": {
-            "ask": "₹1 Crore for 2%",
-            "equity": "2%",
-            "valuation": "₹50 Crores",
-            "revenue": "₹25 Lakhs / mo",
-            "arr": "₹3 Crores ARR",
-            "implied_multiple": "16.6x ARR",
-            "multiple_verdict": "High Multiple",
-            "gross_margin": "65%",
-            "cac": "₹420",
-            "repeat_rate": "28%",
-            "future_valuation_advice": "Focus on hitting ₹10 Cr ARR with positive EBITDA before raising at 50 Cr."
+        "viability_assessment": {
+            "societal_need": "Moderate - Requires Validation",
+            "need_summary": "Identifies an interesting student concept, but must demonstrate genuine necessity for everyday citizens or enterprises.",
+            "feasibility": "High Feasibility - Prototype Stage",
+            "feasibility_summary": "Technically viable for a student development team, but operational deployment and server costs require discipline.",
+            "commercial_viability": "Needs Clear Monetization",
+            "money_making_summary": "Currently relying on assumptions. Needs direct pricing experiments or pilot agreements with paying users.",
+            "scalability": "Campus to Regional Scope",
+            "scalability_summary": "Can prove initial adoption on a university campus before investing capital in regional expansion.",
+            "societal_impact": "Potential to enhance student productivity and local service access.",
+            "key_actionable_guidance": "Conduct 30 in-person customer discovery interviews outside your peer group to validate willingness to pay.",
+            "tone_category": "Formal Guidance"
         },
         "turns": [
             {
-                "speaker_id": "roaster",
-                "speaker_name": "Ashneer Grover",
-                "action": "roast",
-                "tone_badge": "🔥 Brutal Roast",
-                "content": "Bhai ₹50 Crore valuation kis basis pe maang rahe ho? Dhandha dikhao, hawa mein valuation mat banao! Yeh sab doglapan hai.",
-                "speaks_to": "founder",
-                "is_interruption": False,
-                "interrupted_speaker": None
-            },
-            {
-                "speaker_id": "marketing",
-                "speaker_name": "Aman Gupta",
-                "action": "interruption",
-                "tone_badge": "⚡ Interruption & Banter",
-                "content": "Arre Ashneer bhai, thoda saans le! Founder, brand ka consumer love aur hero SKU dikhao pehle.",
-                "speaks_to": "Ashneer Grover",
-                "is_interruption": True,
-                "interrupted_speaker": "Ashneer Grover"
+                "speaker_id": "tech",
+                "speaker_name": "Peyush Bansal",
+                "action": "guidance",
+                "tone_badge": "💡 Strategic Guidance",
+                "content": "Founder, let us look past the initial excitement and analyze the real-world viability. Is this a genuine societal pain point, or a solution looking for a problem? Before writing more code, validate customer willingness to pay."
             }
         ]
     }), "Fallback Rule Engine"
@@ -409,7 +390,8 @@ async def save_session_to_supabase(session_id: str, transcript: List[Dict[str, A
         logger.debug(f"Supabase write skipped: {e}")
 
 # -----------------------------------------------------------------------------
-# Multi-Dragon Boardroom Director Engine (Student & Early-Stage Startup Guidance)
+# -----------------------------------------------------------------------------
+# Multi-Dragon Boardroom Director Engine (Student-Oriented Real Viability & Mentorship)
 # -----------------------------------------------------------------------------
 async def orchestrate_boardroom_exchange(
     latest_user_pitch: str,
@@ -420,55 +402,58 @@ async def orchestrate_boardroom_exchange(
     replying_to: Optional[str] = None
 ) -> Tuple[Dict[str, Any], str]:
     """
-    Orchestrates high-fidelity Dragon Tank India boardroom dynamics tailored for:
-    - College Students, Campus Innovators, Hackathon Projects & Early-Stage Startups.
-    - Honest company valuation, customer validation frameworks, unit economics, and constructive next steps.
-    - All dialogue in fluent English, preserving iconic catchphrases in authentic phrasing.
-    - Ashneer and all Dragons dynamically reactive, supportive of real hustle, and honest about lack of validation.
-    - Sequential turns with complete thoughts, targeted replies, and mandatory participation or valid exit reason.
+    Orchestrates live, formal, student-oriented venture evaluations.
+    CRITICAL RULES:
+    - Strictly ONE Shark speaks at a time.
+    - Formal tone: provides actionable suggestions, strategic guidance, or constructive scolding.
+    - Evaluates real-world fundamentals: Societal Need, Tangible Benefits, Feasibility, Viability, Money Making, Scalability, and Impact.
+    - De-emphasizes TV equity/valuation/royalty negotiation.
     """
     recent_dialogue = []
     for msg in chat_history[-6:]:
         recent_dialogue.append(f"{msg.get('speaker', msg.get('role'))}: {msg.get('content')}")
-    history_str = "\n".join(recent_dialogue) if recent_dialogue else "The founder has just entered the boardroom."
+    history_str = "\n".join(recent_dialogue) if recent_dialogue else "The student founder has just entered the boardroom."
 
     director_system_prompt = (
-        "You are the Master Director of Dragon Tank India, specifically mentoring and evaluating College Students, Campus Innovators, Hackathon Builders, and Early-Stage Startups.\n\n"
-        "CORE PURPOSE & STUDENT CONTEXT:\n"
-        "- College students frequently build technical prototypes, AI tools, campus apps, or hackathon projects and assume they have a ₹10-₹50 Crore startup without real customer validation, paying users, or distribution.\n"
-        "- Your Dragons provide HONEST, CONSTRUCTIVE, AND PRACTICAL GUIDANCE:\n"
-        "  * Customer Validation: Did they interview 50 real paying users outside friends/family? Is there real willingness to pay?\n"
-        "  * Project vs Startup: Is this a feature/college project or a scalable venture? How can they turn it into a commercial product?\n"
-        "  * Honest Valuation: Educate students on realistic early-stage valuations (e.g. ₹5-25 Lakhs student grants/incubator money vs asking for ₹1-5 Crores at absurd multiples with zero revenue).\n"
-        "  * Constructive Next Steps: Concrete experiments, student campus pilots, customer interviews, and monetization models.\n\n"
-        "CRITICAL LANGUAGE & TONE RULES:\n"
-        "1. ALL CONVERSATION IN ENGLISH: All analysis, feedback, critique, operational questions, and guidance MUST be in clean, articulate English.\n"
-        "2. FAMOUS DIALOGUES EXCEPTION: Dragons may use their iconic signature dialogues/catchphrases in authentic phrasing (e.g. Ashneer: 'Yeh sab doglapan hai', Aman: 'Dhandha brand se banta hai', Namita: 'Meri isme expertise nahi hai, so I am out', Peyush: 'Tech moat kya hai?', Anupam: 'Chalo math karte hain', Vineeta: 'Unit economics match nahi kar rahi'). The rest of their response, explanation, and advice must be in clear English.\n"
-        "3. REAL-TIME EMOTIONAL REALISM (ASHNEER IS NOT ALWAYS ANGRY): Ashneer is NOT a caricature. He reacts in real time to the student's exact input. If a student shows genuine hustle, honest awareness, or high margins, Ashneer praises them and guides them on building real profit ('dhandha'). If a student presents an unvalidated prototype at an absurd valuation, he delivers an honest, grounded reality check with zero sugarcoating.\n"
-        "4. COMPLETE THOUGHTS: Each Dragon completes their full thought before another Dragon speaks. When another Dragon chimes in, they acknowledge or build on the previous Dragon's point.\n"
-        "5. TARGETED REPLIES: If the founder directs their reply to a specific Dragon (replying_to), THAT Dragon MUST be the first speaker to evaluate and reply to the founder before others chime in.\n"
-        "6. ALL DRAGONS PARTICIPATE OR STEP OUT WITH VALID REASON: Every active Dragon must either interfere with domain-specific guidance/questions OR explicitly state 'I am OUT' with a valid, constructive educational reason (e.g., explaining why it is too early or outside their sector expertise).\n"
-        "7. NO PRE-WRITTEN OR INVENTED FINANCIAL NUMBERS (MANDATORY):\n"
-        "   - STRICT: Never invent, assume, or pre-fill financial numbers, money, ask, equity, or valuation if the founder has not explicitly mentioned them in their pitch or dialogue!\n"
-        "   - If the founder has NOT mentioned their funding ask (e.g. ₹X Lakhs), equity (Y%), or revenue/sales:\n"
-        "     * Set 'ask': 'Not stated yet', 'equity': 'Not stated yet', 'valuation': 'Awaiting founder pitch', 'revenue': 'Not stated yet', 'arr': 'Not stated yet', 'implied_multiple': 'Awaiting ask & numbers', 'multiple_verdict': 'Awaiting founder numbers'.\n"
-        "     * The Dragons MUST PROACTIVELY ASK the founder: 'What is your exact funding ask and equity percentage?' and 'Have you made any sales yet, or is revenue zero?'\n"
-        "   - ONLY WHEN the founder explicitly states money or numbers, extract those exact figures and calculate the valuation.\n\n"
-        "THE 6 DRAGONS:\n"
-        "1. Ashneer Grover: Practical monetization, gross margins, EBITDA, honest reality checks on vanity metrics. Signature: 'Yeh sab doglapan hai'.\n"
-        "2. Aman Gupta: Brand identity, viral marketing, student campus distribution, product packaging. Signature: 'Dhandha brand se banta hai'.\n"
-        "3. Peyush Bansal: Engineering architecture, tech moats, software scalability, empathy for student inventors. Signature: 'Tech moat kya hai?'.\n"
-        "4. Namita Thapar: Operational execution, compliance, certifications, working capital cycles. Signature: 'Meri isme expertise nahi hai, so I am out'.\n"
-        "5. Anupam Mittal: Market sizing (TAM), unit economics, customer acquisition loops, cap table sanity. Signature: 'Chalo math karte hain'.\n"
-        "6. Vineeta Singh: Cohort repeat rates, gross margins, CAC, D2C retail hustle. Signature: 'Unit economics match nahi kar rahi'."
+        "You are the Executive Director of the Dragon Tank Student Mentorship Den, evaluating college innovators, campus builders, hackathon teams, and early-stage startup founders.\n\n"
+        "MANDATORY DIRECTIVES:\n"
+        "1. FULLY STUDENT-ORIENTED & REALISTIC:\n"
+        "   - You evaluate student ventures transitioning from college projects/hackathons to real-world commercial enterprises.\n"
+        "   - Ground all feedback in real society, business fundamentals, operational feasibility, and customer adoption.\n"
+        "2. REAL-WORLD VIABILITY OVER TV GIMMICKS:\n"
+        "   - Do NOT focus on equity bargaining, pre-money valuations, or royalty deal math.\n"
+        "   - Focus 100% on real business and societal truth:\n"
+        "     * Societal Need & Problem: Does society, human beings, or any industry actually suffer without this? Is it a genuine problem or an academic gimmick?\n"
+        "     * Tangible Benefits: Why will a customer switch from their current habit or pay money? What is the unmistakable value proposition?\n"
+        "     * Technical & Operational Feasibility: Can a student team realistically engineer, build, deploy, and maintain this? What are the technological and supply chain roadblocks?\n"
+        "     * Commercial Viability & Money Making: How will this venture sustainably generate profit? What are actual unit costs vs pricing? Where does cash flow come from?\n"
+        "     * Scalability: How does this scale beyond one college campus or city into a viable national/regional organization?\n"
+        "     * Societal Impact: What measurable positive benefit, productivity improvement, or social change is created?\n"
+        "3. STRICTLY ONE SHARK SPEAKS AT A TIME (NON-NEGOTIABLE):\n"
+        "   - In each turn, EXACTLY ONE Shark is chosen to take the floor and deliver a deep, complete, coherent response.\n"
+        "   - NEVER include multiple speaking sharks, interruptions, or crosstalk. Only ONE Shark speaks per response.\n"
+        "4. TARGETED SHARK SELECTION:\n"
+        "   - If the student specified a target shark (`replying_to`), that Shark MUST be the sole speaker.\n"
+        "   - If `replying_to` is open, choose the single Shark whose real-world domain is most directly challenged:\n"
+        "     * Peyush Bansal: Technical feasibility, engineering stack, software/hardware moats, Bharat societal purpose.\n"
+        "     * Ashneer Grover: Dhandha, unit economics, real costs vs pricing, cash flow, money making, and calling out vanity metrics.\n"
+        "     * Aman Gupta: Customer adoption, product packaging, branding, student campus distribution, and viral utility.\n"
+        "     * Namita Thapar: Operational execution, regulatory compliance (FSSAI/CDSCO/IT), working capital, and supply chain logistics.\n"
+        "     * Anupam Mittal: Market sizing (TAM), customer acquisition loops, long-term business model viability, and strategic scalability.\n"
+        "     * Vineeta Singh: Repeat retention cohorts, delivery logistics, gross margins, CAC, and operational discipline.\n"
+        "5. FORMAL, SERIOUS TONE (GUIDANCE, SUGGESTIONS, OR CONSTRUCTIVE SCOLDING):\n"
+        "   - The Shark speaks in a formal, dignified, professional boardroom manner. No crude slang or circus comedy.\n"
+        "   - Constructive Scolding: When students present unvalidated assumptions, say 'we have no competitors', or claim millions of users without talking to a single paying customer, the Shark delivers a firm, formal scolding to wake them up to reality.\n"
+        "   - Practical Guidance & Suggestions: When students show real hustle or solid feasibility, the Shark delivers clear, actionable next steps.\n"
+        "   - Signature catchphrases may be used naturally in authentic phrasing (e.g. Ashneer: 'Yeh sab doglapan hai', Peyush: 'Tech moat aur purpose kya hai?', Aman: 'Customer need se brand banta hai', Namita: 'Operational compliance dekhni hogi', Anupam: 'Chalo fundamental math karte hain', Vineeta: 'Unit economics samajhni padegi'), but the entire evaluation must be in clear, articulate English."
     )
 
     reply_target_instruction = ""
-    if replying_to and replying_to.lower() not in ["all", "all dragons", "open floor", ""]:
+    if replying_to and replying_to.lower() not in ["all", "all dragons", "all sharks", "open floor", "none", ""]:
         reply_target_instruction = f"""
-IMPORTANT FOUNDER TARGET:
-The founder is specifically replying to: {replying_to}.
-Turn 1 MUST be {replying_to} directly addressing the founder's point before other Dragons chime in!
+IMPORTANT TARGET INSTRUCTION:
+The student founder specifically directed their reply to: {replying_to}.
+{replying_to} MUST BE THE SOLE SPEAKING SHARK in this turn!
 """
 
     if is_decision_phase:
@@ -476,52 +461,44 @@ Turn 1 MUST be {replying_to} directly addressing the founder's point before othe
 BOARDROOM TRANSCRIPT:
 {history_str}
 
-LATEST FOUNDER INPUT:
+LATEST STUDENT FOUNDER INPUT:
 "{latest_user_pitch}"
 {reply_target_instruction}
 
-CURRENT FINANCIAL METRICS:
+CURRENT VIABILITY EVALUATION:
 {json.dumps(current_metrics)}
 
-CURRENT DRAGON STATUSES:
-{json.dumps(dragon_statuses)}
+TASK: FINAL VENTURE VIABILITY VERDICT FOR THIS STUDENT PROJECT.
+Choose the single most authoritative Shark (or {replying_to} if specified) to deliver a definitive, formal Boardroom Ruling on whether this venture is:
+- A commercially viable startup ready for seed development, OR
+- A project requiring fundamental customer validation, pricing redesign, and feasibility rework, OR
+- A worthy academic capstone/feature that lacks commercial viability as an independent business.
 
-TASK: FINAL DECISION ROUND FOR THIS STUDENT VENTURE.
-All active Dragons must give their definitive final verdict in English (with optional iconic catchphrases).
-If the founder has not stated their ask/valuation yet, active Dragons must either demand their ask or step out citing lack of financial clarity.
-Dragons can either:
-- STEP OUT with an honest, constructive, educational reason (e.g. 'This is an unvalidated student project without product-market fit. Come back once you have 100 paying customers, so I am out.').
-- OR lay down a concrete structured DEAL or INCUBATION OFFER:
-  - Student Seed Offer: (e.g. '₹25 Lakhs for 7% equity with incubator mentorship')
-  - Syndicate Offer: (e.g. Aman + Peyush combine for '₹50 Lakhs for 10% equity (5% each) for tech + campus distribution')
-  - Grant / Milestone Offer: (e.g. '₹15 Lakhs grant + ₹20 Lakhs equity upon hitting 500 paying users')
-
-Return valid JSON:
+Return valid JSON format:
 {{
-  "financial_analysis": {{
-     "ask": "{current_metrics.get('ask', 'Not stated yet')}",
-     "equity": "{current_metrics.get('equity', 'Not stated yet')}",
-     "valuation": "{current_metrics.get('valuation', 'Awaiting founder pitch')}",
-     "revenue": "{current_metrics.get('revenue', 'Not stated yet')}",
-     "arr": "{current_metrics.get('arr', 'Not stated yet')}",
-     "implied_multiple": "{current_metrics.get('implied_multiple', 'Awaiting ask & numbers')}",
-     "multiple_verdict": "{current_metrics.get('multiple_verdict', 'Awaiting numbers')}",
-     "gross_margin": "{current_metrics.get('gross_margin', 'Not stated yet')}",
-     "cac": "{current_metrics.get('cac', 'Not stated yet')}",
-     "repeat_rate": "{current_metrics.get('repeat_rate', 'Not stated yet')}",
-     "future_valuation_advice": "Focus on getting 50 paying users and ₹1 Lakh monthly revenue before seeking institutional venture capital."
+  "viability_assessment": {{
+     "societal_need": "High Need | Moderate | Unproven | Low Need",
+     "need_summary": "Concise analysis of societal need and customer pain point",
+     "feasibility": "High Feasibility | Moderate | Complex Execution | High Execution Risk",
+     "feasibility_summary": "Analysis of technical and operational feasibility for students",
+     "commercial_viability": "Viable Dhandha | Monetization Risk | Cost Exceeds Pricing | Needs Business Model",
+     "money_making_summary": "How this venture generates real money and covers costs",
+     "scalability": "National TAM | Regional Scale | Campus Level | Niche Feature",
+     "scalability_summary": "Assessment of scaling potential beyond campus",
+     "societal_impact": "Measurable societal and human benefits",
+     "key_actionable_guidance": "Final formal ruling and top recommendation for the student",
+     "tone_category": "Formal Verdict"
   }},
   "turns": [
      {{
        "speaker_id": "roaster|marketing|tech|operator|strategist|d2c",
-       "speaker_name": "Exact Dragon Name",
-       "action": "offer|out",
-       "tone_badge": "💰 Deal Offer | 🚪 Stepped Out",
-       "content": "Authentic verdict in English with optional catchphrase under 55 words",
+       "speaker_name": "Exact Shark Name",
+       "action": "guidance|scolding|validation_critique|praise",
+       "tone_badge": "🏛️ Formal Viability Ruling | ⚠️ Constructive Scolding | 💡 Strategic Guidance",
+       "content": "Formal, articulate ruling in English under 85 words addressing societal need, feasibility, money making, and next steps.",
        "speaks_to": "founder",
        "is_interruption": false,
-       "interrupted_speaker": null,
-       "deal_offer_terms": "₹X Lakhs for Y% equity (or None if stepped out)"
+       "interrupted_speaker": null
      }}
   ]
 }}
@@ -531,60 +508,53 @@ Return valid JSON:
 BOARDROOM TRANSCRIPT:
 {history_str}
 
-LATEST FOUNDER STATEMENT:
+LATEST STUDENT FOUNDER STATEMENT:
 "{latest_user_pitch}"
 {reply_target_instruction}
 
-CURRENT FINANCIAL METRICS:
+CURRENT VIABILITY EVALUATION:
 {json.dumps(current_metrics)}
 
 TASK:
-1. Check if the founder explicitly provided financial numbers (ask amount, equity %, revenue, sales, margins).
-   - If YES: Extract those exact numbers into financial_analysis and compute valuation = Ask / (Equity% / 100).
-   - If NO: DO NOT INVENT NUMBERS. Set 'ask': 'Not stated yet', 'valuation': 'Awaiting founder pitch', 'revenue': 'Not stated yet'. AND Dragons MUST PROACTIVELY ASK the founder for their funding ask, equity, and sales!
-2. Determine core startup guidance needed (e.g. Financial Ask Check, Customer Validation, Campus Pilot, Pricing Sanity, Tech Moat).
-3. Generate 2 to 3 sequential Dragon turns:
-   - Turn 1: Directly responds to founder statement (MUST be {replying_to} if specified, otherwise the lead curious Dragon). If no numbers were given, ask for them!
-   - Turn 2: A contrasting Dragon chimes in with complete thoughts, adding their domain angle.
-   - Turn 3 (Optional): Third Dragon gives actionable validation advice, asks a sharp unit economics question, or steps out if not viable.
+1. Evaluate the student founder's statement across real-world business & societal pillars:
+   - Societal Need & Real Problem
+   - Tangible Benefits to Customers
+   - Technical & Operational Feasibility
+   - Commercial Viability & Money Making (Costs vs Revenue)
+   - Scalability (Beyond campus)
+   - Measurable Societal Impact
+2. Select EXACTLY ONE Shark to speak:
+   - If {replying_to} is specified, select {replying_to}.
+   - Otherwise, pick the single Shark whose domain directly addresses the student's statement.
+3. The selected Shark must deliver a formal, articulate, and direct evaluation under 85 words:
+   - Provide concrete suggestions, strategic guidance, OR formal constructive scolding (e.g. calling out unvalidated assumptions, lack of paying users, or building something nobody wants).
+   - Only 1 Shark speaks. Zero crosstalk.
 
 Return valid JSON format:
 {{
-  "financial_analysis": {{
-     "ask": "Exact ask from founder or 'Not stated yet'",
-     "equity": "Exact equity from founder or 'Not stated yet'",
-     "valuation": "Calculated valuation or 'Awaiting founder pitch'",
-     "revenue": "Exact revenue from founder or 'Not stated yet'",
-     "arr": "Run-rate ARR or 'Not stated yet'",
-     "implied_multiple": "Multiple or 'Awaiting ask & numbers'",
-     "multiple_verdict": "Realistic Early-Stage | High for Student Stage | Needs Validation | Awaiting founder numbers",
-     "gross_margin": "Exact margin or 'Not stated yet'",
-     "cac": "CAC or 'Not stated yet'",
-     "repeat_rate": "Repeat rate or 'Not stated yet'",
-     "future_valuation_advice": "Actionable guidance on what milestone or pilot is needed to justify this valuation."
+  "viability_assessment": {{
+     "societal_need": "High Need | Moderate | Unproven | Low Need",
+     "need_summary": "Analysis of societal need and customer pain point",
+     "feasibility": "High Feasibility | Moderate | Complex Execution | High Execution Risk",
+     "feasibility_summary": "Analysis of technical and operational feasibility for students",
+     "commercial_viability": "Viable Dhandha | Monetization Risk | Cost Exceeds Pricing | Needs Business Model",
+     "money_making_summary": "How this venture generates real money and covers costs",
+     "scalability": "National TAM | Regional Scale | Campus Level | Niche Feature",
+     "scalability_summary": "Assessment of scaling potential beyond campus",
+     "societal_impact": "Measurable societal and human benefits",
+     "key_actionable_guidance": "Immediate concrete next step or formal instruction for student",
+     "tone_category": "Formal Guidance | Constructive Scolding | Feasibility Review | Money Making Check | Societal Impact"
   }},
   "turns": [
      {{
        "speaker_id": "roaster|marketing|tech|operator|strategist|d2c",
-       "speaker_name": "Exact Dragon Name",
-       "action": "guidance|question|validation_critique|valuation_reality_check|praise|roast|offer|out",
-       "tone_badge": "💡 Student Guidance | 🔍 Numbers Check | 📊 Valuation Reality | 👏 Genuine Praise | ⚡ Dragon Banter | ⚠️ Unit Economics | 💰 Deal Offer | 🚪 Stepped Out",
-       "content": "Articulate English dialogue (optional iconic catchphrase) under 55 words",
-       "speaks_to": "founder|other dragon name",
+       "speaker_name": "Exact Shark Name",
+       "action": "guidance|scolding|feasibility_critique|money_making_check|praise",
+       "tone_badge": "⚠️ Constructive Scolding | 💡 Strategic Guidance | ⚙️ Feasibility Check | 💰 Money Making & Viability | 🌍 Societal Need | 📈 Scalability Roadmap",
+       "content": "Articulate, formal dialogue under 85 words addressing the student founder with serious mentorship, suggestions, or scolding.",
+       "speaks_to": "founder",
        "is_interruption": false,
-       "interrupted_speaker": null,
-       "deal_offer_terms": null
-     }},
-     {{
-       "speaker_id": "marketing|tech|operator|strategist|d2c|roaster",
-       "speaker_name": "Exact Dragon Name",
-       "action": "guidance|question|interruption|out",
-       "tone_badge": "💡 Student Guidance | ⚡ Dragon Banter | 🔍 Numbers Check | 🚪 Stepped Out",
-       "content": "Articulate English dialogue building on the previous dragon or challenging them under 55 words",
-       "speaks_to": "Turn 1 Dragon Name or founder",
-       "is_interruption": true,
-       "interrupted_speaker": "Turn 1 Dragon Name",
-       "deal_offer_terms": null
+       "interrupted_speaker": null
      }}
   ]
 }}
@@ -602,40 +572,35 @@ Return valid JSON format:
             clean_json = re.sub(r"^```(?:json)?\n", "", clean_json)
             clean_json = re.sub(r"\n```$", "", clean_json)
         data = json.loads(clean_json)
+
+        # Ensure turns has at most 1 speaker (Single Shark rule)
+        if "turns" in data and len(data["turns"]) > 1:
+            data["turns"] = [data["turns"][0]]
+
         return data, provider_used
     except Exception as e:
         logger.error(f"JSON parse error in director: {e}. Raw: {raw_json[:200]}")
         return {
-            "financial_analysis": {
-                "ask": current_metrics.get("ask", "Not stated yet"),
-                "equity": current_metrics.get("equity", "Not stated yet"),
-                "valuation": current_metrics.get("valuation", "Awaiting founder pitch"),
-                "revenue": current_metrics.get("revenue", "Not stated yet"),
-                "arr": current_metrics.get("arr", "Not stated yet"),
-                "implied_multiple": current_metrics.get("implied_multiple", "Awaiting ask & numbers"),
-                "multiple_verdict": current_metrics.get("multiple_verdict", "Awaiting founder numbers"),
-                "gross_margin": current_metrics.get("gross_margin", "Not stated yet"),
-                "cac": current_metrics.get("cac", "Not stated yet"),
-                "repeat_rate": current_metrics.get("repeat_rate", "Not stated yet"),
-                "future_valuation_advice": "State your funding ask and revenue in your pitch, or Dragons will ask you directly."
+            "viability_assessment": {
+                "societal_need": current_metrics.get("societal_need", "Moderate - Requires Validation"),
+                "need_summary": current_metrics.get("need_summary", "Examine who in society directly benefits from your solution."),
+                "feasibility": current_metrics.get("feasibility", "High Feasibility - Prototype Stage"),
+                "feasibility_summary": current_metrics.get("feasibility_summary", "Can be built by a student engineering team with focused scope."),
+                "commercial_viability": current_metrics.get("commercial_viability", "Needs Clear Monetization"),
+                "money_making_summary": current_metrics.get("money_making_summary", "Validate customer willingness to pay rather than assuming free usage."),
+                "scalability": current_metrics.get("scalability", "Campus to Regional Scope"),
+                "scalability_summary": current_metrics.get("scalability_summary", "Focus on campus pilot before scaling to wider markets."),
+                "societal_impact": current_metrics.get("societal_impact", "Positive potential to solve local workflow problems."),
+                "key_actionable_guidance": "Conduct 25 structured customer interviews to validate paying demand.",
+                "tone_category": "Formal Guidance"
             },
             "turns": [
                 {
-                    "speaker_id": "roaster",
-                    "speaker_name": "Ashneer Grover",
-                    "action": "question",
-                    "tone_badge": "🔍 Numbers Check",
-                    "content": "Bhai, what is your ask? You came to the boardroom without stating how much money you want, for what equity, and what your revenue is. First tell us the math, tab baat aage badhegi!",
-                    "speaks_to": "founder",
-                    "is_interruption": False,
-                    "interrupted_speaker": None
-                },
-                {
-                    "speaker_id": "marketing",
-                    "speaker_name": "Aman Gupta",
+                    "speaker_id": "tech",
+                    "speaker_name": "Peyush Bansal",
                     "action": "guidance",
-                    "tone_badge": "💡 Student Guidance",
-                    "content": "Ashneer is right. In business, numbers matter. Tell us: are you pre-revenue or have you tested this with paying campus students?",
+                    "tone_badge": "💡 Strategic Guidance",
+                    "content": "Founder, let us look at the fundamental purpose. Is this solving a genuine problem for society, or is it an interesting classroom prototype? Before writing more code, validate customer willingness to pay.",
                     "speaks_to": "founder",
                     "is_interruption": False,
                     "interrupted_speaker": None
@@ -679,23 +644,34 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
         {
             "role": "moderator",
             "speaker": "The Floor",
-            "content": "Step onto the boardroom floor, Founder. The 6 Dragons are seated. Present your venture and state your funding ask, or the Dragons will ask for them.",
+            "content": "Step onto the boardroom floor, Student Founder. The Sharks are seated. Present your project or venture idea. Exactly one Shark will evaluate your pitch live, focusing on Societal Need, Real Benefits, Technical Feasibility, Commercial Viability, Money-Making Model, and Scalability.",
             "timestamp": "Just now"
         }
     ]
 
     business_metrics: Dict[str, Any] = {
+        "societal_need": "Awaiting Student Pitch",
+        "need_summary": "State the real problem in society and who suffers without your solution.",
+        "feasibility": "Awaiting Student Pitch",
+        "feasibility_summary": "Explain your technical architecture and student execution feasibility.",
+        "commercial_viability": "Awaiting Student Pitch",
+        "money_making_summary": "Explain your unit economics, pricing model, and how you achieve profit.",
+        "scalability": "Awaiting Student Pitch",
+        "scalability_summary": "Explain how this venture expands beyond your campus or hackathon demo.",
+        "societal_impact": "Measurable benefit and positive change created for people or industry.",
+        "key_actionable_guidance": "Present your project. Exactly one Shark will evaluate your venture live with formal guidance or scolding.",
+        "verdict_badge": "Awaiting Pitch",
         "ask": "Not stated yet",
         "equity": "Not stated yet",
-        "valuation": "Awaiting founder pitch",
+        "valuation": "Student Project Stage",
         "revenue": "Not stated yet",
         "arr": "Not stated yet",
         "gross_margin": "Not stated yet",
         "cac": "Not stated yet",
         "repeat_rate": "Not stated yet",
-        "implied_multiple": "Awaiting ask & numbers",
-        "multiple_verdict": "Awaiting founder numbers",
-        "future_valuation_advice": "State your funding ask, equity, and sales in your pitch or Dragons will ask you directly."
+        "implied_multiple": "Awaiting numbers",
+        "multiple_verdict": "Awaiting pitch details",
+        "future_valuation_advice": "Focus on real customer validation and unit viability before seeking institutional capital."
     }
 
     dragon_statuses: Dict[str, str] = {
@@ -712,7 +688,7 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
         "metrics": business_metrics,
         "dragon_statuses": dragon_statuses,
         "chat_history": chat_history,
-        "market_benchmark": "Early-stage student ventures need customer validation and evidence of traction before setting a valuation."
+        "market_benchmark": "Early-stage student ventures must prove societal need, customer willingness to pay, and operational feasibility."
     })
 
     try:
@@ -740,7 +716,7 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                     continue
 
                 replying_to = payload.get("replying_to", None)
-                if replying_to and replying_to.lower() in ["all", "all dragons", "open floor", "none"]:
+                if replying_to and replying_to.lower() in ["all", "all dragons", "all sharks", "open floor", "none"]:
                     replying_to = None
 
                 user_msg = {
@@ -754,9 +730,9 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                 await websocket.send_json({"type": "chat_message", "message": user_msg})
 
                 # Visual evaluating indicator
-                status_text = "The Dragons are scrutinizing your student venture & unit economics..."
+                status_text = "The Sharks are evaluating societal need, feasibility & viability..."
                 if replying_to:
-                    status_text = f"{replying_to} is analyzing your response..."
+                    status_text = f"{replying_to} is preparing a formal evaluation..."
                 await websocket.send_json({
                     "type": "moderator_evaluating",
                     "status": status_text
@@ -764,10 +740,10 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
 
                 # Check if user specifically requested final decision
                 is_decision = any(kw in user_pitch.lower() for kw in [
-                    "final decision", "are you in or out", "give me your verdict", "deal or no deal", "final call"
+                    "final decision", "are you in or out", "give me your verdict", "deal or no deal", "final call", "final ruling"
                 ])
 
-                # Orchestrate real-time boardroom exchange
+                # Orchestrate real-time boardroom exchange (Single Shark speaks)
                 boardroom_data, llm_provider = await orchestrate_boardroom_exchange(
                     latest_user_pitch=user_pitch,
                     chat_history=chat_history,
@@ -777,7 +753,12 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                     replying_to=replying_to
                 )
 
-                # Update business metrics & valuation analysis
+                # Update business metrics & viability analysis
+                if "viability_assessment" in boardroom_data:
+                    va = boardroom_data["viability_assessment"]
+                    for k, v in va.items():
+                        if v:
+                            business_metrics[k] = str(v)
                 if "financial_analysis" in boardroom_data:
                     fa = boardroom_data["financial_analysis"]
                     for k, v in fa.items():
@@ -788,52 +769,28 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                 if not turns:
                     turns = [
                         {
-                            "speaker_id": "roaster",
-                            "speaker_name": "Ashneer Grover",
-                            "action": "valuation_reality_check",
-                            "tone_badge": "📊 Valuation Reality",
-                            "content": "Yeh sab doglapan hai. Asking for high valuations without customer validation makes no sense. Show me 50 paying users first!",
+                            "speaker_id": "tech",
+                            "speaker_name": "Peyush Bansal",
+                            "action": "guidance",
+                            "tone_badge": "💡 Strategic Guidance",
+                            "content": "Founder, let us look at the fundamental purpose. Is this solving a genuine societal problem, or is it an interesting classroom prototype? Before writing more code, validate customer willingness to pay.",
                             "speaks_to": "founder",
                             "is_interruption": False,
                             "interrupted_speaker": None
                         }
                     ]
 
-                # Stream each Dragon turn with authentic real-time pacing
+                # Stream the single Shark turn with authentic real-time pacing
                 for idx, turn in enumerate(turns):
-                    speaker_id = turn.get("speaker_id", "roaster")
-                    dragon_info = DRAGON_PERSONAS.get(speaker_id, DRAGON_PERSONAS["roaster"])
+                    speaker_id = turn.get("speaker_id", "tech")
+                    dragon_info = DRAGON_PERSONAS.get(speaker_id, DRAGON_PERSONAS["tech"])
                     content = turn.get("content", "").replace("—", " - ").replace("–", " - ").strip()
                     action = turn.get("action", "guidance")
-                    tone_badge = turn.get("tone_badge", "💡 Student Guidance").replace("—", " · ")
-                    is_interruption = turn.get("is_interruption", False)
-                    interrupted_speaker = turn.get("interrupted_speaker", None)
-                    deal_terms = turn.get("deal_offer_terms", None)
-                    if isinstance(deal_terms, str):
-                        deal_terms = deal_terms.replace("—", " - ")
+                    tone_badge = turn.get("tone_badge", "💡 Strategic Guidance").replace("—", " · ")
 
-                    # Update dragon status
-                    if action == "out":
-                        dragon_statuses[speaker_id] = "out"
-                    elif action == "offer":
-                        dragon_statuses[speaker_id] = "offer"
-                        offers.append({
-                            "dragon_id": speaker_id,
-                            "dragon_name": dragon_info["name"],
-                            "terms": deal_terms or content
-                        })
-                    else:
-                        dragon_statuses[speaker_id] = "speaking"
-
-                    # Interruption / chime-in banner notification
-                    if is_interruption and interrupted_speaker:
-                        await websocket.send_json({
-                            "type": "dragon_interruption_event",
-                            "interrupter": dragon_info["name"],
-                            "interrupted": interrupted_speaker,
-                            "badge": "💡 Dragon Perspective"
-                        })
-                        await asyncio.sleep(0.3)
+                    # STRICTLY ONE SHARK SPEAKS: Set only the chosen shark to 'speaking', all others to 'listening'
+                    for k in dragon_statuses.keys():
+                        dragon_statuses[k] = "speaking" if k == speaker_id else "listening"
 
                     # Real-time typewriter chunk streaming
                     stream_id = f"stream_{speaker_id}_{int(asyncio.get_event_loop().time() * 1000)}"
@@ -849,7 +806,7 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                             "chunk": chunk,
                             "action": action,
                             "tone_badge": tone_badge,
-                            "is_interruption": is_interruption,
+                            "is_interruption": False,
                             "llm_provider": llm_provider
                         })
                         await asyncio.sleep(0.02)
@@ -865,8 +822,8 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                         "content": content,
                         "action": action,
                         "tone_badge": tone_badge,
-                        "is_interruption": is_interruption,
-                        "interrupted_speaker": interrupted_speaker,
+                        "is_interruption": False,
+                        "interrupted_speaker": None,
                         "timestamp": "Just now"
                     }
                     chat_history.append(dragon_msg)
@@ -878,7 +835,7 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                         "message": dragon_msg,
                         "action": action,
                         "tone_badge": tone_badge,
-                        "is_interruption": is_interruption,
+                        "is_interruption": False,
                         "metrics": business_metrics,
                         "dragon_statuses": dragon_statuses,
                         "offers": offers,
@@ -886,48 +843,40 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                         "llm_provider": llm_provider
                     })
 
-                    # Natural conversational pause before next Dragon chimes in
-                    if idx < len(turns) - 1:
-                        await asyncio.sleep(0.65)
-
                 # Persist session to Supabase in background
                 asyncio.create_task(save_session_to_supabase(session_id, chat_history, business_metrics))
 
-            # 2. Demand Final Decisions
+            # 2. Demand Final Decisions / Viability Ruling
             elif msg_type == "call_for_decisions":
                 await websocket.send_json({
                     "type": "moderator_evaluating",
-                    "status": "The 6 Dragons are conferring on their final investment calls..."
+                    "status": "The Sharks are delivering their final formal viability ruling..."
                 })
 
                 decision_data, llm_prov = await orchestrate_boardroom_exchange(
-                    latest_user_pitch="Dragons, please give me your final verdict. Are you in or are you out?",
+                    latest_user_pitch="Sharks, please give me your final formal ruling on whether our venture is viable, needs customer validation, or is an academic project.",
                     chat_history=chat_history,
                     current_metrics=business_metrics,
                     dragon_statuses=dragon_statuses,
                     is_decision_phase=True
                 )
 
+                if "viability_assessment" in decision_data:
+                    va = decision_data["viability_assessment"]
+                    for k, v in va.items():
+                        if v:
+                            business_metrics[k] = str(v)
+
                 decision_turns = decision_data.get("turns", [])
                 for d_turn in decision_turns:
-                    s_id = d_turn.get("speaker_id", "roaster")
-                    s_info = DRAGON_PERSONAS.get(s_id, DRAGON_PERSONAS["roaster"])
+                    s_id = d_turn.get("speaker_id", "tech")
+                    s_info = DRAGON_PERSONAS.get(s_id, DRAGON_PERSONAS["tech"])
                     c = d_turn.get("content", "")
-                    act = d_turn.get("action", "out")
-                    tb = d_turn.get("tone_badge", "🚪 Stepped Out" if act == "out" else "💰 Deal Offer")
+                    act = d_turn.get("action", "guidance")
+                    tb = d_turn.get("tone_badge", "🏛️ Formal Viability Ruling")
 
-                    if act == "out":
-                        dragon_statuses[s_id] = "out"
-                    else:
-                        dragon_statuses[s_id] = "offer"
-                        offers.append({
-                            "dragon_id": s_id,
-                            "dragon_name": s_info["name"],
-                            "terms": d_turn.get("deal_offer_terms", c)
-                        })
-
-                    # Voice output disabled as per user instruction
-                    d_audio = None
+                    for k in dragon_statuses.keys():
+                        dragon_statuses[k] = "speaking" if k == s_id else "listening"
 
                     verdict_msg = {
                         "role": "dragon",
@@ -950,10 +899,9 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                         "metrics": business_metrics,
                         "dragon_statuses": dragon_statuses,
                         "offers": offers,
-                        "audio_base64": d_audio,
+                        "audio_base64": None,
                         "llm_provider": llm_prov
                     })
-                    await asyncio.sleep(0.4)
 
             # 3. Reset Session
             elif msg_type == "reset_session":
@@ -961,22 +909,28 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                     {
                         "role": "moderator",
                         "speaker": "The Floor",
-                        "content": "The Tank has been reset. A fresh founder steps onto the boardroom floor. Pitch your venture and state your funding ask, or the Dragons will ask for them.",
+                        "content": "The floor has been reset. A fresh student founder steps into the den. Present your project or venture idea.",
                         "timestamp": "Just now"
                     }
                 ]
                 business_metrics = {
+                    "societal_need": "Awaiting Student Pitch",
+                    "need_summary": "State the real problem in society and who suffers without your solution.",
+                    "feasibility": "Awaiting Student Pitch",
+                    "feasibility_summary": "Explain your technical architecture and student execution feasibility.",
+                    "commercial_viability": "Awaiting Student Pitch",
+                    "money_making_summary": "Explain your unit economics, pricing model, and how you achieve profit.",
+                    "scalability": "Awaiting Student Pitch",
+                    "scalability_summary": "Explain how this venture expands beyond your campus or hackathon demo.",
+                    "societal_impact": "Measurable benefit and positive change created for people or industry.",
+                    "key_actionable_guidance": "Present your project. Exactly one Shark will evaluate your venture live with formal guidance or scolding.",
+                    "verdict_badge": "Awaiting Pitch",
                     "ask": "Not stated yet",
                     "equity": "Not stated yet",
-                    "valuation": "Awaiting founder pitch",
+                    "valuation": "Student Project Stage",
                     "revenue": "Not stated yet",
                     "arr": "Not stated yet",
-                    "gross_margin": "Not stated yet",
-                    "cac": "Not stated yet",
-                    "repeat_rate": "Not stated yet",
-                    "implied_multiple": "Awaiting ask & numbers",
-                    "multiple_verdict": "Awaiting founder numbers",
-                    "future_valuation_advice": "State your funding ask, equity, and sales in your pitch or Dragons will ask you directly."
+                    "gross_margin": "Not stated yet"
                 }
                 dragon_statuses = {k: "listening" for k in DRAGON_PERSONAS.keys()}
                 offers = []
@@ -987,7 +941,7 @@ async def websocket_pitch_endpoint(websocket: WebSocket):
                     "metrics": business_metrics,
                     "dragon_statuses": dragon_statuses,
                     "chat_history": chat_history,
-                    "market_benchmark": "Early-stage student ventures need customer validation and evidence of traction before setting a valuation."
+                    "market_benchmark": "Early-stage student ventures must prove societal need, customer willingness to pay, and operational feasibility."
                 })
 
     except WebSocketDisconnect:

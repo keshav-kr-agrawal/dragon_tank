@@ -27,7 +27,9 @@ import {
   Heart,
   ArrowUpRight,
   MessageCircle,
-  Play
+  Play,
+  Scale,
+  Target
 } from 'lucide-react'
 import { ALL_DRAGON_PROFILES, DragonProfile } from './dragonDialogues'
 
@@ -36,18 +38,21 @@ interface HomePageProps {
 }
 
 export default function HomePage({ onEnterPitch }: HomePageProps) {
-  // Valuation Lab State (Student & Early-Stage Scale)
-  const [askAmount, setAskAmount] = useState(25) // ₹25 Lakhs
-  const [equityPercent, setEquityPercent] = useState(5) // 5%
+  // Student Venture Viability & Unit Economics State
+  const [userReach, setUserReach] = useState(1000) // 1,000 students/users
+  const [unitCost, setUnitCost] = useState(60) // ₹60 cost to build/serve
+  const [unitPrice, setUnitPrice] = useState(120) // ₹120 charged to user
+  const [monthlyOverhead, setMonthlyOverhead] = useState(15000) // ₹15,000 monthly infra/materials
 
-  const postMoneyLakhs = (askAmount / equityPercent) * 100
-  const postMoneyCrores = (postMoneyLakhs / 100).toFixed(1)
-  const preMoneyCrores = ((postMoneyLakhs - askAmount) / 100).toFixed(1)
+  // Computed Real-World Fundamentals
+  const unitMargin = unitPrice - unitCost
+  const marginPercent = unitPrice > 0 ? Math.round((unitMargin / unitPrice) * 100) : 0
+  const breakEvenUnits = unitMargin > 0 ? Math.ceil(monthlyOverhead / unitMargin) : 0
+  const monthlyGrossProfit = userReach * unitMargin
+  const netMonthlyCashFlow = monthlyGrossProfit - monthlyOverhead
+  const isProfitable = netMonthlyCashFlow > 0
 
-  const askFormatted =
-    askAmount >= 100 ? `₹${(askAmount / 100).toFixed(1)} Cr` : `₹${askAmount} Lakhs`
-
-  // Voice Preview State (Voice output strictly disabled, visual display only)
+  // Voice Preview State (Visual display of famous dialogues)
   const [activeVoicePlaying, setActiveVoicePlaying] = useState<string | null>(null)
   const [activeDialogueIndex, setActiveDialogueIndex] = useState<{ [dragonId: string]: number }>({
     roaster: 0,
@@ -66,58 +71,80 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
     setTimeout(() => setActiveVoicePlaying(null), 1800)
   }
 
-  // Dynamic reaction based on metrics (Tailored for College Students & Early-Stage Startups)
-  const getValuationReaction = () => {
-    const val = parseFloat(postMoneyCrores)
-    if (val > 25) {
+  // Dynamic Formal Guidance & Scolding based on Real Fundamentals
+  const getViabilityReaction = () => {
+    if (unitMargin <= 0) {
       return {
         dragon: 'Ashneer Grover',
-        role: 'The Dhandha & Valuation Roaster',
+        role: 'Financial Discipline & Unit Economics Mentor',
         reaction:
-          'Yeh sab doglapan hai. Asking for a ₹' +
-          val +
-          ' Crore valuation for a college prototype with zero customer validation makes no sense. Interview 50 paying users outside campus first, then talk valuation!',
-        badge: 'Validation Reality Check'
+          'Your direct unit cost (₹' +
+          unitCost +
+          ') exceeds your selling price (₹' +
+          unitPrice +
+          '). Subsidizing students out of personal pocket money is not a viable venture. In the real world, a business must generate positive gross contribution from Day 1.',
+        badge: 'Negative Margin Reality Check',
+        tone: 'Formal Scolding'
       }
-    } else if (equityPercent >= 15) {
+    } else if (breakEvenUnits > userReach) {
       return {
-        dragon: 'Aman Gupta',
-        role: 'Marketing Guru',
+        dragon: 'Namita Thapar',
+        role: 'Operational Feasibility & Cashflow Mentor',
         reaction:
-          'Dhandha brand se banta hai! Giving away ' +
-          equityPercent +
-          '% equity this early will leave your student team heavily diluted before you even hit Series A. Keep your cap table clean!',
-        badge: 'Dilution Warning'
+          'You require ' +
+          breakEvenUnits +
+          ' paying units monthly to cover fixed operational overheads of ₹' +
+          monthlyOverhead.toLocaleString() +
+          ', but your projected reach is only ' +
+          userReach +
+          '. You risk depleting your student budget within 45 days. Reduce fixed costs or establish direct campus partnerships.',
+        badge: 'Cash Runway Warning',
+        tone: 'Feasibility Guidance'
       }
-    } else if (val <= 10 && equityPercent >= 5) {
+    } else if (marginPercent >= 45 && isProfitable && userReach >= 1000) {
       return {
         dragon: 'Peyush Bansal',
-        role: 'Tech Visionary',
+        role: 'Societal Impact & Technical Moat Mentor',
         reaction:
-          'Tech moat kya hai? This is a realistic student seed ask (' +
-          askFormatted +
-          ' for ' +
-          equityPercent +
-          '%). Now explain your tech architecture and how you plan to get your first 500 campus users.',
-        badge: 'Moat Evaluation'
+          'A healthy margin of ' +
+          marginPercent +
+          '% while generating ₹' +
+          netMonthlyCashFlow.toLocaleString() +
+          ' monthly surplus indicates genuine commercial viability. Next, we must verify your technical moat: what prevents an incumbent tech firm from replicating this next semester?',
+        badge: 'Viable Foundation',
+        tone: 'Strategic Guidance'
+      }
+    } else if (userReach >= 5000 && marginPercent < 25) {
+      return {
+        dragon: 'Aman Gupta',
+        role: 'Consumer Pulse & Distribution Mentor',
+        reaction:
+          'You are addressing a large student demographic (' +
+          userReach.toLocaleString() +
+          ' users), but a thin ' +
+          marginPercent +
+          '% margin leaves zero room for logistics or server spikes. Build stronger brand differentiation so students will willingly pay for the premium value.',
+        badge: 'Margin Compression Alert',
+        tone: 'Constructive Suggestion'
       }
     } else {
       return {
         dragon: 'Anupam Mittal',
-        role: 'Strategic Investor',
+        role: 'Strategic Viability & Scalability Mentor',
         reaction:
-          'Chalo math karte hain. For early-stage student ventures, customer validation and unit economics must come before raising capital. Let us calculate your CAC and TAM.',
-        badge: 'Economics Sanity'
+          'For an early student venture, customer retention and measurable societal benefit matter far more than theoretical valuation. Validate that your first 100 campus users achieve repeatable utility before attempting national expansion.',
+        badge: 'Validation Priority',
+        tone: 'Formal Guidance'
       }
     }
   }
 
-  const reaction = getValuationReaction()
+  const reaction = getViabilityReaction()
 
   return (
     <div className="relative min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-amber-100 selection:text-amber-900 overflow-x-hidden">
       {/* ---------------------------------------------------------------------
-          Gentle Ambient Light Mesh (Brings Pure Glassmorphism to Life)
+          Gentle Ambient Light Mesh
       ---------------------------------------------------------------------- */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
         <div className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-amber-100/50 rounded-full blur-[140px]" />
@@ -144,7 +171,7 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
                   Dragon Tank <span className="text-amber-700">India</span>
                 </span>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-200/80">
-                  AI Simulator
+                  Student Mentorship Boardroom
                 </span>
               </div>
             </div>
@@ -153,19 +180,19 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           {/* Clean Glass Nav Links */}
           <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-600">
             <a href="#dragons" className="hover:text-slate-900 transition-colors">
-              The 6 Dragons
+              The 6 Mentors
             </a>
-            <a href="#valuation-lab" className="hover:text-slate-900 transition-colors">
-              Valuation Lab
+            <a href="#viability-lab" className="hover:text-slate-900 transition-colors">
+              Viability & Unit Economics Lab
             </a>
             <a href="#how-it-works" className="hover:text-slate-900 transition-colors">
-              How It Works
+              Evaluation Flow
             </a>
-            <a href="#hall-of-fame" className="hover:text-slate-900 transition-colors">
-              Hall of Fame
+            <a href="#case-studies" className="hover:text-slate-900 transition-colors">
+              Student Case Studies
             </a>
             <a href="#tank-rules" className="hover:text-slate-900 transition-colors">
-              Den Rules
+              Boardroom Rules
             </a>
           </nav>
 
@@ -173,7 +200,7 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           <div className="flex items-center gap-2.5">
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full glass-pill text-[11px] font-medium text-slate-700">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
-              <span>6 Dragons Seated</span>
+              <span>Strictly 1 Shark at a Time</span>
             </div>
 
             <button
@@ -188,7 +215,7 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
       </header>
 
       {/* ---------------------------------------------------------------------
-          Hero Section: Clean, Spacious, Ultra-Refined Glass
+          Hero Section: Student-First, Real-World Fundamentals
       ---------------------------------------------------------------------- */}
       <section className="relative z-10 pt-16 md:pt-24 pb-16 px-4 md:px-8 max-w-6xl mx-auto w-full flex flex-col items-center text-center">
         {/* Status Pill */}
@@ -198,7 +225,7 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-slate-200/80 text-slate-700 text-xs font-semibold mb-6 shadow-2xs"
         >
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Dedicated to College Students, Hackathon Projects & Early-Stage Startups</span>
+          <span>Tailored for College Innovators, Hackathon Projects & Youth Social Ventures</span>
         </motion.div>
 
         {/* Hero Title */}
@@ -208,9 +235,9 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           transition={{ duration: 0.5 }}
           className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.08] max-w-4xl"
         >
-          Turn Your College Project into a{' '}
+          Turn Your Student Project into a{' '}
           <span className="text-amber-700 underline decoration-amber-200 decoration-wavy decoration-from-font">
-            Validated Startup
+            Viable, Real-World Venture
           </span>
         </motion.h1>
 
@@ -219,9 +246,9 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-6 text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed font-normal"
+          className="mt-6 text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl leading-relaxed font-normal"
         >
-          Built a capstone project, AI prototype, or hackathon idea? Pitch to India's top 6 Dragons for honest valuation reality checks, customer validation guidance, and concrete early-stage frameworks.
+          Pitch your capstone, software prototype, or campus venture to 6 iconic mentors. Experience deep, one-at-a-time examination with formal guidance, strategic suggestions, and constructive reality checks—grounded in <strong>Societal Need, Feasibility, Unit Economics, and Measurable Impact</strong>.
         </motion.p>
 
         {/* Primary CTA Buttons */}
@@ -235,26 +262,38 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
             onClick={() => onEnterPitch()}
             className="w-full sm:w-auto px-8 md:px-9 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm md:text-base shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer"
           >
-            <span>Step Into the Den</span>
+            <span>Start Live Student Pitch</span>
             <ChevronRight className="w-4 h-4 text-amber-300" />
           </button>
 
           <a
-            href="#valuation-lab"
+            href="#viability-lab"
             className="w-full sm:w-auto px-6 py-4 rounded-2xl glass-panel hover:bg-white text-slate-700 font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <Sliders className="w-4 h-4 text-amber-600" />
-            <span>Valuation Calculator</span>
+            <span>Test Unit Economics Lab</span>
           </a>
         </motion.div>
 
-        {/* 4 Clean Glass Metrics Strip */}
+        {/* 4 Real-World Pillars Strip */}
         <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-3.5 max-w-4xl w-full">
           {[
-            { label: 'Honest Valuation Math', desc: 'Pre-revenue student benchmarks and realistic dilution curves' },
-            { label: 'Customer Validation Check', desc: 'Actionable experiments to prove paying demand on campus' },
-            { label: 'Targeted Dragon Replies', desc: 'Direct your response to any individual Dragon on the panel' },
-            { label: 'English & Real-Time Intelligence', desc: 'Articulate mentorship with iconic signature dialogues' }
+            {
+              label: '1. Societal Need & Benefits',
+              desc: 'Does society genuinely require this? Who directly benefits and what pain is removed?'
+            },
+            {
+              label: '2. Technical Feasibility',
+              desc: 'Can a student team build and sustain it without unmanageable technical dependencies?'
+            },
+            {
+              label: '3. Money Making & Costs',
+              desc: 'Real unit economics: raw costs, pricing tolerance, operational burn, and gross margin.'
+            },
+            {
+              label: '4. Scalability & Real Impact',
+              desc: 'How the solution expands from campus pilot to broader society with lasting social value.'
+            }
           ].map((item, idx) => (
             <div
               key={idx}
@@ -271,20 +310,20 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
       </section>
 
       {/* ---------------------------------------------------------------------
-          The 6 Dragons Showcase: Featuring ALL Famous Dialogues
+          The 6 Dragons Showcase: Dedicated Student Mentors
       ---------------------------------------------------------------------- */}
       <section id="dragons" className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto w-full">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8">
           <div>
             <span className="text-xs font-bold tracking-wider text-amber-700 uppercase block mb-1">
-              The Investor Board
+              The Mentorship Board
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Meet the 6 Iconic Dragons & All Famous Dialogues
+              Meet the 6 Mentors & Their Real-World Focus
             </h2>
           </div>
           <p className="text-slate-500 text-xs md:text-sm max-w-md mt-2 md:mt-0 leading-relaxed">
-            Click through all of their famous dialogues below and test their voice speech live.
+            In our boardroom, <strong>strictly one shark speaks at a time</strong> to provide focused, disciplined guidance without interruption.
           </p>
         </div>
 
@@ -292,7 +331,6 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           {ALL_DRAGON_PROFILES.map((dragon) => {
             const currentIdx = activeDialogueIndex[dragon.id] || 0
             const currentDialogue = dragon.dialogues[currentIdx]
-            const isPlaying = activeVoicePlaying === currentDialogue.quote
 
             return (
               <div
@@ -321,7 +359,7 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
                   </p>
 
                   {/* Active Dialogue Bubble */}
-                  <div className="p-3 rounded-xl glass-panel-subtle border border-slate-200/60 mb-3 min-h-[90px] flex flex-col justify-between">
+                  <div className="p-3 rounded-xl glass-panel-subtle border border-slate-200/60 mb-3 min-h-[95px] flex flex-col justify-between">
                     <p className="text-[11px] text-slate-800 italic leading-snug">
                       "{currentDialogue.quote}"
                     </p>
@@ -370,33 +408,59 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
       </section>
 
       {/* ---------------------------------------------------------------------
-          Valuation Lab: Clean Modern Glass Card
+          Viability & Unit Economics Lab: Student Venture Sandbox
       ---------------------------------------------------------------------- */}
-      <section id="valuation-lab" className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto w-full">
+      <section id="viability-lab" className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto w-full">
         <div className="glass-panel rounded-3xl p-6 md:p-10 shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Column: Sliders */}
             <div className="lg:col-span-7 space-y-6">
               <div>
                 <span className="text-xs font-bold tracking-wider text-amber-700 uppercase block mb-1">
-                  Valuation Lab
+                  Student Economics Sandbox
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                  Calculate Pre-Money Valuation
+                  Venture Viability & Unit Economics Lab
                 </h3>
                 <p className="text-slate-500 text-xs md:text-sm mt-1 leading-relaxed">
-                  Adjust your investment ask and equity dilution to observe implied company value and simulate Dragon reactions.
+                  Test your real-world costs, customer pricing, and campus reach to see live formal guidance, strategic feasibility advice, or constructive scolding before facing the boardroom.
                 </p>
               </div>
 
-              {/* Ask Slider */}
+              {/* Unit Cost Slider */}
               <div className="p-4 rounded-2xl glass-panel-subtle space-y-2">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-semibold text-slate-700">
-                    Investment Ask
+                    Direct Unit Cost (Building / Serving 1 Unit)
                   </label>
                   <span className="text-base font-bold text-slate-900 font-mono">
-                    {askFormatted}
+                    ₹{unitCost}
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="10"
+                  max="500"
+                  step="5"
+                  value={unitCost}
+                  onChange={(e) => setUnitCost(Number(e.target.value))}
+                  className="w-full accent-amber-600 h-2 bg-slate-200 rounded-lg cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-slate-400 font-medium">
+                  <span>₹10 (Software / Digital)</span>
+                  <span>₹150 (Hardware Prototype)</span>
+                  <span>₹500 (Complex System)</span>
+                </div>
+              </div>
+
+              {/* Customer Pricing Slider */}
+              <div className="p-4 rounded-2xl glass-panel-subtle space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-semibold text-slate-700">
+                    Customer Price / Student Fee
+                  </label>
+                  <span className="text-base font-bold text-slate-900 font-mono">
+                    ₹{unitPrice}
                   </span>
                 </div>
                 <input
@@ -404,80 +468,103 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
                   min="20"
                   max="1000"
                   step="10"
-                  value={askAmount}
-                  onChange={(e) => setAskAmount(Number(e.target.value))}
+                  value={unitPrice}
+                  onChange={(e) => setUnitPrice(Number(e.target.value))}
                   className="w-full accent-amber-600 h-2 bg-slate-200 rounded-lg cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-medium">
-                  <span>₹20 Lakhs</span>
-                  <span>₹1 Crore</span>
-                  <span>₹5 Crores</span>
-                  <span>₹10 Crores</span>
+                  <span>₹20 Micro-fee</span>
+                  <span>₹250 Subscription</span>
+                  <span>₹1,000 Premium</span>
                 </div>
               </div>
 
-              {/* Equity Dilution Slider */}
+              {/* User Reach Slider */}
               <div className="p-4 rounded-2xl glass-panel-subtle space-y-2">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-semibold text-slate-700">
-                    Equity Dilution
+                    Active Target Community Reach
                   </label>
                   <span className="text-base font-bold text-slate-900 font-mono">
-                    {equityPercent}%
+                    {userReach.toLocaleString()} Users
                   </span>
                 </div>
                 <input
                   type="range"
-                  min="1"
-                  max="25"
-                  step="0.5"
-                  value={equityPercent}
-                  onChange={(e) => setEquityPercent(Number(e.target.value))}
+                  min="100"
+                  max="10000"
+                  step="100"
+                  value={userReach}
+                  onChange={(e) => setUserReach(Number(e.target.value))}
                   className="w-full accent-amber-600 h-2 bg-slate-200 rounded-lg cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] text-slate-400 font-medium">
-                  <span>1%</span>
-                  <span>5%</span>
-                  <span>10%</span>
-                  <span>25%</span>
+                  <span>100 Campus Cohort</span>
+                  <span>2,000 Campus Wide</span>
+                  <span>10,000 Regional Reach</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: Computed Numbers */}
+            {/* Right Column: Computed Numbers & Shark Feedback */}
             <div className="lg:col-span-5 flex flex-col gap-3.5">
-              {/* Valuation Result */}
-              <div className="p-5 md:p-6 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 shadow-2xs">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 block mb-1">
-                  Implied Pre-Money Valuation
-                </span>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl md:text-4xl font-extrabold text-emerald-950 font-mono tracking-tight">
-                    ₹{preMoneyCrores} Cr
+              {/* Unit Economics Card */}
+              <div
+                className={`p-5 md:p-6 rounded-2xl border shadow-2xs ${
+                  unitMargin > 0
+                    ? 'bg-emerald-50/70 border-emerald-200/80 text-emerald-950'
+                    : 'bg-rose-50/70 border-rose-200/80 text-rose-950'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-bold uppercase tracking-wider block">
+                    Gross Unit Contribution & Margin
                   </span>
-                  <span className="text-xs text-emerald-700">
-                    (Post-Money: ₹{postMoneyCrores} Cr)
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                      unitMargin > 0
+                        ? 'bg-emerald-100 text-emerald-800'
+                        : 'bg-rose-100 text-rose-800'
+                    }`}
+                  >
+                    {marginPercent}% Margin
                   </span>
                 </div>
-                <div className="mt-3 pt-3 border-t border-emerald-200/60 flex justify-between text-xs text-emerald-900">
-                  <span>Stake: {equityPercent}%</span>
-                  <span className="font-semibold">{askFormatted} Capital Inflow</span>
+
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl md:text-4xl font-extrabold font-mono tracking-tight">
+                    {unitMargin >= 0 ? `+₹${unitMargin}` : `-₹${Math.abs(unitMargin)}`}
+                  </span>
+                  <span className="text-xs opacity-75">per unit sold/served</span>
+                </div>
+
+                <div className="mt-3 pt-3 border-t border-slate-300/40 grid grid-cols-2 gap-2 text-xs">
+                  <div>
+                    <span className="opacity-70 block text-[10px]">Break-even Point:</span>
+                    <span className="font-bold font-mono">
+                      {unitMargin > 0 ? `${breakEvenUnits} units/mo` : 'Never (Negative Margin)'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="opacity-70 block text-[10px]">Net Monthly Run-Rate:</span>
+                    <span className="font-bold font-mono">
+                      {netMonthlyCashFlow >= 0
+                        ? `+₹${netMonthlyCashFlow.toLocaleString()}`
+                        : `-₹${Math.abs(netMonthlyCashFlow).toLocaleString()}`}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Dragon Reaction Preview */}
+              {/* Dragon Formal Guidance & Scolding Preview */}
               <div className="p-4 rounded-2xl glass-panel border border-slate-200/80">
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-bold text-slate-900">
-                      {reaction.dragon}
-                    </span>
-                    <span className="text-[10px] text-slate-500">
-                      | {reaction.role}
-                    </span>
+                    <span className="text-xs font-bold text-slate-900">{reaction.dragon}</span>
+                    <span className="text-[10px] text-slate-500">| {reaction.role}</span>
                   </div>
                   <span className="px-2 py-0.5 rounded-full text-[9px] font-semibold bg-amber-100 text-amber-800 border border-amber-200">
-                    {reaction.badge}
+                    {reaction.tone}
                   </span>
                 </div>
                 <p className="text-xs text-slate-700 italic leading-relaxed">
@@ -485,11 +572,11 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
                 </p>
               </div>
 
-              {/* Boardroom rule note */}
+              {/* Boardroom Guideline Note */}
               <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200/80 text-[11px] text-amber-900 flex items-start gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Boardroom Rule:</strong> In the live boardroom, no numbers are assumed. You state your ask in your pitch, or the Dragons will ask you directly!
+                  <strong>Boardroom Rule:</strong> In the live boardroom, television equity gimmicks are discarded. Mentors evaluate your real societal impact, technical feasibility, and sustainable unit economics.
                 </span>
               </div>
 
@@ -497,14 +584,14 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
               <button
                 onClick={() =>
                   onEnterPitch({
-                    ask: `${askFormatted} for ${equityPercent}%`,
-                    equity: `${equityPercent}%`,
-                    valuation: `₹${preMoneyCrores} Cr`
+                    ask: `Student Project: ₹${unitPrice} Price, ₹${unitCost} Cost (${marginPercent}% Margin), Target ${userReach} Users`,
+                    equity: `${marginPercent}% Margin`,
+                    valuation: `Break-even at ${breakEvenUnits} units`
                   })
                 }
                 className="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs tracking-wide shadow-xs flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
               >
-                <span>Prepare Pitch & Enter Boardroom</span>
+                <span>Pitch This Model to the Mentors</span>
                 <ArrowRight className="w-4 h-4 text-amber-300" />
               </button>
             </div>
@@ -513,18 +600,18 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
       </section>
 
       {/* ---------------------------------------------------------------------
-          How It Works: 4 Clean Glass Steps
+          How It Works: 4 Clean Steps
       ---------------------------------------------------------------------- */}
       <section id="how-it-works" className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto w-full">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-xs font-bold tracking-wider text-amber-700 uppercase block mb-1">
-            Studio Flow
+            Boardroom Process
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            How the Pitch Simulator Works
+            How the Student Mentorship Boardroom Works
           </h2>
           <p className="text-slate-500 text-xs md:text-sm mt-1 leading-relaxed">
-            Multi-agent architecture with low-latency streaming and real-time investor cross-examination.
+            A disciplined, single-speaker framework designed to help students transition from prototype to sustainable enterprise.
           </p>
         </div>
 
@@ -532,26 +619,26 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           {[
             {
               step: '01',
-              title: 'Enter the Den',
-              desc: 'Review your initial business ask, equity dilution, and monthly revenue metrics.',
+              title: 'Present Your Student Idea',
+              desc: 'Articulate the societal problem you are solving, your solution prototype, and target beneficiaries.',
               icon: Flame
             },
             {
               step: '02',
-              title: 'Speak Naturally',
-              desc: 'Use voice via your microphone or type your pitch into the studio transcript dock.',
-              icon: Mic
-            },
-            {
-              step: '03',
-              title: 'Live Dragon Questions',
-              desc: 'The Dragons probe your margins, verify unit economics, and test working capital cycles.',
+              title: 'Strictly One Shark at a Time',
+              desc: 'No confusing crosstalk or interruptions. One mentor takes the floor to examine your specific operational pillar.',
               icon: Users
             },
             {
+              step: '03',
+              title: 'Constructive Formal Guidance',
+              desc: 'Receive formal strategic advice, technical feasibility checks, or honest constructive scolding on unit costs.',
+              icon: MessageSquare
+            },
+            {
               step: '04',
-              title: 'Terms or Exit',
-              desc: 'Receive formal investment offers, counter-offer on equity, or hear the final call.',
+              title: 'Formal Viability Ruling',
+              desc: 'Gain a formal score across Societal Need, Feasibility, Commercial Viability, and Scalability with actionable next steps.',
               icon: Gavel
             }
           ].map((item, i) => (
@@ -573,48 +660,48 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
       </section>
 
       {/* ---------------------------------------------------------------------
-          Deal Hall of Fame: Clean Cards
+          Student Venture Case Studies
       ---------------------------------------------------------------------- */}
-      <section id="hall-of-fame" className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto w-full">
+      <section id="case-studies" className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto w-full">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8">
           <div>
             <span className="text-xs font-bold tracking-wider text-amber-700 uppercase block mb-1">
-              Arena Highlights
+              Case Studies
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Simulated Deal Hall of Fame
+              Real Student Venture Evaluations
             </h2>
           </div>
           <p className="text-slate-500 text-xs md:text-sm max-w-md mt-2 md:mt-0 leading-relaxed">
-            See how different startup business models performed under Dragon cross-examination.
+            See how different college projects were assessed on technical feasibility, societal benefit, and unit economics.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             {
-              brand: 'RoboChai Automation',
-              category: 'DeepTech Food Robotics',
-              verdict: 'Deal Closed: ₹1.2 Cr for 3.5%',
-              investors: 'Peyush Bansal and Aman Gupta',
+              brand: 'JalShuddhi Low-Cost Water Sensor',
+              category: 'Rural IoT & Public Health',
+              verdict: 'Viable Social Enterprise: High Impact',
+              leadMentor: 'Peyush Bansal',
               summary:
-                'Optical vision hardware moat satisfied Peyush. Aman backed pan-India commercial deployment.'
+                'Unit cost of ₹220 with direct societal benefit to rural water testing. Peyush guided the team on optical calibration moats.'
             },
             {
-              brand: 'GlowRoot Ayurvedic D2C',
-              category: 'Beauty and Personal Care',
-              verdict: 'Deal Closed: ₹75 Lakhs for 4%',
-              investors: 'Vineeta Singh (Solo Deal)',
+              brand: 'CampusRide Peer Cycle Sharing',
+              category: 'Smart Campus Mobility',
+              verdict: 'Operational Reality Check: Pivot Required',
+              leadMentor: 'Ashneer Grover',
               summary:
-                '68% gross margin with 38% 60-day repeat cohort convinced Vineeta to make a clean offer.'
+                'Negative unit contribution due to bike maintenance and theft. Ashneer delivered a formal scolding on ignoring operational depreciation.'
             },
             {
-              brand: 'InstantBite Cloud Kitchens',
-              category: 'Hyperlocal Food Delivery',
-              verdict: 'All 6 Dragons Out',
-              investors: 'Ashneer Roasted | Namita Out',
+              brand: 'MedKit Verified Generic Delivery',
+              category: 'Healthcare Access',
+              verdict: 'Feasibility Approval: Regulatory Steps',
+              leadMentor: 'Namita Thapar',
               summary:
-                'High burn rate with negative contribution margins. Dragons exited quickly on unsustainable CAC.'
+                'High societal need with 55% gross margin. Namita provided precise guidance on CDSCO and pharmacy state licensing.'
             }
           ].map((deal, idx) => (
             <div
@@ -636,8 +723,8 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
                 </p>
               </div>
               <div className="pt-3 border-t border-slate-200/60 text-[11px] text-slate-500">
-                <span>Involved Dragons: </span>
-                <span className="text-slate-800 font-medium">{deal.investors}</span>
+                <span>Lead Reviewer: </span>
+                <span className="text-slate-800 font-medium">{deal.leadMentor}</span>
               </div>
             </div>
           ))}
@@ -645,36 +732,36 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
       </section>
 
       {/* ---------------------------------------------------------------------
-          Den Rules: Clean Glass Card
+          Boardroom Rules: Real-World Principles
       ---------------------------------------------------------------------- */}
       <section id="tank-rules" className="relative z-10 py-16 px-4 md:px-8 max-w-7xl mx-auto w-full">
         <div className="glass-panel rounded-3xl p-6 md:p-10 shadow-xs">
           <div className="max-w-2xl mb-6">
             <span className="text-xs font-bold tracking-wider text-amber-700 uppercase block mb-1">
-              Founder Preparation
+              Guiding Principles
             </span>
             <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-              The 4 Rules of the Den
+              The 4 Rules of the Mentorship Boardroom
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             {[
               {
-                title: '1. Know Your Numbers Down to the Paisa',
-                desc: 'Be ready with your Gross Margin, Blended CAC, and Monthly Burn rate without hesitation.'
+                title: '1. Society First, Technology Second',
+                desc: 'A sophisticated AI model or prototype is useless if it does not solve an acute, identifiable pain point for real human beings.'
               },
               {
-                title: '2. Valuation Is Earned, Not Assumed',
-                desc: 'Multiples should correlate with revenue, defensible intellectual property, and path to profitability.'
+                title: '2. Unit Costs Down to the Paisa',
+                desc: 'Calculate exact component, hosting, and delivery costs. A venture cannot survive on student pocket money or subsidized pricing.'
               },
               {
-                title: '3. A Mobile App Is Not A Moat',
-                desc: 'Demonstrate proprietary technology, customer retention stickiness, or distribution partnerships.'
+                title: '3. Technical & Operational Feasibility',
+                desc: 'Be honest about dependencies, regulatory approvals, and team bandwidth. Feasibility in the field beats hype on a slide.'
               },
               {
-                title: '4. Respect Working Capital Cycles',
-                desc: 'Monitor inventory turnover and receivable cycles to ensure sustainable operational cash flow.'
+                title: '4. Strictly One Shark at a Time',
+                desc: 'Respectful, focused dialogue. Each mentor examines a specific dimension of your business without crosstalk or overlapping noise.'
               }
             ].map((rule, idx) => (
               <div key={idx} className="p-4 rounded-2xl glass-panel-subtle">
@@ -696,24 +783,24 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Ready to Face the Boardroom?
+            Ready to Face the Mentorship Boardroom?
           </h2>
           <p className="mt-2.5 text-xs sm:text-sm text-slate-600 max-w-lg mx-auto leading-relaxed">
-            The 6 Dragons are seated. Present your business ask, answer investor inquiries, and negotiate your term sheet.
+            The mentors are seated. Present your student prototype, answer rigorous one-on-one inquiries, and receive your comprehensive viability verdict.
           </p>
 
           <button
             onClick={() => onEnterPitch()}
             className="mt-6 px-8 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-xs transition-all hover:scale-[1.02] active:scale-[0.98] inline-flex items-center gap-2"
           >
-            <span>Enter Pitch Room</span>
+            <span>Enter Pitch Boardroom</span>
             <ChevronRight className="w-4 h-4 text-amber-300" />
           </button>
         </div>
       </section>
 
       {/* ---------------------------------------------------------------------
-          Detailed Glassmorphism Footer (Clean, Modern, No Em Dash)
+          Detailed Glassmorphism Footer
       ---------------------------------------------------------------------- */}
       <footer className="relative z-10 mt-auto border-t border-slate-200/80 bg-white/60 backdrop-blur-2xl text-slate-600 pt-14 pb-12 px-4 md:px-8">
         <div className="max-w-7xl mx-auto space-y-10">
@@ -721,24 +808,24 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
           <div className="glass-panel-subtle rounded-2xl p-5 md:p-6 flex flex-col md:flex-row items-center justify-between gap-5">
             <div className="max-w-md">
               <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider block mb-0.5">
-                Founder Dispatch
+                Student Venture Dispatch
               </span>
               <h4 className="text-base font-bold text-slate-900">
-                Weekly Pitch Breakdowns and Valuation Guides
+                Weekly Student Venture Viability & Unit Economics Briefing
               </h4>
               <p className="text-xs text-slate-500 mt-0.5">
-                Unit economics analysis, CAC cohort trends, and valuation formulas.
+                Real-world unit cost breakdowns, feasibility frameworks, and societal impact case studies.
               </p>
             </div>
 
             <div className="flex w-full md:w-auto items-center gap-2">
               <input
                 type="email"
-                placeholder="founder@startup.in"
+                placeholder="founder@student.edu"
                 className="px-3.5 py-2 rounded-xl glass-panel text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 w-full sm:w-60"
               />
               <button
-                onClick={() => alert('Subscribed to the Founder Dispatch!')}
+                onClick={() => alert('Subscribed to the Student Venture Dispatch!')}
                 className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shrink-0 transition-all shadow-xs"
               >
                 Subscribe
@@ -757,18 +844,18 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
                 </span>
               </div>
               <p className="text-slate-500 text-[11px] leading-relaxed">
-                Real-time multi-agent investment simulator created to help founders test unit economics against iconic investor personas.
+                Dedicated student venture simulator helping college founders evaluate feasibility, societal need, and unit economics with iconic mentors.
               </p>
               <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 font-medium pt-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
-                <span>LangGraph & Gemini Flash Online</span>
+                <span>Single-Speaker Orchestration Active</span>
               </div>
             </div>
 
             {/* Col 2: Simulator Features */}
             <div className="space-y-2">
               <h5 className="font-bold text-slate-900 tracking-wider uppercase text-[11px]">
-                Simulator
+                Boardroom
               </h5>
               <ul className="space-y-1.5 text-slate-500 text-[11px]">
                 <li>
@@ -780,92 +867,72 @@ export default function HomePage({ onEnterPitch }: HomePageProps) {
                   </button>
                 </li>
                 <li>
-                  <a href="#valuation-lab" className="hover:text-slate-900 transition-colors">
-                    Pre-Money Valuation Lab
+                  <a href="#viability-lab" className="hover:text-slate-900 transition-colors">
+                    Unit Economics Lab
                   </a>
                 </li>
                 <li>
                   <a href="#dragons" className="hover:text-slate-900 transition-colors">
-                    Investor Voice Auditions
+                    Meet the 6 Mentors
                   </a>
                 </li>
                 <li>
                   <a href="#how-it-works" className="hover:text-slate-900 transition-colors">
-                    Evaluation Pipeline
-                  </a>
-                </li>
-                <li>
-                  <a href="#hall-of-fame" className="hover:text-slate-900 transition-colors">
-                    Deal Term Sheets
+                    Evaluation Flow
                   </a>
                 </li>
               </ul>
             </div>
 
-            {/* Col 3: The 6 Dragons */}
+            {/* Col 3: Pillars */}
             <div className="space-y-2">
               <h5 className="font-bold text-slate-900 tracking-wider uppercase text-[11px]">
-                The 6 Dragons
+                Pillars
               </h5>
               <ul className="space-y-1.5 text-slate-500 text-[11px]">
-                <li>Ashneer Grover : Roaster</li>
-                <li>Aman Gupta : Marketing</li>
-                <li>Peyush Bansal : DeepTech</li>
-                <li>Namita Thapar : Operations</li>
-                <li>Anupam Mittal : Valuation Guru</li>
-                <li>Vineeta Singh : D2C Cohorts</li>
+                <li>Societal Need & Benefits</li>
+                <li>Technical Feasibility</li>
+                <li>Commercial Viability</li>
+                <li>Scalability & Impact</li>
               </ul>
             </div>
 
-            {/* Col 4: AI Architecture */}
+            {/* Col 4: Campus Resources */}
             <div className="space-y-2">
               <h5 className="font-bold text-slate-900 tracking-wider uppercase text-[11px]">
-                Architecture
+                Campus Resources
               </h5>
               <ul className="space-y-1.5 text-slate-500 text-[11px]">
-                <li>LangGraph Agent Network</li>
-                <li>Google Gemini 1.5 Flash</li>
-                <li>Whisper Speech-to-Text</li>
-                <li>ElevenLabs Voice Streaming</li>
-                <li>Supabase pgvector Memory</li>
+                <li>Hackathon Pitch Kit</li>
+                <li>Capstone Viability Rubric</li>
+                <li>Campus Pilot Guide</li>
+                <li>Non-Dilutive Student Grants</li>
               </ul>
             </div>
 
-            {/* Col 5: Disclaimers */}
+            {/* Col 5: Governance */}
             <div className="space-y-2">
               <h5 className="font-bold text-slate-900 tracking-wider uppercase text-[11px]">
-                Disclaimer
+                Governance
               </h5>
-              <p className="text-[10px] text-slate-400 leading-relaxed">
-                Educational and satirical AI simulation created for pitch preparation. All characterizations are simulated parodies.
-              </p>
-              <p className="text-[10px] text-slate-400 leading-relaxed">
-                Audio is processed in memory and never retained on servers.
-              </p>
+              <ul className="space-y-1.5 text-slate-500 text-[11px]">
+                <li>Academic Integrity Policy</li>
+                <li>Student Cap Table Privacy</li>
+                <li>Terms of Educational Use</li>
+                <li>Open Mentor Standards</li>
+              </ul>
             </div>
           </div>
 
-          {/* Bottom Copyright & Ticker */}
-          <div className="pt-6 border-t border-slate-200/70 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] text-slate-400">
+          {/* Bottom Copyright & Disclaimer */}
+          <div className="pt-6 border-t border-slate-200/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-2">
             <div>
-              © 2026 Dragon Tank India AI Simulator. Built for Indian founders building world-class startups.
+              © {new Date().getFullYear()} Dragon Tank India AI Simulator. Built for Student Innovators.
             </div>
-
-            <div className="flex items-center gap-3">
-              <a href="#dragons" className="hover:text-slate-700">
-                The Dragons
-              </a>
-              <span>·</span>
-              <a href="#valuation-lab" className="hover:text-slate-700">
-                Valuation Lab
-              </a>
-              <span>·</span>
-              <button
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="hover:text-slate-900 transition-colors font-medium"
-              >
-                Back to Top ↑
-              </button>
+            <div className="flex items-center gap-4">
+              <span>Zero Television Gimmicks</span>
+              <span>•</span>
+              <span>100% Real-World Viability</span>
             </div>
           </div>
         </div>
