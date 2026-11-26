@@ -178,7 +178,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
 
   const scrollToBottom = () => {
-    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    chatBottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }
 
   useEffect(() => {
@@ -581,756 +581,542 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
     return p?.accentColor || '#D97706'
   }
 
-  return (
-    <div className="relative min-h-screen bg-[#FAF8F5] text-[#1C1917] flex flex-col font-sans-ui overflow-x-hidden selection:bg-amber-100 selection:text-amber-950 grain">
-      {/* -----------------------------------------------------------------------
-          Ambient Luxury Warm Atmosphere (Ishaan-UI Palette)
-      ------------------------------------------------------------------------ */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-amber-100/40 rounded-full blur-[140px]" />
-        <div className="absolute top-1/4 right-0 w-[420px] h-[420px] bg-stone-200/40 rounded-full blur-[150px]" />
-        <div className="absolute -bottom-20 left-1/3 w-96 h-96 bg-orange-50/40 rounded-full blur-[150px]" />
-      </div>
+  // ---------------------------------------------------------------------------
+  // View helpers
+  // ---------------------------------------------------------------------------
+  const founderTurns = messages.filter((m) => m.role === 'founder').length
+  const isEmpty = founderTurns === 0
+  const targetProfile = ALL_DRAGON_PROFILES.find((p) => p.name === replyTargetDragon)
+  const speakingDragon = dragons.find((d) => d.id === activeSpeaker)
 
-      {/* -----------------------------------------------------------------------
-          Glassmorphic Header with Minimal Dock
-      ------------------------------------------------------------------------ */}
-      <header className="sticky top-0 z-30 glass-dock border-b border-stone-200/60 px-4 md:px-8 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {/* Back to Home Button */}
+  const pillarTone = (value?: string): 'good' | 'mid' | 'risk' | 'pending' => {
+    const v = (value || '').toLowerCase()
+    if (!v || v.includes('awaiting')) return 'pending'
+    if (/(high need|high feasibility|viable|national)/.test(v)) return 'good'
+    if (/(moderate|regional|campus to)/.test(v)) return 'mid'
+    return 'risk'
+  }
+  const toneStyles = {
+    good: { chip: 'bg-emerald-50 text-emerald-800 ring-emerald-200', bar: 'bg-emerald-500', w: '100%', label: 'Strong' },
+    mid: { chip: 'bg-amber-50 text-amber-800 ring-amber-200', bar: 'bg-amber-500', w: '60%', label: 'Okay' },
+    risk: { chip: 'bg-rose-50 text-rose-800 ring-rose-200', bar: 'bg-rose-500', w: '30%', label: 'Risky' },
+    pending: { chip: 'bg-stone-100 text-stone-500 ring-stone-200', bar: 'bg-stone-300', w: '0%', label: 'Not yet' }
+  }
+
+  const pillars = [
+    { key: 'need', title: 'Customer need', icon: IconFlame, value: businessMetrics.societal_need, summary: businessMetrics.need_summary },
+    { key: 'feas', title: 'Can you build it?', icon: IconGear, value: businessMetrics.feasibility, summary: businessMetrics.feasibility_summary },
+    { key: 'money', title: 'Makes money?', icon: IconCoins, value: businessMetrics.commercial_viability, summary: businessMetrics.money_making_summary },
+    { key: 'scale', title: 'Can it scale?', icon: IconAscend, value: businessMetrics.scalability, summary: businessMetrics.scalability_summary }
+  ]
+
+  const numbers = [
+    ['Revenue', businessMetrics.revenue],
+    ['Gross margin', businessMetrics.gross_margin],
+    ['CAC', businessMetrics.cac],
+    ['Repeat rate', businessMetrics.repeat_rate],
+    ['Ask', businessMetrics.ask]
+  ].filter(([, v]) => v && !String(v).toLowerCase().includes('not stated'))
+
+  const quickPrompts = [
+    { label: 'Who is my customer?', text: 'Is the customer need strong enough? What would make someone switch to us?' },
+    { label: 'Is my pricing right?', text: 'Here is how we plan to charge. Does our pricing cover our costs?' },
+    { label: 'Can we build it?', text: 'Is our tech and operations plan realistic for a student team?' },
+    { label: 'How do we scale?', text: 'How do we grow beyond our campus? What is our biggest scaling risk?' }
+  ]
+
+  const samplePitches = [
+    { emoji: '🎓', title: 'Campus AI study copilot', text: 'We are 3 computer science students who built an AI study copilot that summarizes lecture PDFs and generates mock quizzes. 850 students on our campus use it weekly. We charge nothing yet and want to expand to 10 colleges.' },
+    { emoji: '☕', title: 'Hostel late-night delivery', text: 'We run late-night snack and coffee delivery across 6 hostels with a 15-minute guarantee. ₹1.8 lakh sales last month, 62% gross margin, zero marketing spend. We want ₹15 lakh to buy two e-scooters and inventory.' },
+    { emoji: '⚡', title: 'IoT EV charging socket', text: 'Our final-year project is a smart charging socket for campus two-wheelers with UPI QR billing. Tested in 3 parking lots with 300 charge cycles. We need ₹35 lakh to manufacture the first 100 units.' },
+    { emoji: '🚀', title: 'Hackathon idea, big valuation', text: 'We won a hackathon last Sunday with an AI social network idea. 20 signups from roommates. We are asking ₹2 crore for 2% equity.' }
+  ]
+
+  const toggleTarget = (name: string) => setReplyTargetDragon((cur) => (cur === name ? null : name))
+
+  const [mobileTab, setMobileTab] = useState<'chat' | 'score'>('chat')
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+  useEffect(() => {
+    const el = textareaRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px'
+  }, [inputText])
+
+  const focusRing = 'focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-[#FAF8F5]'
+
+  const Avatar = ({ id, size = 36, ring = false }: { id?: string; size?: number; ring?: boolean }) => {
+    const p = ALL_DRAGON_PROFILES.find((x) => x.id === id)
+    const color = p?.accentColor || '#78716C'
+    return (
+      <span
+        className={`relative inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white ${ring ? 'ring-2 ring-offset-2 ring-offset-white' : ''}`}
+        style={{ width: size, height: size, background: color, fontSize: size * 0.36, ['--tw-ring-color' as any]: color }}
+        aria-hidden
+      >
+        {p?.name.split(' ').map((s) => s[0]).join('') || 'DT'}
+      </span>
+    )
+  }
+
+  // ---------------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------------
+  return (
+    <div className="relative flex h-[100dvh] flex-col bg-[#FAF8F5] font-sans-ui text-[#1C1917] selection:bg-amber-100">
+      {/* Header */}
+      <header className="z-30 flex items-center justify-between gap-2 border-b border-stone-200 bg-white/80 px-3 py-2.5 backdrop-blur md:px-6">
+        <div className="flex min-w-0 items-center gap-2 md:gap-3">
           <button
             onClick={onBackToHome}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-btn text-xs font-semibold text-stone-700 hover:text-stone-950 transition-all shadow-xs"
-            title="Return to Home Page"
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-lg text-stone-600 hover:bg-stone-100 hover:text-stone-900 ${focusRing}`}
+            aria-label="Back to home"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Home</span>
+            <ArrowLeft className="h-4 w-4" />
           </button>
-
-          <div className="w-8 h-8 rounded-xl bg-[#1C1917] text-amber-400 flex items-center justify-center shadow-xs">
-            <IconFlame size={17} />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1C1917] text-amber-400">
+            <IconFlame size={16} />
           </div>
-          <div>
-            <div className="flex items-baseline gap-2">
-              <h1 className="font-extrabold text-base md:text-lg tracking-tight text-[#1C1917]">
-                Dragon Tank <span className="font-display italic font-normal text-amber-800">India</span>
-              </h1>
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-800 border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
-                Strictly 1 Speaker
-              </span>
-            </div>
+          <div className="min-w-0">
+            <h1 className="truncate text-[15px] font-extrabold leading-tight tracking-tight">
+              Dragon Tank <span className="font-display font-normal italic text-amber-800">India</span>
+            </h1>
+            <p className="flex items-center gap-1.5 text-[11px] text-stone-500">
+              <span className={`h-1.5 w-1.5 rounded-full ${isConnected ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse'}`} />
+              {isConnected ? 'Dragons are live' : 'Reconnecting…'}
+            </p>
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-2">
-          {/* Sample Pitches */}
+        <div className="flex items-center gap-1.5">
           <button
-            onClick={() => setShowPitchPresets(true)}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-btn text-xs font-semibold text-stone-700 hover:text-stone-900 transition-all"
+            onClick={handleCopy}
+            disabled={isEmpty}
+            className={`hidden h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold text-stone-600 hover:bg-stone-100 disabled:opacity-40 sm:inline-flex ${focusRing}`}
           >
-            <IconSliders size={13} className="text-amber-800" />
-            <span>Presets</span>
+            {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+            {copied ? 'Copied' : 'Copy transcript'}
           </button>
-
-          {/* Final Verdict */}
-          <button
-            onClick={handleVerdict}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#1C1917] hover:bg-stone-800 text-stone-50 text-xs font-semibold shadow-xs transition-all hover:scale-[1.02]"
-          >
-            <IconSeal size={13} className="text-amber-400" />
-            <span>Final Ruling</span>
-          </button>
-
-          {/* Reset */}
           <button
             onClick={handleReset}
-            className="p-2 rounded-xl glass-btn text-stone-600 hover:text-stone-900 transition-all"
-            title="Reset Floor"
+            className={`inline-flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold text-stone-600 hover:bg-stone-100 ${focusRing}`}
+            aria-label="Start over"
+            title="Start over"
           >
-            <IconRotate size={15} />
+            <IconRotate size={14} />
+            <span className="hidden sm:inline">Start over</span>
+          </button>
+          <button
+            onClick={handleVerdict}
+            disabled={isEmpty || !isConnected || isEvaluating}
+            title={isEmpty ? 'Pitch first, then ask for the verdict' : 'All six Dragons give their final verdict'}
+            className={`inline-flex h-9 items-center gap-1.5 rounded-lg bg-[#1C1917] px-3.5 text-xs font-semibold text-white shadow-sm transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:bg-stone-300 ${focusRing}`}
+          >
+            <IconSeal size={14} className="text-amber-400" />
+            Get verdict
           </button>
         </div>
       </header>
 
-      {/* -----------------------------------------------------------------------
-          Live Interruption Banner (High Drama Broadcast Alert)
-      ------------------------------------------------------------------------ */}
-      <AnimatePresence>
-        {interruptionBanner && (
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            className="sticky top-14 z-20 mx-auto max-w-xl px-4 py-1.5"
-          >
-            <div className="flex items-center justify-center gap-2 px-4 py-2 rounded-2xl glass-dock bg-amber-500/90 text-slate-950 font-bold text-xs shadow-lg border border-amber-300 tracking-wide">
-              <IconFlame size={15} className="text-stone-950" />
-              <span>
-                Intervention: <span className="underline">{interruptionBanner.interrupter}</span> speaks to {interruptionBanner.interrupted}
-              </span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {!isConnected && (
+        <div role="status" className="flex items-center justify-center gap-2 bg-rose-50 px-4 py-2 text-xs text-rose-800">
+          <AlertTriangle className="h-3.5 w-3.5" />
+          Can&apos;t reach the Dragon server. Make sure the backend is running on port 8000. Retrying automatically…
+        </div>
+      )}
 
-      {/* -----------------------------------------------------------------------
-          Top 6 Dragons Cards Strip (Fully Transparent Glassmorphism)
-      ------------------------------------------------------------------------ */}
-      <section className="relative z-10 max-w-7xl w-full mx-auto px-4 md:px-8 pt-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
-          {dragons.map((dragon) => {
-            const isSpeaking = activeSpeaker === dragon.id
-            const isOut = dragon.status === 'out'
-            const hasOffer = dragon.status === 'offer'
-            const profile = ALL_DRAGON_PROFILES.find((p) => p.id === dragon.id)
-
+      {/* Dragon panel */}
+      <nav aria-label="Dragon panel" className="border-b border-stone-200 bg-white/60">
+        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-3 py-2.5 md:px-6 lg:justify-center [scrollbar-width:none]">
+          {dragons.map((d) => {
+            const isSpeaking = speakingDragon?.id === d.id
+            const isTarget = replyTargetDragon === d.name
+            const profile = ALL_DRAGON_PROFILES.find((p) => p.id === d.id)
             return (
               <div
-                key={dragon.id}
-                className={`rounded-2xl p-3 transition-all duration-300 flex flex-col justify-between relative overflow-hidden ${
-                  isSpeaking
-                    ? 'dragon-speaking-glass ring-2 ring-amber-500/80 scale-[1.02]'
-                    : isOut
-                    ? 'glass-panel opacity-45 bg-slate-100/40'
-                    : hasOffer
-                    ? 'glass-panel border-emerald-400/60 ring-2 ring-emerald-500/20'
-                    : 'glass-panel hover:bg-white/80 hover:-translate-y-0.5'
+                key={d.id}
+                className={`group flex shrink-0 items-center gap-2 rounded-xl border px-2.5 py-1.5 transition ${
+                  isTarget ? 'border-stone-900 bg-stone-900 text-white' : isSpeaking ? 'border-amber-300 bg-amber-50' : 'border-stone-200 bg-white hover:border-stone-300'
                 }`}
               >
-                {/* Header Icon + Dynamic Status */}
-                <div className="flex items-center justify-between mb-2">
-                  <div className="w-7 h-7 rounded-lg glass-pill flex items-center justify-center shadow-xs">
-                    {getDragonSymbol(dragon.id)}
-                  </div>
-
-                  {/* Status Indicator */}
-                  {isSpeaking ? (
-                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-[10px] font-bold text-amber-800">
-                      <div className="flex items-center gap-0.5 h-2">
-                        <span className="w-0.5 bg-amber-600 rounded-full eq-bar-1" />
-                        <span className="w-0.5 bg-amber-600 rounded-full eq-bar-2" />
-                        <span className="w-0.5 bg-amber-600 rounded-full eq-bar-3" />
-                      </div>
-                      Speaking
-                    </div>
-                  ) : isOut ? (
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-rose-500/10 text-rose-700 border border-rose-500/20">
-                      OUT
+                <button
+                  onClick={() => toggleTarget(d.name)}
+                  aria-pressed={isTarget}
+                  className={`flex items-center gap-2 rounded-lg text-left ${focusRing}`}
+                  title={isTarget ? `Stop asking ${d.name} directly` : `Ask ${d.name} directly`}
+                >
+                  <span className="relative">
+                    <Avatar id={d.id} size={30} />
+                    {isSpeaking && <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white animate-pulse" />}
+                  </span>
+                  <span className="leading-tight">
+                    <span className="block text-[13px] font-semibold">{d.name.split(' ')[0]}</span>
+                    <span className={`hidden text-[11px] sm:block ${isSpeaking ? 'text-emerald-700 font-semibold' : isTarget ? 'text-stone-300' : 'text-stone-500'}`}>
+                      {isSpeaking ? 'Speaking…' : DOMAIN_SHORT[d.id] || 'Mentor'}
                     </span>
-                  ) : hasOffer ? (
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-extrabold bg-emerald-500/10 text-emerald-800 border border-emerald-500/30">
-                      OFFER
-                    </span>
-                  ) : (
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                  )}
-                </div>
-
-                {/* Identity */}
-                <div>
-                  <h3 className="font-extrabold text-slate-900 text-xs tracking-tight truncate">
-                    {dragon.name}
-                  </h3>
-                  <p className="text-[10px] font-medium text-slate-500 truncate mb-1">
-                    {dragon.archetype}
-                  </p>
-                  <p className="text-[10px] text-slate-600 line-clamp-2 leading-tight italic">
-                    "{dragon.tagline}"
-                  </p>
-                </div>
-
-                {/* Interactive All Dialogues Trigger */}
-                <div className="mt-2.5 pt-2 border-t border-white/60">
+                  </span>
+                </button>
+                {profile && (
                   <button
-                    onClick={() => profile && setSelectedDragonForDialogues(profile)}
-                    className="w-full py-1 px-1.5 rounded-lg glass-btn text-[10px] font-semibold text-slate-700 hover:text-slate-950 flex items-center justify-center gap-1"
+                    onClick={() => setSelectedDragonForDialogues(profile)}
+                    className={`ml-0.5 hidden sm:block rounded-md p-1 ${isTarget ? 'text-stone-300 hover:text-white' : 'text-stone-400 hover:text-stone-700'} ${focusRing}`}
+                    aria-label={`About ${d.name}`}
                   >
-                    <MessageCircle className="w-3 h-3 text-amber-700" />
-                    <span>All Famous Dialogues</span>
+                    <MessageCircle className="h-3.5 w-3.5" />
                   </button>
-                </div>
+                )}
               </div>
             )
           })}
         </div>
-      </section>
+      </nav>
 
-      {/* -----------------------------------------------------------------------
-          Split-Pane Main Stage (Transcript + Metrics HUD)
-      ------------------------------------------------------------------------ */}
-      <main className="relative z-10 max-w-7xl w-full mx-auto px-4 md:px-8 mt-3.5 grid grid-cols-1 lg:grid-cols-12 gap-5 flex-1">
-        {/* Left (60%): Clean Glass Boardroom Transcript */}
-        <section className="lg:col-span-7 flex flex-col glass-panel rounded-3xl overflow-hidden h-[540px] md:h-[620px] shadow-sm">
-          {/* Transcript Header */}
-          <div className="px-5 py-2.5 border-b border-white/60 flex items-center justify-between bg-white/40">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Live Studio Floor
-              </span>
-              <span className="text-[11px] text-slate-400 font-medium">
-                ({messages.length} exchanges)
-              </span>
-            </div>
-            <button
-              onClick={handleCopy}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-1"
-            >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-              {copied ? 'Copied' : 'Copy Pitch'}
-            </button>
-          </div>
+      {/* Mobile tabs */}
+      <div className="flex border-b border-stone-200 bg-white lg:hidden" role="tablist">
+        {(['chat', 'score'] as const).map((t) => (
+          <button
+            key={t}
+            role="tab"
+            aria-selected={mobileTab === t}
+            onClick={() => setMobileTab(t)}
+            className={`flex-1 py-2.5 text-sm font-semibold ${mobileTab === t ? 'border-b-2 border-stone-900 text-stone-900' : 'text-stone-500'}`}
+          >
+            {t === 'chat' ? 'Boardroom' : 'Scorecard'}
+          </button>
+        ))}
+      </div>
 
-          {/* Dialogue Feed */}
-          <div className="flex-1 overflow-y-auto p-4 md:p-5 space-y-3.5">
-            {messages.map((msg) => {
-              const isFounder = msg.role === 'founder'
-              const isDragon = msg.role === 'dragon'
-              const isOut = msg.action === 'out'
-              const isOffer = msg.action === 'offer'
-              const isInterruption = msg.is_interruption
-              const dragonProfile = ALL_DRAGON_PROFILES.find((p) => p.name === msg.speaker || p.id === msg.dragonId)
-
-              return (
-                <div
-                  key={msg.id}
-                  className={`flex flex-col ${isFounder ? 'items-end' : 'items-start'} text-sm`}
-                >
-                  <div
-                    className={`max-w-[88%] md:max-w-[84%] rounded-2xl px-4 py-3 transition-all ${
-                      isFounder
-                        ? 'bg-slate-900 text-white rounded-tr-xs shadow-xs'
-                        : isOut
-                        ? 'glass-panel bg-rose-50/70 border-rose-200/90 text-rose-950 rounded-tl-xs'
-                        : isOffer
-                        ? 'glass-panel bg-emerald-50/80 border-emerald-300 text-emerald-950 rounded-tl-xs shadow-xs'
-                        : isInterruption
-                        ? 'glass-panel bg-amber-50/70 border-amber-300/80 text-amber-950 rounded-tl-xs shadow-xs'
-                        : 'glass-panel text-slate-900 rounded-tl-xs shadow-2xs'
-                    }`}
-                  >
-                    {/* Header with Prominent Dragon Avatar, Full Name, and Tone Badges */}
-                    <div className="flex items-center justify-between gap-3 mb-1.5 flex-wrap">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {isDragon && dragonProfile && (
-                          <div
-                            className="w-5 h-5 rounded-md flex items-center justify-center font-black text-[9px] text-white shadow-2xs"
-                            style={{ backgroundColor: dragonProfile.accentColor }}
-                          >
-                            {dragonProfile.avatarInitials}
-                          </div>
-                        )}
-
-                        <span
-                          className={`font-black text-xs ${
-                            isFounder ? 'text-amber-300' : 'text-slate-900'
-                          }`}
-                        >
-                          {msg.speaker}
-                        </span>
-
-                        {isDragon && dragonProfile && (
-                          <span className="text-[10px] text-slate-500 font-medium hidden sm:inline">
-                            · {dragonProfile.archetype}
-                          </span>
-                        )}
-
-                        {/* Tone & Drama Badges */}
-                        {msg.tone_badge && (
-                          <span className="text-[10px] font-mono-num font-semibold px-2 py-0.5 rounded-md glass-inset text-amber-900 border border-amber-800/20">
-                            {msg.tone_badge.replace(/[🔥💡⚠️⚙️💰🌍📈🌱📋🏛️⚡]/g, '').trim()}
-                          </span>
-                        )}
-
-                        {isInterruption && msg.interrupted_speaker && (
-                          <span className="text-[10px] font-mono-num font-semibold text-amber-950 bg-amber-100/80 px-2 py-0.5 rounded border border-amber-300">
-                            Intervenes · {msg.interrupted_speaker}
-                          </span>
-                        )}
-
-                        {isOut && (
-                          <span className="text-[10px] font-mono-num font-bold text-rose-800 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                            Out
-                          </span>
-                        )}
-
-                        {isOffer && (
-                          <span className="text-[10px] font-mono-num font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-300">
-                            Endorsement
-                          </span>
-                        )}
-                      </div>
-
-                      {isDragon && (
-                        <button
-                          onClick={() => {
-                            setReplyTargetDragon(msg.speaker)
-                            const inputEl = document.getElementById('boardroom-pitch-input')
-                            inputEl?.focus()
-                          }}
-                          className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/70 hover:bg-slate-900 hover:text-white text-slate-600 transition-all border border-slate-200/80 flex items-center gap-1 shadow-2xs cursor-pointer"
-                          title={`Reply directly to ${msg.speaker}`}
-                        >
-                          <MessageCircle className="w-3 h-3" />
-                          <span>Reply</span>
-                        </button>
-                      )}
-                    </div>
-
-                    <p
-                      className={`leading-relaxed text-[13px] whitespace-pre-wrap ${
-                        isFounder ? 'text-slate-100' : 'text-slate-800'
-                      }`}
-                    >
-                      {msg.content}
-                    </p>
-                  </div>
-
-                  <span className="text-[10px] text-slate-400 mt-1 px-1">
-                    {msg.timestamp}
-                  </span>
+      {/* Main */}
+      <main className="mx-auto grid min-h-0 w-full max-w-7xl flex-1 grid-cols-1 gap-5 px-0 md:px-6 md:py-5 lg:grid-cols-12">
+        {/* Chat column */}
+        <section
+          className={`${mobileTab === 'chat' ? 'flex' : 'hidden'} min-h-0 flex-col overflow-hidden bg-white md:rounded-2xl md:border md:border-stone-200 md:shadow-sm lg:col-span-8 lg:flex`}
+          aria-label="Boardroom conversation"
+        >
+          <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5 md:px-6" aria-live="polite">
+            {isEmpty ? (
+              <div className="mx-auto max-w-xl py-4 text-center md:py-8">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700">
+                  <IconFlame size={24} />
                 </div>
-              )
-            })}
+                <h2 className="font-display text-2xl font-semibold md:text-3xl">Pitch your idea to the Dragons</h2>
+                <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                  Describe what you&apos;re building in a few sentences. The Dragon whose expertise fits best will reply with honest
+                  feedback: what works, what&apos;s missing, and what to do next.
+                </p>
 
-            {isEvaluating && (
-              <div className="flex items-center gap-2 p-3 rounded-2xl glass-panel text-xs text-slate-700 max-w-xs animate-pulse border border-amber-300">
-                <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-                <span className="font-semibold">{evaluatingText}</span>
+                <div className="mt-6 grid grid-cols-2 gap-2 text-left sm:grid-cols-4">
+                  {[
+                    ['1', 'The problem', 'Who has it?'],
+                    ['2', 'Your solution', 'What you built'],
+                    ['3', 'Money', 'Price vs cost'],
+                    ['4', 'Traction', 'Real users / sales']
+                  ].map(([n, t, s]) => (
+                    <div key={n} className="rounded-xl border border-stone-200 bg-stone-50 p-3">
+                      <div className="text-[11px] font-bold text-amber-700">{n}</div>
+                      <div className="text-[13px] font-semibold">{t}</div>
+                      <div className="text-[11px] text-stone-500">{s}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="mb-2 mt-7 text-xs font-semibold uppercase tracking-wider text-stone-500">Or try a sample pitch</p>
+                <div className="grid gap-2 text-left sm:grid-cols-2">
+                  {samplePitches.map((s) => (
+                    <button
+                      key={s.title}
+                      onClick={() => {
+                        setInputText(s.text)
+                        textareaRef.current?.focus()
+                      }}
+                      className={`flex items-start gap-3 rounded-xl border border-stone-200 bg-white p-3 text-left transition hover:border-amber-300 hover:bg-amber-50/40 ${focusRing}`}
+                    >
+                      <span className="text-lg" aria-hidden>{s.emoji}</span>
+                      <span>
+                        <span className="block text-[13px] font-semibold">{s.title}</span>
+                        <span className="line-clamp-2 text-[12px] text-stone-500">{s.text}</span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
+            ) : (
+              <ol className="mx-auto flex max-w-3xl flex-col gap-5">
+                {messages
+                  .filter((m) => m.role !== 'moderator')
+                  .map((msg) => {
+                    if (msg.role === 'founder') {
+                      return (
+                        <li key={msg.id} className="flex justify-end">
+                          <div className="max-w-[85%] rounded-2xl rounded-br-md bg-[#1C1917] px-4 py-3 text-[14px] leading-relaxed text-stone-50">
+                            {msg.content}
+                          </div>
+                        </li>
+                      )
+                    }
+                    const profile = ALL_DRAGON_PROFILES.find((p) => p.id === msg.dragonId || p.name === msg.speaker)
+                    const action = String(msg.action || '')
+                    const verdict = action === 'verdict_in' ? 'in' : action === 'verdict_out' ? 'out' : null
+                    return (
+                      <li key={msg.id} className="flex gap-3">
+                        <Avatar id={profile?.id} size={36} />
+                        <div className="min-w-0 max-w-[88%]">
+                          <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                            <span className="text-[13px] font-bold">{msg.speaker}</span>
+                            {verdict ? (
+                              <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ring-1 ${verdict === 'in' ? 'bg-emerald-50 text-emerald-800 ring-emerald-200' : 'bg-rose-50 text-rose-800 ring-rose-200'}`}>
+                                {verdict === 'in' ? "I'm IN" : "I'm OUT"}
+                              </span>
+                            ) : (
+                              msg.tone_badge && (
+                                <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] font-medium text-stone-600">{msg.tone_badge}</span>
+                              )
+                            )}
+                          </div>
+                          <div
+                            className="rounded-2xl rounded-tl-md border bg-white px-4 py-3 text-[14px] leading-relaxed text-stone-800"
+                            style={{ borderColor: (profile?.accentColor || '#d6d3d1') + '40', borderLeftWidth: 3, borderLeftColor: profile?.accentColor }}
+                          >
+                            {msg.content}
+                          </div>
+                          {profile && (
+                            <button
+                              onClick={() => {
+                                setReplyTargetDragon(profile.name)
+                                textareaRef.current?.focus()
+                              }}
+                              className={`mt-1 rounded px-1 text-[12px] font-medium text-stone-500 hover:text-stone-900 ${focusRing}`}
+                            >
+                              Reply to {profile.name.split(' ')[0]} →
+                            </button>
+                          )}
+                        </div>
+                      </li>
+                    )
+                  })}
+                {isEvaluating && (
+                  <li className="flex items-center gap-3 text-sm text-stone-500">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-100">
+                      <span className="flex gap-0.5">
+                        {[0, 1, 2].map((i) => (
+                          <span key={i} className="h-1.5 w-1.5 animate-bounce rounded-full bg-stone-400" style={{ animationDelay: `${i * 120}ms` }} />
+                        ))}
+                      </span>
+                    </span>
+                    {evaluatingText}
+                  </li>
+                )}
+              </ol>
             )}
-
             <div ref={chatBottomRef} />
           </div>
 
-          {/* Quick Interactive Student Founder Action Chips */}
-          <div className="px-4 py-2.5 border-t border-stone-200/60 bg-stone-50/50 flex items-center gap-2 overflow-x-auto text-xs scrollbar-none">
-            <span className="text-[10px] font-mono-num font-bold text-stone-400 uppercase tracking-wider shrink-0">
-              Guidance:
-            </span>
-            {[
-              { label: 'Societal Need', icon: IconCompass, text: 'Here is the genuine societal problem we are solving and the exact user pain point.' },
-              { label: 'Money Making & Costs', icon: IconCoins, text: 'Here is how our venture generates real revenue, our unit costs, pricing, and how we achieve profitability.' },
-              { label: 'Technical Feasibility', icon: IconGear, text: 'Here is our technical prototype architecture and how our student team builds and maintains it.' },
-              { label: 'Scalability Plan', icon: IconAscend, text: 'Here is how we scale from our campus pilot to 15 universities and regional markets.' },
-              { label: 'Measurable Impact', icon: IconFlame, text: 'Here is the tangible benefit and measurable human or business impact our solution delivers.' },
-              { label: 'Request Formal Critique', icon: IconSeal, text: 'Dragons, please give us a direct, formal reality check on our biggest feasibility blindspot.' }
-            ].map((chip, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleSend(chip.text)}
-                className="shrink-0 px-3 py-1.5 rounded-xl glass-btn text-[11px] font-semibold text-stone-700 hover:text-stone-950 flex items-center gap-1.5 transition-all cursor-pointer"
-              >
-                <chip.icon size={12} className="text-amber-800" />
-                <span>{chip.label}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Target Dragon Selector for Replying */}
-          <div className="px-4 pt-2.5 pb-2 bg-stone-50/70 border-t border-stone-200/60 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5 max-w-full">
-              <span className="text-[10px] font-mono-num font-bold text-stone-400 uppercase tracking-wider shrink-0">
-                Direct To:
-              </span>
-              <button
-                onClick={() => setReplyTargetDragon(null)}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all shrink-0 cursor-pointer ${
-                  replyTargetDragon === null
-                    ? 'bg-[#1C1917] text-stone-50 shadow-xs'
-                    : 'glass-btn text-stone-600 hover:text-stone-900'
-                }`}
-              >
-                Auto-Select Domain Mentor
-              </button>
-              {ALL_DRAGON_PROFILES.map((dp) => (
-                <button
-                  key={dp.id}
-                  onClick={() => setReplyTargetDragon(dp.name)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
-                    replyTargetDragon === dp.name
-                      ? 'bg-[#1C1917] text-stone-50 shadow-xs ring-1 ring-amber-400'
-                      : 'glass-btn text-stone-700 hover:text-stone-950'
-                  }`}
-                >
-                  <span
-                    className="w-1.5 h-1.5 rounded-full inline-block"
-                    style={{ backgroundColor: dp.accentColor }}
-                  />
-                  <span>{dp.name.split(' ')[0]}</span>
-                </button>
-              ))}
-            </div>
-            {replyTargetDragon && (
-              <button
-                onClick={() => setReplyTargetDragon(null)}
-                className="text-[10px] text-stone-400 hover:text-stone-700 ml-2 shrink-0 underline cursor-pointer"
-              >
-                Reset
-              </button>
-            )}
-          </div>
-
-          {/* Desktop Pitch Dock */}
-          <div className="p-3.5 border-t border-stone-200/60 bg-white/70 backdrop-blur-md">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleToggleMic}
-                className={`p-2.5 rounded-xl transition-all ${
-                  isRecording
-                    ? 'bg-rose-600 text-white shadow-md animate-pulse ring-4 ring-rose-200'
-                    : 'glass-btn text-stone-700 hover:text-stone-900 hover:scale-105'
-                }`}
-                title={isRecording ? 'Stop Recording' : 'Voice Input'}
-              >
-                <IconMic size={16} />
-              </button>
-
-              <input
-                id="boardroom-pitch-input"
-                type="text"
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleSend()
-                }}
-                placeholder={
-                  isRecording
-                    ? `Recording voice (${recordingSeconds}s)... Speak clearly.`
-                    : replyTargetDragon
-                    ? `Replying directly to ${replyTargetDragon} (e.g. explain feasibility, societal need, or costs)...`
-                    : 'Present your project (e.g. societal need, technical feasibility, money-making model, or ask for guidance)...'
-                }
-                className="flex-1 glass-inset rounded-xl px-4 py-2.5 text-xs md:text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all"
-              />
-
-              <button
-                onClick={() => handleSend()}
-                disabled={!inputText.trim()}
-                className="p-2.5 rounded-xl bg-[#1C1917] hover:bg-stone-800 disabled:opacity-30 text-stone-50 transition-all hover:scale-105 shadow-xs"
-                title="Send Pitch"
-              >
-                <IconSend size={15} />
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* Right (40%): Live Student Venture Viability & Impact Radar */}
-        <section className="lg:col-span-5 flex flex-col gap-4">
-          <div className="glass-strong rounded-3xl p-5 md:p-6 flex flex-col gap-4 shadow-sm">
-            
-            {/* Header: Viability Radar */}
-            <div className="flex items-center justify-between pb-2 border-b border-stone-200/60">
-              <div className="flex items-center gap-2">
-                <IconCompass size={16} className="text-amber-800" />
-                <span className="text-xs font-bold uppercase tracking-wider text-stone-800 font-mono-num">
-                  Venture Viability Radar
-                </span>
-              </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
-                {businessMetrics.verdict_badge || 'Live Assessment'}
-              </span>
-            </div>
-
-            {/* Dragon's Formal Actionable Guidance & Reality Check Card */}
-            <div className="p-4 rounded-2xl glass-inset border border-stone-200/80 flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono-num font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-                  <IconSeal size={13} className="text-amber-800" />
-                  Mentor Formal Guidance
-                </span>
-                <span className="px-2 py-0.5 rounded-md text-[9px] font-bold bg-stone-100 text-stone-700 border border-stone-200">
-                  {businessMetrics.tone_category || 'Formal Mentorship'}
-                </span>
-              </div>
-              <p className="font-display italic text-sm text-stone-900 leading-relaxed">
-                "{businessMetrics.key_actionable_guidance || 'Present your project to receive formal guidance, feasibility reality checks, or constructive scolding.'}"
-              </p>
-            </div>
-
-            {/* The 4 Real-World Pillars Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* 1. Societal Need */}
-              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-1 mb-1.5">
-                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
-                      <IconCompass size={12} className="text-amber-800" />
-                      Societal Need
-                    </span>
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200">
-                      {businessMetrics.societal_need || 'Evaluating'}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
-                    {businessMetrics.need_summary || 'Does society or any real demographic genuinely need this solution?'}
-                  </p>
-                </div>
-              </div>
-
-              {/* 2. Technical Feasibility */}
-              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-1 mb-1.5">
-                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
-                      <IconGear size={12} className="text-emerald-800" />
-                      Feasibility
-                    </span>
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
-                      {businessMetrics.feasibility || 'Evaluating'}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
-                    {businessMetrics.feasibility_summary || 'Can a student team engineer, deploy, and maintain this reliably?'}
-                  </p>
-                </div>
-              </div>
-
-              {/* 3. Commercial Viability & Money Making */}
-              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-1 mb-1.5">
-                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
-                      <IconCoins size={12} className="text-amber-800" />
-                      Money Making
-                    </span>
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 text-amber-900 border border-amber-200">
-                      {businessMetrics.commercial_viability || 'Evaluating'}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
-                    {businessMetrics.money_making_summary || 'Are unit costs lower than price? How will this venture make profit?'}
-                  </p>
-                </div>
-              </div>
-
-              {/* 4. Scalability */}
-              <div className="glass rounded-2xl p-3.5 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-1 mb-1.5">
-                    <span className="text-[10px] font-mono-num font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1">
-                      <IconAscend size={12} className="text-purple-800" />
-                      Scalability
-                    </span>
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">
-                      {businessMetrics.scalability || 'Evaluating'}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-stone-700 leading-snug line-clamp-3">
-                    {businessMetrics.scalability_summary || 'How does this grow beyond your campus into wider regional markets?'}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Measurable Societal Impact & Benefits */}
-            <div className="glass rounded-2xl p-4 bg-emerald-50/50 border border-emerald-200/80">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-950 mb-1">
-                <IconSeal size={14} className="text-emerald-800" />
-                <span>Measurable Societal & Human Impact</span>
-              </div>
-              <p className="text-xs text-stone-700 leading-relaxed font-normal">
-                {businessMetrics.societal_impact || 'Evaluating positive change, productivity enhancement, and human benefits...'}
-              </p>
-            </div>
-
-            {/* Action Bar: Request Formal Viability Ruling & Reset */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center gap-2.5">
-              <button
-                onClick={handleVerdict}
-                className="w-full flex-1 py-3 px-4 rounded-xl bg-[#1C1917] hover:bg-stone-800 text-stone-50 font-semibold text-xs tracking-wide shadow-xs transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <IconSeal size={14} className="text-amber-400" />
-                <span>Request Final Formal Viability Ruling</span>
-              </button>
-              <button
-                onClick={handleReset}
-                className="py-3 px-3.5 rounded-xl glass-btn text-xs font-semibold text-stone-600 hover:text-stone-900 flex items-center justify-center gap-1.5 cursor-pointer"
-                title="Reset Floor for Fresh Pitch"
-              >
-                <IconRotate size={14} />
-                <span>Reset</span>
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* -----------------------------------------------------------------------
-          Interactive Famous Dialogues Modal (All Famous Catchphrases)
-      ------------------------------------------------------------------------ */}
-      <AnimatePresence>
-        {selectedDragonForDialogues && (
-          <div className="fixed inset-0 z-50 bg-slate-900/20 backdrop-blur-md flex items-center justify-center p-4">
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="glass-dock rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-white/80"
-            >
-              <div className="flex items-center justify-between pb-3.5 border-b border-slate-200/60">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs text-white shadow-xs"
-                    style={{ backgroundColor: selectedDragonForDialogues.accentColor }}
-                  >
-                    {selectedDragonForDialogues.avatarInitials}
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-slate-900 text-base">
-                      {selectedDragonForDialogues.name}
-                    </h3>
-                    <p className="text-xs text-slate-500 font-medium">
-                      All Iconic Dialogues · {selectedDragonForDialogues.archetype}
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setSelectedDragonForDialogues(null)}
-                  className="p-1.5 rounded-xl glass-btn text-slate-400 hover:text-slate-800"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              <div className="mt-4 space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
-                {selectedDragonForDialogues.dialogues.map((dlg, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3.5 rounded-2xl glass-panel hover:bg-white/90 transition-all flex items-start justify-between gap-3"
-                  >
-                    <div>
-                      <p className="text-xs font-bold text-slate-900 italic leading-relaxed mb-1">
-                        "{dlg.quote}"
-                      </p>
-                      <p className="text-[11px] text-slate-500">
-                        {dlg.context}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-                        Quote #{idx + 1}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* -----------------------------------------------------------------------
-          Pitch Presets Modal
-      ------------------------------------------------------------------------ */}
-      <AnimatePresence>
-        {showPitchPresets && (
-          <div className="fixed inset-0 z-50 bg-slate-900/20 backdrop-blur-md flex items-center justify-center p-4">
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="glass-dock rounded-3xl max-w-lg w-full p-6 shadow-xl border border-white/80"
-            >
-              <div className="flex items-center justify-between pb-3 border-b border-slate-200/60">
-                <h3 className="font-bold text-slate-900 text-base">
-                  1-Click Student & Early-Stage Pitches
-                </h3>
-                <button
-                  onClick={() => setShowPitchPresets(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-700"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="mt-4 space-y-2.5">
-                {[
-                  {
-                    title: '💡 Idea Only (No Numbers Stated: Dragons Will Ask Directly)',
-                    text: 'We are engineering students who built an automated campus notes repository and study planner with 400 active student signups. We have not set any funding ask or valuation yet.'
-                  },
-                  {
-                    title: '🎓 Campus AI Exam Copilot (₹20L for 5% Ask Stated)',
-                    text: 'We are 3 computer science students who built an AI study copilot that summarizes lecture PDFs and generates mock exam quizzes. 850 active students on our campus use it weekly. We are asking for ₹20 Lakhs for 5% equity (₹4 Cr valuation) to expand to 10 partner engineering colleges.'
-                  },
-                  {
-                    title: '☕ Hostel Late-Night Quick Delivery (₹1.8L Sales, ₹15L Ask)',
-                    text: 'We started a late-night snack and coffee delivery run across 6 university hostels with a 15-minute delivery guarantee. We clocked ₹1.8 Lakhs in sales last month with 62% gross margin and zero marketing spend. We are asking for ₹15 Lakhs for 7% to buy two electric delivery scooters and inventory.'
-                  },
-                  {
-                    title: '⚡ Smart Campus EV Charging Prototype (Hardware IoT, ₹35L Ask)',
-                    text: 'Built as our final year engineering project, our smart IoT charging socket automates billing via UPI QR codes for campus two-wheelers. Tested in 3 college parking lots with 300 charge cycles. Asking for ₹35 Lakhs for 8% to manufacture the first 100 commercial units.'
-                  },
-                  {
-                    title: '🚀 Unvalidated Hackathon Pitch (Absurd Valuation Reality Check)',
-                    text: 'We won our college hackathon last Sunday with an unvalidated idea for an AI social network. We have 20 signups from our roommates and are asking for ₹2 Crores for 2% equity (₹100 Crore valuation)!'
-                  }
-                ].map((preset, idx) => (
+          {/* Composer */}
+          <div className="border-t border-stone-200 bg-white px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 md:px-5">
+            {!isEmpty && (
+              <div className="mb-2 flex gap-1.5 overflow-x-auto [scrollbar-width:none]">
+                {quickPrompts.map((q) => (
                   <button
-                    key={idx}
-                    onClick={() => {
-                      setInputText(preset.text)
-                      setShowPitchPresets(false)
-                    }}
-                    className="w-full text-left p-3 rounded-2xl glass-panel hover:bg-white/90 hover:border-amber-300 transition-all text-xs"
+                    key={q.label}
+                    onClick={() => handleSend(q.text)}
+                    disabled={!isConnected || isEvaluating}
+                    className={`shrink-0 rounded-full border border-stone-200 px-3 py-1 text-[12px] font-medium text-stone-600 hover:border-stone-400 hover:text-stone-900 disabled:opacity-40 ${focusRing}`}
                   >
-                    <span className="font-bold text-slate-900 block mb-1">
-                      {preset.title}
-                    </span>
-                    <span className="text-slate-600 line-clamp-2">
-                      {preset.text}
-                    </span>
+                    {q.label}
                   </button>
                 ))}
               </div>
-            </motion.div>
+            )}
+            {targetProfile && (
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-stone-100 py-1 pl-1 pr-2 text-[12px]">
+                <Avatar id={targetProfile.id} size={20} />
+                Asking <b>{targetProfile.name}</b> directly
+                <button onClick={() => setReplyTargetDragon(null)} aria-label="Ask the whole panel instead" className={`rounded-full p-0.5 hover:bg-stone-200 ${focusRing}`}>
+                  <X className="h-3 w-3" />
+                </button>
+              </div>
+            )}
+            <div className="flex items-end gap-2 rounded-2xl border border-stone-300 bg-white p-1.5 focus-within:border-stone-900 focus-within:ring-1 focus-within:ring-stone-900">
+              <button
+                onClick={handleToggleMic}
+                aria-label={isRecording ? 'Stop recording' : 'Speak your pitch'}
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${isRecording ? 'bg-rose-600 text-white' : 'text-stone-500 hover:bg-stone-100'} ${focusRing}`}
+              >
+                <IconMic size={18} />
+              </button>
+              <label htmlFor="pitch-input" className="sr-only">Your pitch</label>
+              <textarea
+                id="pitch-input"
+                ref={textareaRef}
+                rows={1}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault()
+                    handleSend()
+                  }
+                }}
+                placeholder={
+                  isRecording
+                    ? `Listening… ${recordingSeconds}s`
+                    : targetProfile
+                    ? `Reply to ${targetProfile.name.split(' ')[0]}…`
+                    : isEmpty
+                    ? 'Describe your idea: problem, solution, price, traction…'
+                    : 'Answer the Dragon or add more details…'
+                }
+                className="max-h-40 min-h-[40px] flex-1 resize-none bg-transparent px-1 py-2.5 text-[15px] leading-snug placeholder:text-stone-400 focus:outline-none"
+              />
+              <button
+                onClick={() => handleSend()}
+                disabled={!inputText.trim() || !isConnected}
+                aria-label="Send"
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#1C1917] text-white transition hover:bg-stone-800 disabled:bg-stone-200 disabled:text-stone-400 ${focusRing}`}
+              >
+                <IconSend size={16} />
+              </button>
+            </div>
+            <p className="mt-1.5 hidden text-center text-[11px] text-stone-400 md:block">
+              Enter to send · Shift+Enter for a new line · Click a Dragon above to ask them directly
+            </p>
           </div>
-        )}
-      </AnimatePresence>
+        </section>
 
-      {/* Deal Closed Modal */}
-      <AnimatePresence>
-        {dealClosed && (
-          <div className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-md flex items-center justify-center p-4">
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="glass-dock rounded-3xl max-w-md w-full p-6 text-center shadow-2xl border border-emerald-300"
-            >
-              <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
-                <Check className="w-8 h-8" />
+        {/* Scorecard */}
+        <aside
+          className={`${mobileTab === 'score' ? 'block' : 'hidden'} min-h-0 overflow-y-auto px-4 py-5 md:px-0 md:py-0 lg:col-span-4 lg:block`}
+          aria-label="Venture scorecard"
+        >
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-bold">Scorecard</h2>
+                <span className="rounded-full bg-stone-100 px-2.5 py-0.5 text-[11px] font-semibold text-stone-600">
+                  {businessMetrics.verdict_badge && !businessMetrics.verdict_badge.includes('Awaiting') ? businessMetrics.verdict_badge : isEmpty ? 'Waiting for pitch' : 'Live'}
+                </span>
               </div>
-              <h2 className="text-2xl font-black text-slate-900 mb-1">DEAL CLOSED!</h2>
-              <p className="text-sm text-slate-600 mb-4">
-                You signed a term sheet with <span className="font-bold text-slate-900">{dealClosed.dragon_name}</span>.
-              </p>
-              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-900 mb-6">
-                {dealClosed.terms}
+              <ul className="mt-4 space-y-4">
+                {pillars.map((p) => {
+                  const tone = pillarTone(p.value)
+                  const s = toneStyles[tone]
+                  const Icon = p.icon
+                  return (
+                    <li key={p.key}>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="flex items-center gap-2 text-[13px] font-semibold">
+                          <Icon size={14} className="text-stone-500" />
+                          {p.title}
+                        </span>
+                        <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ring-1 ${s.chip}`} title={p.value}>
+                          {tone === 'pending' ? s.label : p.value}
+                        </span>
+                      </div>
+                      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-stone-100">
+                        <div className={`h-full rounded-full transition-all duration-700 ${s.bar}`} style={{ width: s.w }} />
+                      </div>
+                      <p className="mt-1.5 text-[12px] leading-relaxed text-stone-500">{p.summary}</p>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-5">
+              <h2 className="flex items-center gap-2 text-sm font-bold text-amber-900">
+                <IconCheckCircle size={15} /> Your next step
+              </h2>
+              <p className="mt-2 text-[14px] leading-relaxed text-amber-950">{businessMetrics.key_actionable_guidance}</p>
+            </div>
+
+            {numbers.length > 0 && (
+              <div className="rounded-2xl border border-stone-200 bg-white p-5">
+                <h2 className="text-sm font-bold">Numbers you&apos;ve shared</h2>
+                <dl className="mt-3 grid grid-cols-2 gap-3">
+                  {numbers.map(([k, v]) => (
+                    <div key={k as string}>
+                      <dt className="text-[11px] text-stone-500">{k}</dt>
+                      <dd className="font-mono-num text-[13px] font-semibold">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setDealClosed(null)}
-                  className="flex-1 py-3 rounded-xl bg-slate-900 text-white font-bold text-xs"
-                >
-                  Continue Pitching
-                </button>
-                <button
-                  onClick={onBackToHome}
-                  className="px-4 py-3 rounded-xl glass-panel text-slate-700 font-bold text-xs"
-                >
-                  Return to Home
-                </button>
+            )}
+
+            {businessMetrics.societal_impact && !isEmpty && (
+              <div className="rounded-2xl border border-stone-200 bg-white p-5">
+                <h2 className="text-sm font-bold">Impact</h2>
+                <p className="mt-2 text-[13px] leading-relaxed text-stone-600">{businessMetrics.societal_impact}</p>
               </div>
-            </motion.div>
+            )}
           </div>
+        </aside>
+      </main>
+
+      {/* Dragon profile sheet */}
+      <AnimatePresence>
+        {selectedDragonForDialogues && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedDragonForDialogues(null)}
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label={selectedDragonForDialogues.name}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 30, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-[85vh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-white p-6 shadow-xl sm:rounded-3xl"
+            >
+              <div className="flex items-start gap-3">
+                <Avatar id={selectedDragonForDialogues.id} size={48} />
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold">{selectedDragonForDialogues.name}</h3>
+                  <p className="text-[13px] text-stone-500">{selectedDragonForDialogues.title}</p>
+                  <p className="mt-1 text-[12px] font-semibold text-amber-800">Judges: {DOMAIN_SHORT[selectedDragonForDialogues.id]}</p>
+                </div>
+                <button onClick={() => setSelectedDragonForDialogues(null)} aria-label="Close" className={`rounded-full p-1.5 hover:bg-stone-100 ${focusRing}`}>
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <h4 className="mb-2 mt-5 text-xs font-semibold uppercase tracking-wider text-stone-500">Signature lines</h4>
+              <ul className="space-y-2">
+                {selectedDragonForDialogues.dialogues.map((d: DragonDialogue) => (
+                  <li key={d.quote} className="rounded-xl bg-stone-50 p-3">
+                    <p className="font-display text-[15px] italic">“{d.quote}”</p>
+                    <p className="mt-1 text-[12px] text-stone-500">{d.context}</p>
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={() => {
+                  setReplyTargetDragon(selectedDragonForDialogues.name)
+                  setSelectedDragonForDialogues(null)
+                  setMobileTab('chat')
+                  setTimeout(() => textareaRef.current?.focus(), 50)
+                }}
+                className={`mt-5 w-full rounded-xl bg-[#1C1917] py-3 text-sm font-semibold text-white hover:bg-stone-800 ${focusRing}`}
+              >
+                Ask {selectedDragonForDialogues.name.split(' ')[0]} directly
+              </button>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
   )
+}
+
+const DOMAIN_SHORT: Record<string, string> = {
+  roaster: 'Money & pricing',
+  marketing: 'Customers & brand',
+  tech: 'Tech & purpose',
+  operator: 'Operations & legal',
+  strategist: 'Market & scale',
+  d2c: 'Retention & execution'
 }
