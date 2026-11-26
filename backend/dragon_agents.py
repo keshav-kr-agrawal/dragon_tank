@@ -622,7 +622,7 @@ Return ONLY JSON:
 
         if verdict:
             if hits and not red:
-                content = (f"{p['fallback_praise']} On {p["pillar"].lower()}, you have given me something "
+                content = (f"{p['fallback_praise']} On {p['pillar'].lower()}, you have given me something "
                            f"to work with, so I am in as a mentor - on one condition. {p['fallback_questions'][0]}")
                 return self._turn(content, "verdict_in")
             content = (f"For me, {p['pillar'].lower()} is still unproven here, so for now I am out. "
