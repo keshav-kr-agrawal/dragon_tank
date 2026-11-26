@@ -145,7 +145,7 @@ flowchart TD
     GeminiFlash -.->|On Error / Exception| OpenAI
     OpenAI -.->|On Disconnection| RuleEngine
 
-    LLM_Cascades -->|Strict Single Shark JSON Payload| Director
+    LLM_Cascades -->|Strict Single Dragon JSON Payload| Director
     Director -->|Token Stream Chunks (2 words / 20ms)| WS
     WS -->|Reactive Typewriter Event Stream| UI
     WS -->|Async Non-blocking Background Task| Sessions
@@ -179,6 +179,19 @@ Each mentor commands a specialized evaluation domain, delivering articulate boar
 |                   | (SUGAR Cosmetics CEO)       | vs LTV, Delivery Friction       | rate kitna hai?"    |
 +-------------------+-----------------------------+---------------------------------+---------------------+
 ```
+
+### Independent Dragon Pipelines
+
+Each Dragon runs as its own agent (`backend/dragon_agents.py`):
+
+1. **Router** picks exactly one Dragon per turn: the one you replied to, otherwise the Dragon whose domain keywords your statement hits most (with a fairness penalty so one Dragon doesn't hog the floor).
+2. **Dragon agent** builds a system prompt from *only its own* persona, focus areas, red/green flags and signature lines. Other Dragons' lines are listed only as "never say these".
+3. **Per-Dragon memory** tracks which of its own catchphrases and points it has already used, so it doesn't repeat itself.
+4. **Guardrails** strip any sentence containing another Dragon's signature line, any "I am <other Dragon>" impersonation, and any off-brand wording.
+5. **Feedback contract**: react to what the founder actually said, credit what is genuinely good, name the biggest gap in that Dragon's domain, end with one concrete next step or question. No pure roasting, no empty praise.
+6. **Neutral analyst** (no persona) updates the 4-pillar scorecard in parallel.
+7. **Final verdict**: all six Dragons rule independently (IN / OUT with reason), one after another.
+8. **Offline mode**: with no LLM key, each Dragon falls back to its own persona-specific questions.
 
 ### Detailed Mentor Rubrics
 
@@ -581,7 +594,7 @@ All communication between the browser den and the multi-agent director flows thr
 Client (Browser)                                    Server (FastAPI)
        |                                                    |
        | ------------------ pitch_text -------------------> | (Founder pitches idea)
-       | <-------------- moderator_evaluating ------------- | (Shark preparing critique)
+       | <-------------- moderator_evaluating ------------- | (Dragon preparing critique)
        | <------------ dragon_stream_chunk (x N) ---------- | (Typewriter token stream)
        | <----------------- dragon_turn ------------------- | (Finalized message & 4 pillars)
        |                                                    |

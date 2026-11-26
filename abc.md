@@ -22,7 +22,7 @@
    - [9.1 Apple VisionOS Pure Glassmorphism Design System](#91-apple-visionos-pure-glassmorphism-design-system)
    - [9.2 Split-Pane Stage: Boardroom Floor vs. Viability & Impact Radar](#92-split-pane-stage-boardroom-floor-vs-viability--impact-radar)
    - [9.3 Student Venture Economics & Viability Lab](#93-student-venture-economics--viability-lab)
-   - [9.4 Targeted Shark Mentorship & Student Action Chips](#94-targeted-shark-mentorship--student-action-chips)
+   - [9.4 Targeted Dragon Mentorship & Student Action Chips](#94-targeted-dragon-mentorship--student-action-chips)
    - [9.5 Red Carpet Cinematic Entrance](#95-red-carpet-cinematic-entrance)
 10. [Native In-Memory Web Audio Synthesizer](#10-native-in-memory-web-audio-synthesizer)
 11. [Database Architecture & Supabase pgvector](#11-database-architecture--supabase-pgvector)
@@ -41,7 +41,7 @@ Built with a **FastAPI** asynchronous backend and a **Next.js 14 App Router** fr
 
 Unlike entertainment-focused television pitch shows that emphasize theatrical bidding wars, paper valuations, and royalty demands, Dragon Tank India enforces a **rigorous real-world educational standard**:
 - **Fully Student-Oriented**: Grounded in the reality of campus prototypes, capstone projects, lab hardware, and student budgets.
-- **Strictly One Shark at a Time**: Zero crosstalk, zero chaotic overlapping interruptions. Each turn belongs exclusively to one mentor who conducts a deep-dive interrogation into their domain.
+- **Strictly One Dragon at a Time**: Zero crosstalk, zero chaotic overlapping interruptions. Each turn belongs exclusively to one mentor who conducts a deep-dive interrogation into their domain.
 - **Formal Mentorship, Suggestions & Constructive Scolding**: Clear, articulate, and formal evaluation that provides actionable guidance or firm constructive scolding when fundamental business and operational mistakes are made.
 - **Real-World Value Pillars**: Evaluations focus strictly on **Societal Need, Customer Benefits, Technical & Operational Feasibility, Commercial Viability & Money Making, and Scalability** rather than arbitrary television equity bargaining.
 
@@ -96,8 +96,8 @@ In traditional group settings, multiple voices talking over each other causes co
    if "turns" in data and len(data["turns"]) > 1:
        data["turns"] = [data["turns"][0]]
    ```
-3. **Visual State Synchronization**: During speech, only the speaking Shark's status is set to `"speaking"` with an animated breathing amber aura and voice equalizer bars. All other five Sharks are explicitly set to `"listening"`.
-4. **Zero Crosstalk**: No other Shark interrupts or cuts off the active speaker, allowing the founder to receive focused, undivided mentorship.
+3. **Visual State Synchronization**: During speech, only the speaking Dragon's status is set to `"speaking"` with an animated breathing amber aura and voice equalizer bars. All other five Dragons are explicitly set to `"listening"`.
+4. **Zero Crosstalk**: No other Dragon interrupts or cuts off the active speaker, allowing the founder to receive focused, undivided mentorship.
 
 ---
 
@@ -158,7 +158,7 @@ flowchart TD
     GeminiFB -.->|On Error| OpenAI
     OpenAI -.->|On Error| RuleEngine
 
-    LLM_Router -->|Strict Single Shark JSON Turn| WS
+    LLM_Router -->|Strict Single Dragon JSON Turn| WS
     WS -->|Typewriter Word Chunks| UI
     WS -->|Live Viability Assessment| UI
     WS -->|Async Background Task| SessionsTable
@@ -170,11 +170,11 @@ flowchart TD
 
 ## 7. Backend Architecture & Multi-Agent Engine
 
-The backend core resides in [`backend/server.py`](file:///Users/keshav/shark%20tank/backend/server.py). It operates as an asynchronous event-driven system handling concurrent WebSocket sessions.
+The backend core resides in [`backend/server.py`](./backend/server.py). It operates as an asynchronous event-driven system handling concurrent WebSocket sessions.
 
 ### 7.1 Single-Speaker Director System
 When a student founder submits an idea or answer:
-1. **Targeted Shark Routing**: If the student targets a specific Shark (e.g. *"Reply to Peyush Bansal"*), that mentor takes the floor.
+1. **Targeted Dragon Routing**: If the student targets a specific Dragon (e.g. *"Reply to Peyush Bansal"*), that mentor takes the floor.
 2. **Context-Aware Topic Routing**: Otherwise, the system analyzes the student's statement:
    - *Unit costs, cash burn, or negative margins* $\rightarrow$ **Ashneer Grover**
    - *Consumer branding, packaging, or campus adoption* $\rightarrow$ **Aman Gupta**
@@ -182,7 +182,7 @@ When a student founder submits an idea or answer:
    - *Distribution logistics, working capital, or regulations* $\rightarrow$ **Namita Thapar**
    - *Market viability, retention cohorts, or commercial scale* $\rightarrow$ **Anupam Mittal**
    - *Customer retention, repeat rates, or unit contribution* $\rightarrow$ **Vineeta Singh**
-3. **Turn Clamping**: Exactly one speaker is selected. All other Sharks remain in `"listening"` mode.
+3. **Turn Clamping**: Exactly one speaker is selected. All other Dragons remain in `"listening"` mode.
 
 ### 7.2 Real-World Viability Assessment Engine
 With every turn, the engine outputs structured analysis across the four pillars:
@@ -212,7 +212,7 @@ To guarantee continuous uptime and sub-second response times:
 4. **Offline Fallback**: Deterministic Python Rule Engine delivering structured student guidance even without network connectivity.
 
 ### 7.4 Real-Time Typewriter Streaming Protocol
-The active Shark's dialogue streams over WebSocket in 2-word bursts every 20ms, accompanied by tone badges:
+The active Dragon's dialogue streams over WebSocket in 2-word bursts every 20ms, accompanied by tone badges:
 - `💡 Strategic Guidance`
 - `⚠️ Constructive Scolding`
 - `⚙️ Feasibility Check`
@@ -292,9 +292,9 @@ In accordance with Ishaan-UI principles (*data visuals should be custom, never d
 - Large Newsreader display numerals displaying unit contribution and gross margin.
 
 ### 9.4 Split-Pane Stage: Boardroom Floor vs. Viability & Impact Radar
-Located in [`frontend/components/PitchBoardroom.tsx`](file:///Users/keshav/shark%20tank/frontend/components/PitchBoardroom.tsx):
+Located in [`frontend/components/PitchBoardroom.tsx`](./frontend/components/PitchBoardroom.tsx):
 - **Left Stage (60% Desktop Width)**:
-  - Scrollable transcript displaying student statements and the single speaking Shark's guidance.
+  - Scrollable transcript displaying student statements and the single speaking Dragon's guidance.
   - Typographical status seals instead of emoji tags.
   - Bespoke action chips: `Societal Need`, `Money Making & Costs`, `Technical Feasibility`, `Scalability Plan`, `Request Formal Critique`.
 - **Right Stage (40% Desktop Width) — Student Venture Viability & Impact Radar**:
@@ -305,21 +305,21 @@ Located in [`frontend/components/PitchBoardroom.tsx`](file:///Users/keshav/shark
   - **Formal Viability Ruling Action**: Triggers the panel's comprehensive final evaluation with an authentic seal.
 
 ### 9.5 Student Venture Economics & Viability Lab
-Located on [`frontend/components/HomePage.tsx`](file:///Users/keshav/shark%20tank/frontend/components/HomePage.tsx):
+Located on [`frontend/components/HomePage.tsx`](./frontend/components/HomePage.tsx):
 - Embedded **Bezel Dial** displaying live Gross Margin %.
 - Interactive tactile sliders for **Direct Unit Cost (₹)**, **Customer Pricing (₹)**, and **Target Community Reach (Users)**.
 - Computes live: Gross Margin %, Break-even Volume, and Net Monthly Run-Rate.
-- Live dynamic Shark feedback preview with formal guidance, suggestions, or scolding based on real math.
+- Live dynamic Dragon feedback preview with formal guidance, suggestions, or scolding based on real math.
 
 ### 9.5 Red Carpet Cinematic Entrance
-Implemented in [`frontend/components/RedCarpetTransition.tsx`](file:///Users/keshav/shark%20tank/frontend/components/RedCarpetTransition.tsx):
+Implemented in [`frontend/components/RedCarpetTransition.tsx`](./frontend/components/RedCarpetTransition.tsx):
 - Sub-bass impact boom (36 Hz), parting hydraulic stage doors, rolling red carpet, and flash strobes before transitioning to the boardroom floor.
 
 ---
 
 ## 10. Native In-Memory Web Audio Synthesizer
 
-Located in [`frontend/components/SoundEffects.ts`](file:///Users/keshav/shark%20tank/frontend/components/SoundEffects.ts):
+Located in [`frontend/components/SoundEffects.ts`](./frontend/components/SoundEffects.ts):
 - Zero external MP3 or WAV dependencies.
 - Synthesizes sub-bass booms, hydraulic hisses, boardroom gongs, and camera clicks in browser memory using the Web Audio API.
 
@@ -327,7 +327,7 @@ Located in [`frontend/components/SoundEffects.ts`](file:///Users/keshav/shark%20
 
 ## 11. Database Architecture & Supabase pgvector
 
-Defined in [`supabase/schema.sql`](file:///Users/keshav/shark%20tank/supabase/schema.sql):
+Defined in [`supabase/schema.sql`](./supabase/schema.sql):
 - `public.sessions`: Stores session transcripts, viability metrics, and mentorship logs.
 - `public.market_benchmarks`: Provides vector-indexed Indian market benchmarks for RAG retrieval.
 
@@ -339,14 +339,14 @@ All communication between client and server occurs over `/ws/pitch`.
 
 ### Client Messages:
 - `pitch_text`: Student submits pitch with target mentor and current metrics.
-- `founder_answer`: Student answers an active Shark's question.
+- `founder_answer`: Student answers an active Dragon's question.
 - `call_for_decisions`: Triggers the final formal viability ruling.
 - `reset_session`: Resets the session state and metrics.
 
 ### Server Messages:
-- `session_init`: Floor initialization with seated Sharks and initial pillar metrics.
+- `session_init`: Floor initialization with seated Dragons and initial pillar metrics.
 - `chat_message`: Acknowledgment of student input.
-- `moderator_evaluating`: Status indicator while the Shark prepares feedback.
+- `moderator_evaluating`: Status indicator while the Dragon prepares feedback.
 - `dragon_stream_chunk`: High-speed typewriter token streaming.
 - `dragon_turn`: Finalized single-speaker message, updated 4-pillar metrics, and dragon statuses.
 
@@ -355,7 +355,7 @@ All communication between client and server occurs over `/ws/pitch`.
 ## 13. Repository Directory & File Breakdown
 
 ```
-shark tank/
+dragon_tank/
 ├── .env                              # Master environment variables (API keys, ports)
 ├── README.md                         # Quick start documentation
 ├── abc.md                            # Comprehensive project technical documentation (This file)

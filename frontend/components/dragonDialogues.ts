@@ -50,8 +50,8 @@ export const ALL_DRAGON_PROFILES: DragonProfile[] = [
         category: 'roast'
       },
       {
-        quote: 'Tere se bada hypocrite maine aaj tak nahi dekha.',
-        context: 'Calling out double standards in operational spending.',
+        quote: 'Bhai kya soch ke pricing banayi hai? Free mein baantoge toh dhandha band ho jayega.',
+        context: 'When a founder gives the product away with no pricing plan.',
         category: 'roast'
       },
       {
@@ -91,8 +91,8 @@ export const ALL_DRAGON_PROFILES: DragonProfile[] = [
         category: 'advice'
       },
       {
-        quote: 'Arre Ashneer bhai, thoda saans le! Har cheez dukaan nahi hoti!',
-        context: 'Interrupting Ashneer to defend founders from extreme financial bullying.',
+        quote: 'Hum bhi bana lenge - toh tera wala kyun khareedega customer?',
+        context: 'Testing whether the product has a reason to exist against copycats.',
         category: 'catchphrase'
       },
       {
@@ -132,9 +132,9 @@ export const ALL_DRAGON_PROFILES: DragonProfile[] = [
         category: 'catchphrase'
       },
       {
-        quote: "Ashneer, let him speak. Don't demoralize the founder.",
-        context: 'Stepping in calmly to ensure the founder gets fair airtime.',
-        category: 'catchphrase'
+        quote: 'Technology tabhi valuable hai jab woh essential service ko 10x sasta ya accessible banaye.',
+        context: 'Judging whether the tech genuinely improves access or affordability.',
+        category: 'advice'
       },
       {
         quote: 'Technology se hum unit cost 50% kam kar sakte hain.',
@@ -229,8 +229,8 @@ export const ALL_DRAGON_PROFILES: DragonProfile[] = [
         category: 'roast'
       },
       {
-        quote: 'Ashneer, tu har business ko sabzi mandi samajhta hai!',
-        context: 'Arguing that tech platforms need runway to build network moats.',
+        quote: "Don't confuse activity with progress.",
+        context: 'When busy-work and vanity metrics are presented as traction.',
         category: 'catchphrase'
       },
       {

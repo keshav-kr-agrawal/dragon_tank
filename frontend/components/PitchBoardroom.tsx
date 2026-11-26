@@ -119,7 +119,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
       role: 'moderator',
       speaker: 'Studio Floor',
       content:
-        'Step onto the floor, Student Founder. The Sharks are seated. Present your project or venture idea. Exactly one Shark will evaluate your pitch live, focusing on Societal Need, Real Benefits, Technical Feasibility, Commercial Viability, Money-Making Model, and Scalability.',
+        'Step onto the floor, Student Founder. The Dragons are seated. Present your project or venture idea. The Dragon whose domain your pitch touches most will evaluate it live, focusing on Societal Need, Real Benefits, Technical Feasibility, Commercial Viability, Money-Making Model, and Scalability.',
       timestamp: 'Just now'
     }
   ])
@@ -135,7 +135,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
     scalability: 'Awaiting Student Pitch',
     scalability_summary: 'Explain how this venture expands beyond your campus or hackathon demo.',
     societal_impact: 'Measurable benefit and positive change created for people or industry.',
-    key_actionable_guidance: 'Present your venture. Exactly one Shark will evaluate your pitch live with formal guidance or scolding.',
+    key_actionable_guidance: 'Present your venture. The Dragon whose domain it touches most will evaluate it live with formal guidance or scolding.',
     verdict_badge: 'Awaiting Pitch',
     ask: initialMetrics?.ask || 'Not stated yet',
     equity: initialMetrics?.equity || 'Not stated yet',
@@ -357,7 +357,8 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
             // Sync message tone and final content
             if (data.message) {
               setMessages((prev) => {
-                const streamMatchIndex = prev.findIndex((m) => m.speaker === data.message.speaker && prev.length - 1 - prev.indexOf(m) < 3)
+                const byId = data.message.id ? prev.findIndex((m) => m.id === data.message.id) : -1
+                const streamMatchIndex = byId >= 0 ? byId : prev.findIndex((m, i) => m.speaker === data.message.speaker && prev.length - 1 - i < 3)
                 if (streamMatchIndex >= 0) {
                   const updated = [...prev]
                   updated[streamMatchIndex] = {
@@ -524,7 +525,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
       wsRef.current.send(
         JSON.stringify({
           type: 'call_for_decisions',
-          text: 'Sharks, please deliver your final formal ruling on our venture viability, feasibility, and next steps.',
+          text: 'Dragons, please deliver your final formal ruling on our venture viability, feasibility, and next steps.',
           metrics: businessMetrics
         })
       )
@@ -914,7 +915,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
               { label: 'Technical Feasibility', icon: IconGear, text: 'Here is our technical prototype architecture and how our student team builds and maintains it.' },
               { label: 'Scalability Plan', icon: IconAscend, text: 'Here is how we scale from our campus pilot to 15 universities and regional markets.' },
               { label: 'Measurable Impact', icon: IconFlame, text: 'Here is the tangible benefit and measurable human or business impact our solution delivers.' },
-              { label: 'Request Formal Critique', icon: IconSeal, text: 'Sharks, please give us a direct, formal reality check on our biggest feasibility blindspot.' }
+              { label: 'Request Formal Critique', icon: IconSeal, text: 'Dragons, please give us a direct, formal reality check on our biggest feasibility blindspot.' }
             ].map((chip, idx) => (
               <button
                 key={idx}
@@ -1033,7 +1034,7 @@ export default function PitchBoardroom({ onBackToHome, initialMetrics }: PitchBo
               </span>
             </div>
 
-            {/* Shark's Formal Actionable Guidance & Reality Check Card */}
+            {/* Dragon's Formal Actionable Guidance & Reality Check Card */}
             <div className="p-4 rounded-2xl glass-inset border border-stone-200/80 flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono-num font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
